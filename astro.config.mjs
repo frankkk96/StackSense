@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://infrapass.dev',
+  site: 'https://stacksense.cc',
   trailingSlash: 'always',
   build: {
     format: 'directory',
