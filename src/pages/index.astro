@@ -13,9 +13,43 @@ const chapters = await getCollection('chapters');
 const bySlug = new Map(chapters.map((c) => [c.data.slug, c]));
 
 const base = `${import.meta.env.BASE_URL}`.replace(/\/$/, '');
+const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
+
+const websiteLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'InfraPass',
+  alternateName: siteTitle,
+  url: `${siteUrl}/`,
+  description:
+    '面向系统工程师的 AI / Data Infra 学习地图：把基础语言、操作系统、数据 / AI 栈、工程实践和延伸阅读放到一张图上，按主题跳读。',
+  inLanguage: 'zh-CN',
+};
+
+const itemListLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListOrder: 'https://schema.org/ItemListOrderAscending',
+  numberOfItems: chapters.length,
+  itemListElement: tracks.flatMap((t, ti) =>
+    t.slugs.map((slug, si) => {
+      const c = bySlug.get(slug);
+      return {
+        '@type': 'ListItem',
+        position: ti * 10 + si + 1,
+        url: `${siteUrl}/${slug}/`,
+        name: c?.data.title ?? slug,
+      };
+    }),
+  ),
+};
 ---
 
-<Base>
+<Base
+  ogImage="/og/home.png"
+  pageType="website"
+  jsonLd={[websiteLd, itemListLd]}
+>
   <div class="page">
     <header class="topbar">
       <span class="brand-static">
