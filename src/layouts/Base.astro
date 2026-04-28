@@ -18,7 +18,7 @@ const {
   jsonLd,
 } = Astro.props;
 
-const pageTitle = title ? `${title} · InfraPass` : `InfraPass · ${siteTitle}`;
+const pageTitle = title ? `${title} · StackSense` : `StackSense · ${siteTitle}`;
 const pageDesc = description ?? siteDescription;
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageUrl = new URL(ogImage, Astro.site).toString();
@@ -50,7 +50,7 @@ const ldArray = jsonLd
     <link rel="apple-touch-icon" href={`${base}/apple-touch-icon.png`} />
 
     <meta property="og:type" content={pageType} />
-    <meta property="og:site_name" content="InfraPass" />
+    <meta property="og:site_name" content="StackSense" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDesc} />
     <meta property="og:url" content={canonical} />

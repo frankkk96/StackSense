@@ -18,7 +18,7 @@ const siteUrl = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const websiteLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'InfraPass',
+  name: 'StackSense',
   alternateName: siteTitle,
   url: `${siteUrl}/`,
   description:
@@ -54,7 +54,7 @@ const itemListLd = {
     <header class="topbar">
       <span class="brand-static">
         <Logo size={20} class="brand-logo" />
-        <span class="brand-name">InfraPass</span>
+        <span class="brand-name">StackSense</span>
       </span>
       <span class="meta">v1 · 2026</span>
     </header>
@@ -116,7 +116,7 @@ const itemListLd = {
     ))}
 
     <footer class="site-foot">
-      <span>InfraPass · {chapters.length} modules · {tracks.length} tracks</span>
+      <span>StackSense · {chapters.length} modules · {tracks.length} tracks</span>
       <span>static · astro</span>
     </footer>
   </div>
