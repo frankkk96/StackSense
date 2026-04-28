@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <g transform="translate(38 193)">
+    <path d="M 435 52 L 373 0 L 363 6 L 0 312 L 0 412 L 112 413 L 113 325 Z"/>
+    <path d="M 549 151 L 488 101 L 227 314 L 227 413 L 338 413 L 338 327 Z"/>
+    <path d="M 724 308 L 592 198 L 452 314 L 452 413 L 562 413 L 563 327 L 593 301 L 724 413 Z"/>
+  </g>
+  <style>
+    path { fill: #1a1a1a; }
+    @media (prefers-color-scheme: dark) {
+      path { fill: #f2f1ec; }
+    }
+  </style>
+</svg>

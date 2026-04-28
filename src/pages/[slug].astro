@@ -1,0 +1,111 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import { getCollection, render } from 'astro:content';
+import { moduleTags, moduleDescriptions, trackOf } from '../data/site';
+
+export async function getStaticPaths() {
+  const chapters = await getCollection('chapters');
+  return chapters.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const sections = headings.filter((h) => h.depth === 2);
+
+const allChapters = await getCollection('chapters');
+const tag = moduleTags[entry.data.slug] ?? '';
+const track = trackOf(entry.data.slug);
+const desc = moduleDescriptions[entry.data.slug] ?? '';
+
+const body = (entry.body ?? '').trim();
+const firstBlank = body.indexOf('\n\n');
+const intro = (firstBlank > 0 ? body.slice(0, firstBlank) : body).trim();
+
+const related = track
+  ? allChapters
+      .filter(
+        (c) => track.slugs.includes(c.data.slug) && c.data.slug !== entry.data.slug,
+      )
+      .sort((a, b) => a.data.order - b.data.order)
+  : [];
+
+const base = `${import.meta.env.BASE_URL}`.replace(/\/$/, '');
+const home = `${base}/`;
+---
+
+<Base title={entry.data.title} description={desc}>
+  <div class="page">
+    <header class="topbar">
+      <a href={home}>
+        <Logo size={20} class="brand-logo" />
+        <span class="brand-name">InfraPass</span>
+      </a>
+      <a href={home}>← 回到地图</a>
+    </header>
+
+    <header class="module-head">
+      <div class="crumbs">
+        {track && (
+          <>
+            <span class="track-name">{track.label}</span>
+            <span class="sep">/</span>
+          </>
+        )}
+        {tag && <span class="tag">{tag}</span>}
+      </div>
+      <h1>{entry.data.title}</h1>
+      {intro && <p class="lede">{intro}</p>}
+    </header>
+
+    {sections.length > 1 && (
+      <nav class="section-chips" aria-label="本模块目录">
+        <span class="chips-label">在这一章 · contents</span>
+        <div class="chips-row">
+          {sections.map((s, i) => (
+            <a href={`#${s.slug}`}>
+              <span class="idx">{String(i + 1).padStart(2, '0')}</span>
+              <span class="text">{s.text}</span>
+            </a>
+          ))}
+        </div>
+      </nav>
+    )}
+
+    <article class="prose">
+      <Content />
+    </article>
+
+    {related.length > 0 && (
+      <section class="related">
+        <div class="related-head">
+          <span class="label">
+            <span class="accent">▸</span> 同区域 · {track?.label}
+          </span>
+          <a href={home} class="back">← 回到地图</a>
+        </div>
+        <div class="related-grid">
+          {related.map((c) => (
+            <a class="module-card" href={`${base}/${c.data.slug}/`}>
+              <div class="top">
+                <span class="tag">{moduleTags[c.data.slug]}</span>
+              </div>
+              <span class="title">{c.data.title}</span>
+              <span class="desc">{moduleDescriptions[c.data.slug]}</span>
+              <span class="arrow">→</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <footer class="site-foot">
+      <span>InfraPass · {tag}</span>
+      <a href={home}>↩ 回到地图</a>
+    </footer>
+  </div>
+</Base>

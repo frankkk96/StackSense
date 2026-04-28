@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import { getCollection } from 'astro:content';
+import {
+  siteTitle,
+  moduleDescriptions,
+  moduleTags,
+  tracks,
+} from '../data/site';
+
+const chapters = await getCollection('chapters');
+const bySlug = new Map(chapters.map((c) => [c.data.slug, c]));
+
+const base = `${import.meta.env.BASE_URL}`.replace(/\/$/, '');
+---
+
+<Base>
+  <div class="page">
+    <header class="topbar">
+      <span class="brand-static">
+        <Logo size={20} class="brand-logo" />
+        <span class="brand-name">InfraPass</span>
+      </span>
+      <span class="meta">v1 · 2026</span>
+    </header>
+
+    <section class="hero">
+      <span class="eyebrow">A study map for systems engineers</span>
+      <h1>AI / Data Infra <span class="accent">知识地图</span></h1>
+      <p class="lede">
+        把语言、操作系统、数据栈、AI infra、GPU 编程、工程实践和延伸阅读放到同一张地图上。
+      </p>
+      <p class="lede">
+        每个模块独立成页：介绍、要回答的问题、概念、Lab、资料、工具。按主题跳读，不必从头到尾。
+      </p>
+
+      <div class="hero-stats">
+        <div>
+          <div class="num">{chapters.length}</div>
+          <div class="label">modules</div>
+        </div>
+        <div>
+          <div class="num">{tracks.length}</div>
+          <div class="label">tracks</div>
+        </div>
+        <div>
+          <div class="num">200+</div>
+          <div class="label">resources</div>
+        </div>
+      </div>
+    </section>
+
+    {tracks.map((t) => (
+      <section class="track" id={t.id}>
+        <header class="track-head">
+          <div class="label-col">
+            <span class="id">{t.sub}</span>
+            <span class="label">
+              <span class="accent">▸</span>{t.label}
+            </span>
+          </div>
+          <p class="hint">{t.hint}</p>
+        </header>
+        <div class="module-grid">
+          {t.slugs.map((slug) => {
+            const c = bySlug.get(slug);
+            if (!c) return null;
+            return (
+              <a class="module-card" href={`${base}/${slug}/`}>
+                <div class="top">
+                  <span class="tag">{moduleTags[slug]}</span>
+                </div>
+                <span class="title">{c.data.title}</span>
+                <span class="desc">{moduleDescriptions[slug]}</span>
+                <span class="arrow">→</span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+
+    <footer class="site-foot">
+      <span>InfraPass · {chapters.length} modules · {tracks.length} tracks</span>
+      <span>static · astro</span>
+    </footer>
+  </div>
+</Base>
