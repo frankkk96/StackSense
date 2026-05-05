@@ -52,11 +52,15 @@ const itemListLd = {
 >
   <div class="page">
     <header class="topbar">
-      <span class="brand-static">
-        <Logo size={20} class="brand-logo" />
+      <a href="#top" class="brand">
+        <Logo size={22} class="brand-logo" />
         <span class="brand-name">StackSense</span>
-      </span>
-      <span class="meta">v1 · 2026</span>
+      </a>
+      <nav class="topnav" aria-label="Sections">
+        {tracks.map((t) => (
+          <a href={`#${t.id}`}>{t.sub}</a>
+        ))}
+      </nav>
     </header>
 
     <section class="hero">
@@ -85,14 +89,17 @@ const itemListLd = {
       </div>
     </section>
 
-    {tracks.map((t) => (
+    {tracks.map((t, ti) => (
       <section class="track" id={t.id}>
         <header class="track-head">
           <div class="label-col">
-            <span class="id">{t.sub}</span>
-            <span class="label">
-              <span class="accent">▸</span>{t.label}
+            <span class="ord">
+              {String(ti + 1).padStart(2, '0')}
+              <span class="ord-sep">/</span>
+              {String(tracks.length).padStart(2, '0')}
             </span>
+            <span class="label">{t.label}</span>
+            <span class="sub">{t.sub}</span>
           </div>
           <p class="hint">{t.hint}</p>
         </header>
@@ -102,12 +109,12 @@ const itemListLd = {
             if (!c) return null;
             return (
               <a class="module-card" href={`${base}/${slug}/`}>
-                <div class="top">
+                <div class="card-top">
                   <span class="tag">{moduleTags[slug]}</span>
+                  <span class="arrow">→</span>
                 </div>
                 <span class="title">{c.data.title}</span>
                 <span class="desc">{moduleDescriptions[slug]}</span>
-                <span class="arrow">→</span>
               </a>
             );
           })}
