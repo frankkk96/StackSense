@@ -2,11 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { forceCollide } from 'd3-force';
 import graphData from '../src/data/graph.json';
 import nodeDetailsRaw from '../src/data/details.json';
 import type {
-  EdgeKind,
+  Domain,
   GraphEdge,
   GraphNode,
   NodeDetail,
@@ -18,6 +17,9 @@ import {
   Box,
   Braces,
   Lightbulb,
+  Maximize2,
+  Minus,
+  Plus,
   Search,
   X as IconX,
 } from 'lucide-react';
@@ -44,7 +46,6 @@ interface FGNode {
 interface FGLink {
   source: string | FGNode;
   target: string | FGNode;
-  kind: EdgeKind;
 }
 
 type Selected = { nodeId: string } | null;
@@ -62,25 +63,55 @@ const BORDER_FAINT = 'rgba(242, 241, 236, 0.22)';
 const BORDER_LIGHT = 'rgba(242, 241, 236, 0.65)';
 
 // ── Helpers ───────────────────────────────────────────────────
-function approxLabelWidth(label: string): number {
-  let w = 0;
-  for (const ch of label) {
-    if (/[一-龥]/.test(ch)) w += 19;
-    else w += 10;
+const LABEL_FONT_BASE = '13px ui-monospace, "JetBrains Mono", "Fira Code", monospace';
+const LABEL_FONT_NORMAL = `500 ${LABEL_FONT_BASE}`;
+const LABEL_FONT_BOLD = `600 ${LABEL_FONT_BASE}`;
+
+// Lazy off-screen canvas for accurate text width measurement. SSR-safe.
+let measureCtx: CanvasRenderingContext2D | null | undefined;
+function getMeasureCtx(): CanvasRenderingContext2D | null {
+  if (measureCtx !== undefined) return measureCtx;
+  if (typeof document === 'undefined') {
+    measureCtx = null;
+    return null;
   }
+  measureCtx = document.createElement('canvas').getContext('2d');
+  return measureCtx;
+}
+
+const widthCache = new Map<string, number>();
+
+function measureLabelWidth(label: string, type: NodeType): number {
+  const font = type === 'language' ? LABEL_FONT_BOLD : LABEL_FONT_NORMAL;
+  const key = `${type}|${label}`;
+  const cached = widthCache.get(key);
+  if (cached !== undefined) return cached;
+  const ctx = getMeasureCtx();
+  let w: number;
+  if (ctx) {
+    ctx.font = font;
+    w = Math.ceil(ctx.measureText(label).width);
+  } else {
+    // SSR fallback — best-effort approximation per char.
+    w = 0;
+    for (const ch of label) w += /[一-鿿]/.test(ch) ? 14 : 8;
+  }
+  widthCache.set(key, w);
   return w;
 }
 
 // Shape dimensions — every node now contains its label inside the shape.
+// Padding per type is tuned to leave breathing room around the measured glyph
+// box (concept hexagon needs extra for the cut corners).
 function shapeWidth(n: { type: NodeType; label: string }): number {
-  const tw = approxLabelWidth(n.label);
+  const tw = measureLabelWidth(n.label, n.type);
   switch (n.type) {
     case 'project':
-      return Math.max(60, tw + 20);
+      return Math.max(60, tw + 22);
     case 'concept':
-      return Math.max(70, tw + 32); // hexagon needs extra for the cut corners
+      return Math.max(70, tw + 32);
     case 'language':
-      return Math.max(68, tw + 22);
+      return Math.max(60, tw + 22);
   }
 }
 
@@ -98,9 +129,47 @@ function approachOffset(
   return denom === 0 ? hw : 1 / denom;
 }
 
-// Per-node collision radius — keeps labeled boxes from overlapping in the sim.
-function collideRadius(n: { type: NodeType; label: string }): number {
-  return shapeWidth(n) / 2 + 6;
+// Custom rectangle-aware collision force. Built-in `forceCollide` is circular,
+// which pushes wide-label nodes too far apart vertically. Here we resolve
+// overlap on the axis with the smaller penetration, so the nodes settle into
+// the tightest non-overlapping packing for their actual painted box.
+function rectCollide(padding = 4, iterations = 1) {
+  let nodes: FGNode[] = [];
+  function force() {
+    const n = nodes.length;
+    for (let iter = 0; iter < iterations; iter++) {
+      for (let i = 0; i < n; i++) {
+        const a = nodes[i];
+        if (a.x === undefined || a.y === undefined) continue;
+        const aw = shapeWidth(a) / 2 + padding;
+        const ah = SHAPE_HEIGHT / 2 + padding;
+        for (let j = i + 1; j < n; j++) {
+          const b = nodes[j];
+          if (b.x === undefined || b.y === undefined) continue;
+          const bw = shapeWidth(b) / 2 + padding;
+          const bh = SHAPE_HEIGHT / 2 + padding;
+          const dx = b.x - a.x;
+          const dy = b.y - a.y;
+          const overlapX = aw + bw - Math.abs(dx);
+          const overlapY = ah + bh - Math.abs(dy);
+          if (overlapX <= 0 || overlapY <= 0) continue;
+          if (overlapX < overlapY) {
+            const push = (overlapX / 2) * (dx < 0 ? -1 : 1);
+            a.x -= push;
+            b.x += push;
+          } else {
+            const push = (overlapY / 2) * (dy < 0 ? -1 : 1);
+            a.y -= push;
+            b.y += push;
+          }
+        }
+      }
+    }
+  }
+  force.initialize = (input: FGNode[]) => {
+    nodes = input;
+  };
+  return force;
 }
 
 // ── Component ─────────────────────────────────────────────────
@@ -109,6 +178,7 @@ export default function Graph() {
     d3Force: (name: string, force?: unknown) => unknown;
     zoomToFit: (durationMs?: number, padding?: number) => void;
     centerAt: (x: number, y: number, durationMs?: number) => void;
+    zoom: (scale?: number, durationMs?: number) => number;
   } | null>(null);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -121,6 +191,7 @@ export default function Graph() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeResult, setActiveResult] = useState(0);
+
 
   useEffect(() => {
     const update = () => {
@@ -148,16 +219,19 @@ export default function Graph() {
     return m;
   }, []);
 
-  // Search: case-insensitive substring match against label / id, capped.
+  // Search: case-insensitive substring match against label / id / domain / tags, capped.
   const searchResults = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return [] as GraphNode[];
     return graphNodes
-      .filter(
-        (n) =>
-          n.label.toLowerCase().includes(q) || n.id.toLowerCase().includes(q)
-      )
-      .slice(0, 8);
+      .filter((n) => {
+        if (n.label.toLowerCase().includes(q)) return true;
+        if (n.id.toLowerCase().includes(q)) return true;
+        if (n.domain.toLowerCase().includes(q)) return true;
+        for (const t of n.tags) if (t.toLowerCase().includes(q)) return true;
+        return false;
+      })
+      .slice(0, 12);
   }, [searchQuery]);
 
   useEffect(() => {
@@ -192,7 +266,6 @@ export default function Graph() {
       links: graphEdges.map((e) => ({
         source: e.from,
         target: e.to,
-        kind: e.kind,
       })) as FGLink[],
     }),
     []
@@ -224,13 +297,29 @@ export default function Graph() {
     });
     link?.strength?.(0.55);
 
-    instance.d3Force(
-      'collide',
-      forceCollide<FGNode>()
-        .radius((n) => collideRadius(n))
-        .strength(0.9)
-        .iterations(2)
-    );
+    instance.d3Force('collide', rectCollide(4, 2));
+  }, []);
+
+  const ZOOM_STEP = 1.4;
+  const ZOOM_MIN = 0.2;
+  const ZOOM_MAX = 5;
+
+  const handleZoomIn = useCallback(() => {
+    const fg = fgRef.current;
+    if (!fg) return;
+    const cur = fg.zoom();
+    fg.zoom(Math.min(cur * ZOOM_STEP, ZOOM_MAX), 220);
+  }, []);
+
+  const handleZoomOut = useCallback(() => {
+    const fg = fgRef.current;
+    if (!fg) return;
+    const cur = fg.zoom();
+    fg.zoom(Math.max(cur / ZOOM_STEP, ZOOM_MIN), 220);
+  }, []);
+
+  const handleZoomFit = useCallback(() => {
+    fgRef.current?.zoomToFit(400, 60);
   }, []);
 
   const focusNode = useCallback(
@@ -399,25 +488,6 @@ export default function Graph() {
     [isLinkLit]
   );
 
-  // Once the simulation cools the first time, frame the cluster nicely.
-  // Subsequent stops (after drag) shouldn't yank the camera back.
-  const fittedRef = useRef(false);
-  const handleEngineStop = useCallback(() => {
-    if (fittedRef.current) return;
-    fgRef.current?.zoomToFit(600, 60);
-    fittedRef.current = true;
-  }, []);
-
-  // First-mount safety: if the sim is still warm when the canvas mounts,
-  // try to fit a moment later so the user doesn't see an off-center blob.
-  useEffect(() => {
-    if (size.w === 0 || size.h === 0 || fittedRef.current) return;
-    const t = setTimeout(() => {
-      if (!fittedRef.current) fgRef.current?.zoomToFit(600, 60);
-    }, 1500);
-    return () => clearTimeout(t);
-  }, [size.w, size.h]);
-
   const panel = derivePanel(selected);
 
   return (
@@ -525,7 +595,6 @@ export default function Graph() {
               setSelected({ nodeId: (node as FGNode).id })
             }
             onBackgroundClick={() => setSelected(null)}
-            onEngineStop={handleEngineStop}
             warmupTicks={120}
             cooldownTicks={400}
             enableZoomInteraction
@@ -542,13 +611,47 @@ export default function Graph() {
         )}
       </div>
 
+      <div className="graph-zoom-controls" role="group" aria-label="缩放">
+        <button
+          type="button"
+          className="graph-zoom-btn"
+          onClick={handleZoomIn}
+          aria-label="放大"
+          title="放大"
+        >
+          <Plus size={15} strokeWidth={1.8} />
+        </button>
+        <button
+          type="button"
+          className="graph-zoom-btn"
+          onClick={handleZoomOut}
+          aria-label="缩小"
+          title="缩小"
+        >
+          <Minus size={15} strokeWidth={1.8} />
+        </button>
+        <button
+          type="button"
+          className="graph-zoom-btn"
+          onClick={handleZoomFit}
+          aria-label="适应窗口"
+          title="适应窗口"
+        >
+          <Maximize2 size={13} strokeWidth={1.8} />
+        </button>
+      </div>
+
       <div
         className={`panel-backdrop${selected ? ' is-active' : ''}`}
         onClick={() => setSelected(null)}
         aria-hidden="true"
       />
 
-      <SidePanel panel={panel} onClose={() => setSelected(null)} />
+      <SidePanel
+        panel={panel}
+        onClose={() => setSelected(null)}
+        onSelectNode={focusNode}
+      />
     </div>
   );
 }
@@ -577,6 +680,12 @@ function roundRect(
 }
 
 // ── Side panel ──────────────────────────────────────────────
+interface RelatedNode {
+  id: string;
+  label: string;
+  type: NodeType;
+}
+
 interface PanelData {
   iconType: NodeType;
   logoSlug?: string | null;
@@ -585,11 +694,37 @@ interface PanelData {
   questions: string[];
   concepts: string[];
   resources?: NodeResource[];
+  domain: Domain;
+  tags: string[];
+  related: RelatedNode[];
+}
+
+const nodesById = new Map(graphNodes.map((n) => [n.id, n]));
+
+// Edges are treated as undirected here — a connection is just a connection,
+// regardless of which side is `from`/`to` in the JSON. Same node connected
+// via multiple edges only appears once.
+function buildRelated(nodeId: string): RelatedNode[] {
+  const seen = new Set<string>();
+  const out: RelatedNode[] = [];
+  for (const e of graphEdges) {
+    let otherId: string | null = null;
+    if (e.from === nodeId) otherId = e.to;
+    else if (e.to === nodeId) otherId = e.from;
+    else continue;
+    if (seen.has(otherId)) continue;
+    seen.add(otherId);
+    const other = nodesById.get(otherId);
+    if (!other) continue;
+    out.push({ id: other.id, label: other.label, type: other.type });
+  }
+  out.sort((a, b) => a.label.localeCompare(b.label));
+  return out;
 }
 
 function derivePanel(selected: Selected): PanelData | null {
   if (!selected) return null;
-  const node = graphNodes.find((n) => n.id === selected.nodeId);
+  const node = nodesById.get(selected.nodeId);
   if (!node) return null;
   const detail = nodeDetails[node.id];
   return {
@@ -600,15 +735,20 @@ function derivePanel(selected: Selected): PanelData | null {
     questions: detail?.questions ?? [],
     concepts: detail?.concepts ?? [],
     resources: node.resources,
+    domain: node.domain,
+    tags: node.tags,
+    related: buildRelated(node.id),
   };
 }
 
 function SidePanel({
   panel,
   onClose,
+  onSelectNode,
 }: {
   panel: PanelData | null;
   onClose: () => void;
+  onSelectNode: (id: string) => void;
 }) {
   return (
     <aside className={`side-panel${panel ? ' is-open' : ''}`} aria-hidden={!panel}>
@@ -635,26 +775,38 @@ function SidePanel({
               </div>
             </header>
 
+            {(panel.tags.length > 0 || panel.domain) && (
+              <div className="side-panel-tags">
+                <span className="side-panel-tag is-domain">{panel.domain}</span>
+                {panel.tags.map((t) => (
+                  <span key={t} className="side-panel-tag">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            )}
+
             {panel.intro && <p className="side-panel-intro">{panel.intro}</p>}
 
             {panel.resources && panel.resources.length > 0 && (
               <section className="side-panel-section">
-                <h3>资源</h3>
-                <ul className="side-panel-resource-list">
+                <h3>资源 · {panel.resources.length}</h3>
+                <div className="side-panel-chip-list">
                   {panel.resources.map((r) => (
-                    <li key={r.href}>
-                      <a
-                        href={r.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <span className="resource-kind">{r.kind}</span>
-                        <span className="resource-label">{r.label}</span>
-                        <ArrowUpRight size={12} strokeWidth={1.7} />
-                      </a>
-                    </li>
+                    <a
+                      key={r.href}
+                      href={r.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="side-panel-chip side-panel-chip-resource"
+                      title={r.label}
+                    >
+                      <span className="chip-kind">{r.kind}</span>
+                      <span className="chip-label">{r.label}</span>
+                      <ArrowUpRight size={11} strokeWidth={1.7} />
+                    </a>
                   ))}
-                </ul>
+                </div>
               </section>
             )}
 
@@ -666,6 +818,25 @@ function SidePanel({
                     <li key={i}>{c}</li>
                   ))}
                 </ul>
+              </section>
+            )}
+
+            {panel.related.length > 0 && (
+              <section className="side-panel-section">
+                <h3>相关节点 · {panel.related.length}</h3>
+                <div className="side-panel-chip-list">
+                  {panel.related.map((r) => (
+                    <button
+                      key={r.id}
+                      type="button"
+                      className={`side-panel-chip side-panel-chip-related type-${r.type}`}
+                      onClick={() => onSelectNode(r.id)}
+                      title={`跳转到 ${r.label}`}
+                    >
+                      <span className="chip-label">{r.label}</span>
+                    </button>
+                  ))}
+                </div>
               </section>
             )}
 

@@ -3,7 +3,7 @@
 
 export type NodeType = 'concept' | 'project' | 'language';
 
-export type EdgeKind = 'implements' | 'uses' | 'depends' | 'covers';
+export type Domain = 'AI' | 'Data' | 'Systems' | 'Math' | 'Language';
 
 export type ResourceKind =
   | 'paper'
@@ -24,13 +24,14 @@ export interface GraphNode {
   id: string;
   type: NodeType;
   label: string;
+  domain: Domain;
+  tags: string[];
   resources?: NodeResource[];
 }
 
 export interface GraphEdge {
   from: string;
   to: string;
-  kind: EdgeKind;
 }
 
 export interface NodeDetail {

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { siteTitle, siteDescription } from '../src/data/site';
 import '../src/styles/global.css';
 
@@ -17,6 +17,13 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#161717',
 };
 
 export default function RootLayout({

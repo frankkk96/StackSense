@@ -4,6 +4,12 @@
       "id": "linear-algebra",
       "type": "concept",
       "label": "线性代数",
+      "domain": "Math",
+      "tags": [
+        "线性代数",
+        "矩阵分解",
+        "SVD"
+      ],
       "resources": [
         {
           "kind": "video",
@@ -31,6 +37,11 @@
       "id": "calculus",
       "type": "concept",
       "label": "微积分",
+      "domain": "Math",
+      "tags": [
+        "微积分",
+        "链式法则"
+      ],
       "resources": [
         {
           "kind": "video",
@@ -48,6 +59,12 @@
       "id": "probability",
       "type": "concept",
       "label": "概率论与统计",
+      "domain": "Math",
+      "tags": [
+        "概率论",
+        "统计",
+        "KL 散度"
+      ],
       "resources": [
         {
           "kind": "course",
@@ -70,6 +87,11 @@
       "id": "convex-optimization",
       "type": "concept",
       "label": "凸优化",
+      "domain": "Math",
+      "tags": [
+        "凸优化",
+        "对偶"
+      ],
       "resources": [
         {
           "kind": "book",
@@ -87,6 +109,11 @@
       "id": "information-theory",
       "type": "concept",
       "label": "信息论",
+      "domain": "Math",
+      "tags": [
+        "信息论",
+        "熵"
+      ],
       "resources": [
         {
           "kind": "book",
@@ -104,6 +131,12 @@
       "id": "backpropagation",
       "type": "concept",
       "label": "反向传播",
+      "domain": "AI",
+      "tags": [
+        "深度学习基础",
+        "反向传播",
+        "autograd"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -126,6 +159,12 @@
       "id": "sgd",
       "type": "concept",
       "label": "SGD / 随机梯度下降",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "优化器",
+        "梯度下降"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -143,6 +182,12 @@
       "id": "adam",
       "type": "concept",
       "label": "Adam Optimizer",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "优化器",
+        "自适应学习率"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -160,6 +205,11 @@
       "id": "batch-norm",
       "type": "concept",
       "label": "Batch Normalization",
+      "domain": "AI",
+      "tags": [
+        "深度学习基础",
+        "归一化"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -177,6 +227,11 @@
       "id": "dropout",
       "type": "concept",
       "label": "Dropout",
+      "domain": "AI",
+      "tags": [
+        "深度学习基础",
+        "正则化"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -189,6 +244,12 @@
       "id": "word2vec",
       "type": "concept",
       "label": "Word2Vec / 词嵌入",
+      "domain": "AI",
+      "tags": [
+        "NLP",
+        "词嵌入",
+        "表示学习"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -206,6 +267,11 @@
       "id": "alexnet",
       "type": "concept",
       "label": "AlexNet",
+      "domain": "AI",
+      "tags": [
+        "CV",
+        "CNN"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -223,6 +289,12 @@
       "id": "resnet",
       "type": "concept",
       "label": "ResNet",
+      "domain": "AI",
+      "tags": [
+        "CV",
+        "CNN",
+        "残差连接"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -240,6 +312,12 @@
       "id": "transformer",
       "type": "concept",
       "label": "Transformer",
+      "domain": "AI",
+      "tags": [
+        "模型架构",
+        "Transformer",
+        "Attention"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -267,6 +345,12 @@
       "id": "bert",
       "type": "concept",
       "label": "BERT / 双向预训练",
+      "domain": "AI",
+      "tags": [
+        "NLP",
+        "Transformer",
+        "双向预训练"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -284,6 +368,12 @@
       "id": "gpt",
       "type": "concept",
       "label": "GPT / 自回归 LM",
+      "domain": "AI",
+      "tags": [
+        "NLP",
+        "LLM",
+        "自回归"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -306,6 +396,12 @@
       "id": "diffusion",
       "type": "concept",
       "label": "扩散模型 / DDPM",
+      "domain": "AI",
+      "tags": [
+        "生成模型",
+        "扩散模型",
+        "图像生成"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -328,6 +424,11 @@
       "id": "scaling-laws",
       "type": "concept",
       "label": "Scaling Laws (Kaplan)",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "Scaling"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -340,6 +441,12 @@
       "id": "chinchilla",
       "type": "concept",
       "label": "Chinchilla (compute-optimal)",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "Scaling",
+        "计算最优"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -352,6 +459,12 @@
       "id": "lora",
       "type": "concept",
       "label": "LoRA / PEFT",
+      "domain": "AI",
+      "tags": [
+        "微调",
+        "PEFT",
+        "LoRA"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -369,6 +482,11 @@
       "id": "rlhf",
       "type": "concept",
       "label": "RLHF / 对齐",
+      "domain": "AI",
+      "tags": [
+        "对齐",
+        "RLHF"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -391,6 +509,12 @@
       "id": "moe",
       "type": "concept",
       "label": "Mixture of Experts",
+      "domain": "AI",
+      "tags": [
+        "模型架构",
+        "MoE",
+        "稀疏"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -413,6 +537,12 @@
       "id": "zero",
       "type": "concept",
       "label": "ZeRO / 分片优化",
+      "domain": "AI",
+      "tags": [
+        "分布式训练",
+        "显存优化",
+        "ZeRO"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -430,6 +560,11 @@
       "id": "paxos",
       "type": "concept",
       "label": "Paxos",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "共识"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -447,6 +582,12 @@
       "id": "raft",
       "type": "concept",
       "label": "Raft",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "共识",
+        "复制"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -469,6 +610,12 @@
       "id": "spanner",
       "type": "concept",
       "label": "Spanner / TrueTime",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "分布式数据库",
+        "TrueTime"
+      ],
       "resources": [
         {
           "kind": "paper",
@@ -481,6 +628,11 @@
       "id": "computer-architecture",
       "type": "concept",
       "label": "计算机体系结构",
+      "domain": "Systems",
+      "tags": [
+        "体系结构",
+        "CPU"
+      ],
       "resources": [
         {
           "kind": "book",
@@ -513,6 +665,11 @@
       "id": "operating-systems",
       "type": "concept",
       "label": "操作系统",
+      "domain": "Systems",
+      "tags": [
+        "操作系统",
+        "内核"
+      ],
       "resources": [
         {
           "kind": "course",
@@ -535,6 +692,12 @@
       "id": "tcp-ip",
       "type": "concept",
       "label": "TCP/IP 与网络",
+      "domain": "Systems",
+      "tags": [
+        "网络",
+        "协议",
+        "TCP/IP"
+      ],
       "resources": [
         {
           "kind": "site",
@@ -552,6 +715,12 @@
       "id": "spectre",
       "type": "concept",
       "label": "Spectre / 推测执行漏洞",
+      "domain": "Systems",
+      "tags": [
+        "操作系统",
+        "安全",
+        "CPU 漏洞"
+      ],
       "resources": [
         {
           "kind": "site",
@@ -569,6 +738,12 @@
       "id": "vllm",
       "type": "project",
       "label": "vLLM",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "推理引擎",
+        "LLM Serving"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -591,6 +766,12 @@
       "id": "tensorrt-llm",
       "type": "project",
       "label": "TensorRT-LLM",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "推理引擎",
+        "LLM Serving"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -603,6 +784,12 @@
       "id": "nanogpt",
       "type": "project",
       "label": "nanoGPT",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "LLM 训练",
+        "教学"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -620,6 +807,12 @@
       "id": "megatron",
       "type": "project",
       "label": "Megatron-LM",
+      "domain": "AI",
+      "tags": [
+        "分布式训练",
+        "并行",
+        "LLM 训练"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -637,6 +830,12 @@
       "id": "deepspeed",
       "type": "project",
       "label": "DeepSpeed",
+      "domain": "AI",
+      "tags": [
+        "分布式训练",
+        "ZeRO",
+        "显存优化"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -649,6 +848,12 @@
       "id": "cutlass",
       "type": "project",
       "label": "CUTLASS",
+      "domain": "AI",
+      "tags": [
+        "GPU 编程",
+        "CUDA",
+        "GEMM"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -661,6 +866,12 @@
       "id": "flashattn",
       "type": "project",
       "label": "FlashAttention",
+      "domain": "AI",
+      "tags": [
+        "GPU 编程",
+        "算子",
+        "Attention"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -683,6 +894,12 @@
       "id": "triton",
       "type": "project",
       "label": "Triton",
+      "domain": "AI",
+      "tags": [
+        "GPU 编程",
+        "DSL",
+        "ML 编译器"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -700,6 +917,11 @@
       "id": "nccl",
       "type": "project",
       "label": "NCCL",
+      "domain": "AI",
+      "tags": [
+        "分布式训练",
+        "集合通信"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -712,6 +934,12 @@
       "id": "spark",
       "type": "project",
       "label": "Spark",
+      "domain": "Data",
+      "tags": [
+        "计算引擎",
+        "批处理",
+        "通用计算"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -729,6 +957,12 @@
       "id": "flink",
       "type": "project",
       "label": "Flink",
+      "domain": "Data",
+      "tags": [
+        "计算引擎",
+        "流计算",
+        "状态管理"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -741,6 +975,12 @@
       "id": "kafka",
       "type": "project",
       "label": "Kafka",
+      "domain": "Data",
+      "tags": [
+        "流式管道",
+        "消息队列",
+        "日志"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -753,6 +993,12 @@
       "id": "iceberg",
       "type": "project",
       "label": "Iceberg",
+      "domain": "Data",
+      "tags": [
+        "存储",
+        "表格式",
+        "湖仓"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -765,6 +1011,12 @@
       "id": "duckdb",
       "type": "project",
       "label": "DuckDB",
+      "domain": "Data",
+      "tags": [
+        "OLAP",
+        "列存",
+        "嵌入式"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -777,6 +1029,12 @@
       "id": "clickhouse",
       "type": "project",
       "label": "ClickHouse",
+      "domain": "Data",
+      "tags": [
+        "OLAP",
+        "列存",
+        "实时分析"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -789,6 +1047,12 @@
       "id": "etcd",
       "type": "project",
       "label": "etcd",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "协调服务",
+        "KV 存储"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -801,6 +1065,12 @@
       "id": "tikv",
       "type": "project",
       "label": "TiKV",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "分布式 KV",
+        "分布式事务"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -813,6 +1083,12 @@
       "id": "cockroach",
       "type": "project",
       "label": "CockroachDB",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "分布式数据库",
+        "关系数据库"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -825,6 +1101,11 @@
       "id": "zookeeper",
       "type": "project",
       "label": "ZooKeeper",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "协调服务"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -837,6 +1118,11 @@
       "id": "linux",
       "type": "project",
       "label": "Linux Kernel",
+      "domain": "Systems",
+      "tags": [
+        "操作系统",
+        "内核"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -854,6 +1140,12 @@
       "id": "nginx",
       "type": "project",
       "label": "nginx",
+      "domain": "Systems",
+      "tags": [
+        "网络",
+        "反向代理",
+        "HTTP"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -866,6 +1158,12 @@
       "id": "cilium",
       "type": "project",
       "label": "Cilium",
+      "domain": "Systems",
+      "tags": [
+        "网络",
+        "服务网格",
+        "eBPF"
+      ],
       "resources": [
         {
           "kind": "project",
@@ -878,6 +1176,11 @@
       "id": "python",
       "type": "language",
       "label": "Python",
+      "domain": "Language",
+      "tags": [
+        "通用",
+        "动态类型"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -895,6 +1198,11 @@
       "id": "cpp",
       "type": "language",
       "label": "C++",
+      "domain": "Language",
+      "tags": [
+        "系统",
+        "编译型"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -917,6 +1225,12 @@
       "id": "rust",
       "type": "language",
       "label": "Rust",
+      "domain": "Language",
+      "tags": [
+        "系统",
+        "编译型",
+        "内存安全"
+      ],
       "resources": [
         {
           "kind": "book",
@@ -934,6 +1248,12 @@
       "id": "go",
       "type": "language",
       "label": "Go",
+      "domain": "Language",
+      "tags": [
+        "系统",
+        "GC",
+        "云原生"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -951,6 +1271,12 @@
       "id": "java",
       "type": "language",
       "label": "Java",
+      "domain": "Language",
+      "tags": [
+        "通用",
+        "JVM",
+        "GC"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -968,6 +1294,11 @@
       "id": "scala",
       "type": "language",
       "label": "Scala",
+      "domain": "Language",
+      "tags": [
+        "JVM",
+        "函数式"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -980,6 +1311,11 @@
       "id": "c",
       "type": "language",
       "label": "C",
+      "domain": "Language",
+      "tags": [
+        "系统",
+        "编译型"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -997,6 +1333,11 @@
       "id": "cuda-cpp",
       "type": "language",
       "label": "CUDA C++",
+      "domain": "Language",
+      "tags": [
+        "GPU",
+        "并行编程"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -1014,6 +1355,11 @@
       "id": "ptx",
       "type": "language",
       "label": "PTX",
+      "domain": "Language",
+      "tags": [
+        "GPU",
+        "ISA"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -1026,6 +1372,11 @@
       "id": "assembly",
       "type": "language",
       "label": "汇编",
+      "domain": "Language",
+      "tags": [
+        "底层",
+        "指令集"
+      ],
       "resources": [
         {
           "kind": "docs",
@@ -1038,488 +1389,1700 @@
           "href": "https://www.agner.org/optimize/"
         }
       ]
+    },
+    {
+      "id": "pytorch",
+      "type": "project",
+      "label": "PyTorch",
+      "domain": "AI",
+      "tags": [
+        "框架",
+        "训练框架",
+        "深度学习"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/pytorch/pytorch"
+        },
+        {
+          "kind": "docs",
+          "label": "Docs",
+          "href": "https://pytorch.org/docs/stable/"
+        },
+        {
+          "kind": "paper",
+          "label": "PyTorch · Paszke et al (NeurIPS 2019)",
+          "href": "https://arxiv.org/abs/1912.01703"
+        }
+      ]
+    },
+    {
+      "id": "jax",
+      "type": "project",
+      "label": "JAX",
+      "domain": "AI",
+      "tags": [
+        "框架",
+        "训练框架",
+        "函数式"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/google/jax"
+        },
+        {
+          "kind": "docs",
+          "label": "Docs",
+          "href": "https://jax.readthedocs.io/"
+        }
+      ]
+    },
+    {
+      "id": "xla",
+      "type": "project",
+      "label": "XLA",
+      "domain": "AI",
+      "tags": [
+        "编译器",
+        "ML 编译器"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "OpenXLA",
+          "href": "https://github.com/openxla/xla"
+        },
+        {
+          "kind": "site",
+          "label": "openxla.org",
+          "href": "https://openxla.org/xla"
+        }
+      ]
+    },
+    {
+      "id": "mlir",
+      "type": "project",
+      "label": "MLIR",
+      "domain": "AI",
+      "tags": [
+        "编译器",
+        "ML 编译器",
+        "IR"
+      ],
+      "resources": [
+        {
+          "kind": "site",
+          "label": "mlir.llvm.org",
+          "href": "https://mlir.llvm.org/"
+        },
+        {
+          "kind": "paper",
+          "label": "MLIR · Lattner et al (CGO 2021)",
+          "href": "https://arxiv.org/abs/2002.11054"
+        }
+      ]
+    },
+    {
+      "id": "tvm",
+      "type": "project",
+      "label": "Apache TVM",
+      "domain": "AI",
+      "tags": [
+        "编译器",
+        "ML 编译器",
+        "推理"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/tvm"
+        },
+        {
+          "kind": "paper",
+          "label": "TVM · Chen et al (OSDI 2018)",
+          "href": "https://arxiv.org/abs/1802.04799"
+        }
+      ]
+    },
+    {
+      "id": "hf-transformers",
+      "type": "project",
+      "label": "Hugging Face Transformers",
+      "domain": "AI",
+      "tags": [
+        "框架",
+        "模型库",
+        "NLP"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/huggingface/transformers"
+        },
+        {
+          "kind": "docs",
+          "label": "Docs",
+          "href": "https://huggingface.co/docs/transformers"
+        }
+      ]
+    },
+    {
+      "id": "ray",
+      "type": "project",
+      "label": "Ray",
+      "domain": "AI",
+      "tags": [
+        "框架",
+        "分布式调度",
+        "分布式训练"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/ray-project/ray"
+        },
+        {
+          "kind": "paper",
+          "label": "Ray · Moritz et al (OSDI 2018)",
+          "href": "https://arxiv.org/abs/1712.05889"
+        }
+      ]
+    },
+    {
+      "id": "llama",
+      "type": "project",
+      "label": "Llama",
+      "domain": "AI",
+      "tags": [
+        "NLP",
+        "LLM",
+        "开源模型"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/meta-llama/llama"
+        },
+        {
+          "kind": "paper",
+          "label": "Llama 2 · Touvron et al (2023)",
+          "href": "https://arxiv.org/abs/2307.09288"
+        },
+        {
+          "kind": "paper",
+          "label": "Llama 3 Tech Report (2024)",
+          "href": "https://arxiv.org/abs/2407.21783"
+        }
+      ]
+    },
+    {
+      "id": "gan",
+      "type": "concept",
+      "label": "GAN",
+      "domain": "AI",
+      "tags": [
+        "生成模型",
+        "GAN"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Goodfellow et al · GAN (2014)",
+          "href": "https://arxiv.org/abs/1406.2661"
+        },
+        {
+          "kind": "paper",
+          "label": "DCGAN · Radford et al",
+          "href": "https://arxiv.org/abs/1511.06434"
+        },
+        {
+          "kind": "paper",
+          "label": "StyleGAN · Karras et al",
+          "href": "https://arxiv.org/abs/1812.04948"
+        }
+      ]
+    },
+    {
+      "id": "vae",
+      "type": "concept",
+      "label": "VAE",
+      "domain": "AI",
+      "tags": [
+        "生成模型",
+        "VAE",
+        "变分推断"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Kingma & Welling · VAE (2013)",
+          "href": "https://arxiv.org/abs/1312.6114"
+        },
+        {
+          "kind": "paper",
+          "label": "VQ-VAE · van den Oord et al",
+          "href": "https://arxiv.org/abs/1711.00937"
+        }
+      ]
+    },
+    {
+      "id": "clip",
+      "type": "concept",
+      "label": "CLIP / 多模态对比",
+      "domain": "AI",
+      "tags": [
+        "多模态",
+        "对比学习",
+        "表示学习"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Radford et al · CLIP (2021)",
+          "href": "https://arxiv.org/abs/2103.00020"
+        },
+        {
+          "kind": "project",
+          "label": "OpenAI CLIP",
+          "href": "https://github.com/openai/CLIP"
+        }
+      ]
+    },
+    {
+      "id": "mamba",
+      "type": "concept",
+      "label": "Mamba / 状态空间模型",
+      "domain": "AI",
+      "tags": [
+        "模型架构",
+        "SSM",
+        "长上下文"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Mamba · Gu & Dao (2023)",
+          "href": "https://arxiv.org/abs/2312.00752"
+        },
+        {
+          "kind": "paper",
+          "label": "S4 · Gu et al",
+          "href": "https://arxiv.org/abs/2111.00396"
+        }
+      ]
+    },
+    {
+      "id": "speculative-decoding",
+      "type": "concept",
+      "label": "Speculative Decoding",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "LLM Serving",
+        "推测解码"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Leviathan et al · Speculative Decoding (2022)",
+          "href": "https://arxiv.org/abs/2211.17192"
+        },
+        {
+          "kind": "paper",
+          "label": "Chen et al · Speculative Sampling",
+          "href": "https://arxiv.org/abs/2302.01318"
+        }
+      ]
+    },
+    {
+      "id": "continuous-batching",
+      "type": "concept",
+      "label": "Continuous Batching / KV Cache",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "LLM Serving",
+        "KV Cache"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Orca · Yu et al (OSDI 2022)",
+          "href": "https://www.usenix.org/conference/osdi22/presentation/yu"
+        },
+        {
+          "kind": "paper",
+          "label": "PagedAttention · Kwon et al",
+          "href": "https://arxiv.org/abs/2309.06180"
+        }
+      ]
+    },
+    {
+      "id": "reinforcement-learning",
+      "type": "concept",
+      "label": "强化学习",
+      "domain": "AI",
+      "tags": [
+        "RL",
+        "策略学习"
+      ],
+      "resources": [
+        {
+          "kind": "book",
+          "label": "Sutton & Barto · RL: An Introduction",
+          "href": "http://incompleteideas.net/book/the-book.html"
+        },
+        {
+          "kind": "paper",
+          "label": "DQN · Mnih et al (Nature 2015)",
+          "href": "https://www.nature.com/articles/nature14236"
+        },
+        {
+          "kind": "course",
+          "label": "DeepMind x UCL · RL Lectures",
+          "href": "https://www.deepmind.com/learning-resources/reinforcement-learning-series-2021"
+        }
+      ]
+    },
+    {
+      "id": "mapreduce",
+      "type": "concept",
+      "label": "MapReduce",
+      "domain": "Data",
+      "tags": [
+        "计算引擎",
+        "批处理"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Dean & Ghemawat · MapReduce (OSDI 2004)",
+          "href": "https://research.google/pubs/mapreduce-simplified-data-processing-on-large-clusters/"
+        }
+      ]
+    },
+    {
+      "id": "gfs",
+      "type": "concept",
+      "label": "GFS / Google File System",
+      "domain": "Data",
+      "tags": [
+        "存储",
+        "分布式文件系统"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Ghemawat et al · GFS (SOSP 2003)",
+          "href": "https://research.google/pubs/the-google-file-system/"
+        }
+      ]
+    },
+    {
+      "id": "bigtable",
+      "type": "concept",
+      "label": "Bigtable",
+      "domain": "Data",
+      "tags": [
+        "存储",
+        "NoSQL",
+        "LSM"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Chang et al · Bigtable (OSDI 2006)",
+          "href": "https://research.google/pubs/bigtable-a-distributed-storage-system-for-structured-data-2/"
+        }
+      ]
+    },
+    {
+      "id": "dynamo",
+      "type": "concept",
+      "label": "Dynamo",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "NoSQL",
+        "AP"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "DeCandia et al · Dynamo (SOSP 2007)",
+          "href": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+        }
+      ]
+    },
+    {
+      "id": "cap-theorem",
+      "type": "concept",
+      "label": "CAP 定理",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "一致性",
+        "CAP"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Gilbert & Lynch · CAP Proof",
+          "href": "https://groups.csail.mit.edu/tds/papers/Gilbert/Brewer2.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "Brewer · CAP Twelve Years Later",
+          "href": "https://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed/"
+        }
+      ]
+    },
+    {
+      "id": "consistent-hashing",
+      "type": "concept",
+      "label": "一致性哈希",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "哈希",
+        "负载均衡"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Karger et al · Consistent Hashing (1997)",
+          "href": "https://dl.acm.org/doi/10.1145/258533.258660"
+        },
+        {
+          "kind": "paper",
+          "label": "Jump Consistent Hash · Lamping & Veach",
+          "href": "https://arxiv.org/abs/1406.2294"
+        }
+      ]
+    },
+    {
+      "id": "lamport-clocks",
+      "type": "concept",
+      "label": "Lamport / Vector Clocks",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "逻辑时钟"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Lamport · Time, Clocks (1978)",
+          "href": "https://lamport.azurewebsites.net/pubs/time-clocks.pdf"
+        },
+        {
+          "kind": "paper",
+          "label": "Hybrid Logical Clocks · Kulkarni et al",
+          "href": "https://cse.buffalo.edu/tech-reports/2014-04.pdf"
+        }
+      ]
+    },
+    {
+      "id": "two-phase-commit",
+      "type": "concept",
+      "label": "2PC / 分布式事务",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "分布式事务",
+        "2PC"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Gray · Notes on DB Operating Systems (1978)",
+          "href": "https://jimgray.azurewebsites.net/papers/dbos.pdf"
+        },
+        {
+          "kind": "paper",
+          "label": "Percolator · Peng & Dabek (OSDI 2010)",
+          "href": "https://research.google/pubs/large-scale-incremental-processing-using-distributed-transactions-and-notifications/"
+        }
+      ]
+    },
+    {
+      "id": "ebpf",
+      "type": "concept",
+      "label": "eBPF",
+      "domain": "Systems",
+      "tags": [
+        "操作系统",
+        "Linux 内核",
+        "可观测性"
+      ],
+      "resources": [
+        {
+          "kind": "site",
+          "label": "ebpf.io",
+          "href": "https://ebpf.io/"
+        },
+        {
+          "kind": "docs",
+          "label": "Linux BPF Docs",
+          "href": "https://www.kernel.org/doc/html/latest/bpf/"
+        },
+        {
+          "kind": "book",
+          "label": "Learning eBPF · Liz Rice",
+          "href": "https://www.oreilly.com/library/view/learning-ebpf/9781098135119/"
+        }
+      ]
+    },
+    {
+      "id": "arrow",
+      "type": "project",
+      "label": "Apache Arrow",
+      "domain": "Data",
+      "tags": [
+        "存储",
+        "列存",
+        "内存格式"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/arrow"
+        },
+        {
+          "kind": "site",
+          "label": "arrow.apache.org",
+          "href": "https://arrow.apache.org/"
+        }
+      ]
+    },
+    {
+      "id": "parquet",
+      "type": "project",
+      "label": "Parquet",
+      "domain": "Data",
+      "tags": [
+        "存储",
+        "列存",
+        "文件格式"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/parquet-format"
+        },
+        {
+          "kind": "site",
+          "label": "parquet.apache.org",
+          "href": "https://parquet.apache.org/"
+        }
+      ]
+    },
+    {
+      "id": "hudi",
+      "type": "project",
+      "label": "Apache Hudi",
+      "domain": "Data",
+      "tags": [
+        "存储",
+        "表格式",
+        "湖仓"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/hudi"
+        }
+      ]
+    },
+    {
+      "id": "delta-lake",
+      "type": "project",
+      "label": "Delta Lake",
+      "domain": "Data",
+      "tags": [
+        "存储",
+        "表格式",
+        "湖仓"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/delta-io/delta"
+        },
+        {
+          "kind": "paper",
+          "label": "Armbrust et al · Delta Lake (VLDB 2020)",
+          "href": "https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf"
+        }
+      ]
+    },
+    {
+      "id": "airflow",
+      "type": "project",
+      "label": "Apache Airflow",
+      "domain": "Data",
+      "tags": [
+        "调度",
+        "工作流",
+        "编排"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/airflow"
+        }
+      ]
+    },
+    {
+      "id": "trino",
+      "type": "project",
+      "label": "Trino",
+      "domain": "Data",
+      "tags": [
+        "OLAP",
+        "联邦查询",
+        "MPP"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/trinodb/trino"
+        },
+        {
+          "kind": "paper",
+          "label": "Sethi et al · Presto (ICDE 2019)",
+          "href": "https://research.facebook.com/publications/presto-sql-on-everything/"
+        }
+      ]
+    },
+    {
+      "id": "kubernetes",
+      "type": "project",
+      "label": "Kubernetes",
+      "domain": "Systems",
+      "tags": [
+        "容器",
+        "容器编排",
+        "云原生"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/kubernetes/kubernetes"
+        },
+        {
+          "kind": "paper",
+          "label": "Borg · Verma et al (EuroSys 2015)",
+          "href": "https://research.google/pubs/large-scale-cluster-management-at-google-with-borg/"
+        }
+      ]
+    },
+    {
+      "id": "docker",
+      "type": "project",
+      "label": "Docker / containerd",
+      "domain": "Systems",
+      "tags": [
+        "容器",
+        "容器运行时"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "moby/moby",
+          "href": "https://github.com/moby/moby"
+        },
+        {
+          "kind": "project",
+          "label": "containerd",
+          "href": "https://github.com/containerd/containerd"
+        }
+      ]
+    },
+    {
+      "id": "redis",
+      "type": "project",
+      "label": "Redis",
+      "domain": "Systems",
+      "tags": [
+        "数据库",
+        "内存数据库",
+        "KV 存储"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/redis/redis"
+        }
+      ]
+    },
+    {
+      "id": "postgres",
+      "type": "project",
+      "label": "PostgreSQL",
+      "domain": "Systems",
+      "tags": [
+        "数据库",
+        "关系数据库",
+        "OLTP"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub Mirror",
+          "href": "https://github.com/postgres/postgres"
+        },
+        {
+          "kind": "site",
+          "label": "postgresql.org",
+          "href": "https://www.postgresql.org/"
+        }
+      ]
+    },
+    {
+      "id": "rocksdb",
+      "type": "project",
+      "label": "RocksDB",
+      "domain": "Systems",
+      "tags": [
+        "存储引擎",
+        "LSM",
+        "嵌入式"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/facebook/rocksdb"
+        }
+      ]
+    },
+    {
+      "id": "grpc",
+      "type": "project",
+      "label": "gRPC",
+      "domain": "Systems",
+      "tags": [
+        "网络",
+        "RPC",
+        "HTTP/2"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/grpc/grpc"
+        },
+        {
+          "kind": "site",
+          "label": "grpc.io",
+          "href": "https://grpc.io/"
+        }
+      ]
+    },
+    {
+      "id": "envoy",
+      "type": "project",
+      "label": "Envoy",
+      "domain": "Systems",
+      "tags": [
+        "网络",
+        "服务网格",
+        "代理"
+      ],
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/envoyproxy/envoy"
+        }
+      ]
     }
   ],
   "edges": [
     {
       "from": "linear-algebra",
-      "to": "transformer",
-      "kind": "depends"
+      "to": "transformer"
     },
     {
       "from": "linear-algebra",
-      "to": "word2vec",
-      "kind": "depends"
+      "to": "word2vec"
     },
     {
       "from": "linear-algebra",
-      "to": "lora",
-      "kind": "depends"
+      "to": "lora"
     },
     {
       "from": "calculus",
-      "to": "backpropagation",
-      "kind": "depends"
+      "to": "backpropagation"
     },
     {
       "from": "calculus",
-      "to": "diffusion",
-      "kind": "depends"
+      "to": "diffusion"
     },
     {
       "from": "probability",
-      "to": "dropout",
-      "kind": "depends"
+      "to": "dropout"
     },
     {
       "from": "probability",
-      "to": "diffusion",
-      "kind": "depends"
+      "to": "diffusion"
     },
     {
       "from": "probability",
-      "to": "rlhf",
-      "kind": "depends"
+      "to": "rlhf"
     },
     {
       "from": "convex-optimization",
-      "to": "sgd",
-      "kind": "depends"
+      "to": "sgd"
     },
     {
       "from": "convex-optimization",
-      "to": "adam",
-      "kind": "depends"
+      "to": "adam"
     },
     {
       "from": "convex-optimization",
-      "to": "rlhf",
-      "kind": "depends"
+      "to": "rlhf"
     },
     {
       "from": "information-theory",
-      "to": "rlhf",
-      "kind": "depends"
+      "to": "rlhf"
     },
     {
       "from": "information-theory",
-      "to": "diffusion",
-      "kind": "depends"
+      "to": "diffusion"
     },
     {
       "from": "backpropagation",
-      "to": "sgd",
-      "kind": "depends"
+      "to": "sgd"
     },
     {
       "from": "sgd",
-      "to": "adam",
-      "kind": "depends"
+      "to": "adam"
     },
     {
       "from": "word2vec",
-      "to": "transformer",
-      "kind": "depends"
+      "to": "transformer"
     },
     {
       "from": "alexnet",
-      "to": "dropout",
-      "kind": "depends"
+      "to": "dropout"
     },
     {
       "from": "alexnet",
-      "to": "batch-norm",
-      "kind": "depends"
+      "to": "batch-norm"
     },
     {
       "from": "batch-norm",
-      "to": "resnet",
-      "kind": "depends"
+      "to": "resnet"
     },
     {
       "from": "dropout",
-      "to": "transformer",
-      "kind": "depends"
+      "to": "transformer"
     },
     {
       "from": "resnet",
-      "to": "transformer",
-      "kind": "depends"
+      "to": "transformer"
     },
     {
       "from": "transformer",
-      "to": "bert",
-      "kind": "depends"
+      "to": "bert"
     },
     {
       "from": "transformer",
-      "to": "gpt",
-      "kind": "depends"
+      "to": "gpt"
     },
     {
       "from": "transformer",
-      "to": "moe",
-      "kind": "depends"
+      "to": "moe"
     },
     {
       "from": "transformer",
-      "to": "lora",
-      "kind": "depends"
+      "to": "lora"
     },
     {
       "from": "gpt",
-      "to": "rlhf",
-      "kind": "depends"
+      "to": "rlhf"
     },
     {
       "from": "gpt",
-      "to": "scaling-laws",
-      "kind": "depends"
+      "to": "scaling-laws"
     },
     {
       "from": "scaling-laws",
-      "to": "chinchilla",
-      "kind": "depends"
+      "to": "chinchilla"
     },
     {
       "from": "adam",
-      "to": "zero",
-      "kind": "depends"
+      "to": "zero"
     },
     {
       "from": "transformer",
-      "to": "vllm",
-      "kind": "implements"
+      "to": "vllm"
     },
     {
       "from": "transformer",
-      "to": "flashattn",
-      "kind": "implements"
+      "to": "flashattn"
     },
     {
       "from": "transformer",
-      "to": "nanogpt",
-      "kind": "implements"
+      "to": "nanogpt"
     },
     {
       "from": "transformer",
-      "to": "megatron",
-      "kind": "implements"
+      "to": "megatron"
     },
     {
       "from": "transformer",
-      "to": "tensorrt-llm",
-      "kind": "implements"
+      "to": "tensorrt-llm"
     },
     {
       "from": "gpt",
-      "to": "vllm",
-      "kind": "implements"
+      "to": "vllm"
     },
     {
       "from": "gpt",
-      "to": "megatron",
-      "kind": "implements"
+      "to": "megatron"
     },
     {
       "from": "gpt",
-      "to": "nanogpt",
-      "kind": "implements"
+      "to": "nanogpt"
     },
     {
       "from": "zero",
-      "to": "deepspeed",
-      "kind": "implements"
+      "to": "deepspeed"
     },
     {
       "from": "zero",
-      "to": "megatron",
-      "kind": "implements"
+      "to": "megatron"
     },
     {
       "from": "lora",
-      "to": "vllm",
-      "kind": "implements"
+      "to": "vllm"
     },
     {
       "from": "lora",
-      "to": "deepspeed",
-      "kind": "implements"
+      "to": "deepspeed"
     },
     {
       "from": "rlhf",
-      "to": "vllm",
-      "kind": "implements"
+      "to": "vllm"
     },
     {
       "from": "rlhf",
-      "to": "deepspeed",
-      "kind": "implements"
+      "to": "deepspeed"
     },
     {
       "from": "moe",
-      "to": "megatron",
-      "kind": "implements"
+      "to": "megatron"
     },
     {
       "from": "moe",
-      "to": "deepspeed",
-      "kind": "implements"
+      "to": "deepspeed"
     },
     {
       "from": "moe",
-      "to": "vllm",
-      "kind": "implements"
+      "to": "vllm"
     },
     {
       "from": "scaling-laws",
-      "to": "megatron",
-      "kind": "implements"
+      "to": "megatron"
     },
     {
       "from": "chinchilla",
-      "to": "megatron",
-      "kind": "implements"
+      "to": "megatron"
     },
     {
       "from": "paxos",
-      "to": "zookeeper",
-      "kind": "implements"
+      "to": "zookeeper"
     },
     {
       "from": "raft",
-      "to": "etcd",
-      "kind": "implements"
+      "to": "etcd"
     },
     {
       "from": "raft",
-      "to": "tikv",
-      "kind": "implements"
+      "to": "tikv"
     },
     {
       "from": "spanner",
-      "to": "cockroach",
-      "kind": "implements"
+      "to": "cockroach"
     },
     {
       "from": "paxos",
-      "to": "raft",
-      "kind": "depends"
+      "to": "raft"
     },
     {
       "from": "operating-systems",
-      "to": "linux",
-      "kind": "implements"
+      "to": "linux"
     },
     {
       "from": "operating-systems",
-      "to": "nginx",
-      "kind": "implements"
+      "to": "nginx"
     },
     {
       "from": "operating-systems",
-      "to": "cilium",
-      "kind": "implements"
+      "to": "cilium"
     },
     {
       "from": "tcp-ip",
-      "to": "linux",
-      "kind": "implements"
+      "to": "linux"
     },
     {
       "from": "tcp-ip",
-      "to": "nginx",
-      "kind": "implements"
+      "to": "nginx"
     },
     {
       "from": "tcp-ip",
-      "to": "cilium",
-      "kind": "implements"
+      "to": "cilium"
     },
     {
       "from": "computer-architecture",
-      "to": "operating-systems",
-      "kind": "depends"
+      "to": "operating-systems"
     },
     {
       "from": "computer-architecture",
-      "to": "spectre",
-      "kind": "depends"
+      "to": "spectre"
     },
     {
       "from": "flashattn",
-      "to": "vllm",
-      "kind": "depends"
+      "to": "vllm"
     },
     {
       "from": "cutlass",
-      "to": "vllm",
-      "kind": "depends"
+      "to": "vllm"
     },
     {
       "from": "cutlass",
-      "to": "flashattn",
-      "kind": "depends"
+      "to": "flashattn"
     },
     {
       "from": "nccl",
-      "to": "megatron",
-      "kind": "depends"
+      "to": "megatron"
     },
     {
       "from": "nccl",
-      "to": "deepspeed",
-      "kind": "depends"
+      "to": "deepspeed"
     },
     {
       "from": "zookeeper",
-      "to": "kafka",
-      "kind": "depends"
+      "to": "kafka"
     },
     {
       "from": "iceberg",
-      "to": "spark",
-      "kind": "depends"
+      "to": "spark"
     },
     {
       "from": "python",
-      "to": "vllm",
-      "kind": "uses"
+      "to": "vllm"
     },
     {
       "from": "python",
-      "to": "megatron",
-      "kind": "uses"
+      "to": "megatron"
     },
     {
       "from": "python",
-      "to": "deepspeed",
-      "kind": "uses"
+      "to": "deepspeed"
     },
     {
       "from": "python",
-      "to": "nanogpt",
-      "kind": "uses"
+      "to": "nanogpt"
     },
     {
       "from": "python",
-      "to": "triton",
-      "kind": "uses"
+      "to": "triton"
     },
     {
       "from": "cpp",
-      "to": "tensorrt-llm",
-      "kind": "uses"
+      "to": "tensorrt-llm"
     },
     {
       "from": "cpp",
-      "to": "duckdb",
-      "kind": "uses"
+      "to": "duckdb"
     },
     {
       "from": "cpp",
-      "to": "clickhouse",
-      "kind": "uses"
+      "to": "clickhouse"
     },
     {
       "from": "cpp",
-      "to": "nccl",
-      "kind": "uses"
+      "to": "nccl"
     },
     {
       "from": "cuda-cpp",
-      "to": "tensorrt-llm",
-      "kind": "uses"
+      "to": "tensorrt-llm"
     },
     {
       "from": "cuda-cpp",
-      "to": "cutlass",
-      "kind": "uses"
+      "to": "cutlass"
     },
     {
       "from": "cuda-cpp",
-      "to": "flashattn",
-      "kind": "uses"
+      "to": "flashattn"
     },
     {
       "from": "cuda-cpp",
-      "to": "triton",
-      "kind": "uses"
+      "to": "triton"
     },
     {
       "from": "java",
-      "to": "spark",
-      "kind": "uses"
+      "to": "spark"
     },
     {
       "from": "java",
-      "to": "flink",
-      "kind": "uses"
+      "to": "flink"
     },
     {
       "from": "java",
-      "to": "kafka",
-      "kind": "uses"
+      "to": "kafka"
     },
     {
       "from": "java",
-      "to": "iceberg",
-      "kind": "uses"
+      "to": "iceberg"
     },
     {
       "from": "java",
-      "to": "zookeeper",
-      "kind": "uses"
+      "to": "zookeeper"
     },
     {
       "from": "scala",
-      "to": "spark",
-      "kind": "uses"
+      "to": "spark"
     },
     {
       "from": "scala",
-      "to": "kafka",
-      "kind": "uses"
+      "to": "kafka"
     },
     {
       "from": "go",
-      "to": "etcd",
-      "kind": "uses"
+      "to": "etcd"
     },
     {
       "from": "go",
-      "to": "cockroach",
-      "kind": "uses"
+      "to": "cockroach"
     },
     {
       "from": "go",
-      "to": "cilium",
-      "kind": "uses"
+      "to": "cilium"
     },
     {
       "from": "rust",
-      "to": "tikv",
-      "kind": "uses"
+      "to": "tikv"
     },
     {
       "from": "c",
-      "to": "linux",
-      "kind": "uses"
+      "to": "linux"
     },
     {
       "from": "c",
-      "to": "nginx",
-      "kind": "uses"
+      "to": "nginx"
     },
     {
       "from": "ptx",
-      "to": "cuda-cpp",
-      "kind": "depends"
+      "to": "cuda-cpp"
     },
     {
       "from": "assembly",
-      "to": "computer-architecture",
-      "kind": "covers"
+      "to": "computer-architecture"
+    },
+    {
+      "from": "cpp",
+      "to": "vllm"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "vllm"
+    },
+    {
+      "from": "cpp",
+      "to": "flashattn"
+    },
+    {
+      "from": "cpp",
+      "to": "triton"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "megatron"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "deepspeed"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "nccl"
+    },
+    {
+      "from": "assembly",
+      "to": "linux"
+    },
+    {
+      "from": "ptx",
+      "to": "flashattn"
+    },
+    {
+      "from": "ptx",
+      "to": "cutlass"
+    },
+    {
+      "from": "transformer",
+      "to": "diffusion"
+    },
+    {
+      "from": "resnet",
+      "to": "diffusion"
+    },
+    {
+      "from": "raft",
+      "to": "cockroach"
+    },
+    {
+      "from": "paxos",
+      "to": "spanner"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "kafka"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "etcd"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "zookeeper"
+    },
+    {
+      "from": "python",
+      "to": "pytorch"
+    },
+    {
+      "from": "cpp",
+      "to": "pytorch"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "pytorch"
+    },
+    {
+      "from": "backpropagation",
+      "to": "pytorch"
+    },
+    {
+      "from": "pytorch",
+      "to": "vllm"
+    },
+    {
+      "from": "pytorch",
+      "to": "megatron"
+    },
+    {
+      "from": "pytorch",
+      "to": "deepspeed"
+    },
+    {
+      "from": "pytorch",
+      "to": "nanogpt"
+    },
+    {
+      "from": "pytorch",
+      "to": "flashattn"
+    },
+    {
+      "from": "python",
+      "to": "jax"
+    },
+    {
+      "from": "xla",
+      "to": "jax"
+    },
+    {
+      "from": "backpropagation",
+      "to": "jax"
+    },
+    {
+      "from": "cpp",
+      "to": "xla"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "xla"
+    },
+    {
+      "from": "mlir",
+      "to": "xla"
+    },
+    {
+      "from": "cpp",
+      "to": "mlir"
+    },
+    {
+      "from": "mlir",
+      "to": "triton"
+    },
+    {
+      "from": "mlir",
+      "to": "tvm"
+    },
+    {
+      "from": "cpp",
+      "to": "tvm"
+    },
+    {
+      "from": "python",
+      "to": "tvm"
+    },
+    {
+      "from": "python",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "pytorch",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "transformer",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "bert",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "gpt",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "python",
+      "to": "ray"
+    },
+    {
+      "from": "cpp",
+      "to": "ray"
+    },
+    {
+      "from": "ray",
+      "to": "vllm"
+    },
+    {
+      "from": "transformer",
+      "to": "llama"
+    },
+    {
+      "from": "gpt",
+      "to": "llama"
+    },
+    {
+      "from": "rlhf",
+      "to": "llama"
+    },
+    {
+      "from": "pytorch",
+      "to": "llama"
+    },
+    {
+      "from": "llama",
+      "to": "vllm"
+    },
+    {
+      "from": "probability",
+      "to": "gan"
+    },
+    {
+      "from": "convex-optimization",
+      "to": "gan"
+    },
+    {
+      "from": "probability",
+      "to": "vae"
+    },
+    {
+      "from": "information-theory",
+      "to": "vae"
+    },
+    {
+      "from": "vae",
+      "to": "diffusion"
+    },
+    {
+      "from": "transformer",
+      "to": "clip"
+    },
+    {
+      "from": "word2vec",
+      "to": "clip"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "mamba"
+    },
+    {
+      "from": "transformer",
+      "to": "mamba"
+    },
+    {
+      "from": "gpt",
+      "to": "speculative-decoding"
+    },
+    {
+      "from": "speculative-decoding",
+      "to": "vllm"
+    },
+    {
+      "from": "gpt",
+      "to": "continuous-batching"
+    },
+    {
+      "from": "continuous-batching",
+      "to": "vllm"
+    },
+    {
+      "from": "probability",
+      "to": "reinforcement-learning"
+    },
+    {
+      "from": "reinforcement-learning",
+      "to": "rlhf"
+    },
+    {
+      "from": "mapreduce",
+      "to": "spark"
+    },
+    {
+      "from": "mapreduce",
+      "to": "flink"
+    },
+    {
+      "from": "gfs",
+      "to": "mapreduce"
+    },
+    {
+      "from": "bigtable",
+      "to": "spanner"
+    },
+    {
+      "from": "bigtable",
+      "to": "tikv"
+    },
+    {
+      "from": "consistent-hashing",
+      "to": "dynamo"
+    },
+    {
+      "from": "dynamo",
+      "to": "cockroach"
+    },
+    {
+      "from": "cpp",
+      "to": "arrow"
+    },
+    {
+      "from": "arrow",
+      "to": "duckdb"
+    },
+    {
+      "from": "arrow",
+      "to": "spark"
+    },
+    {
+      "from": "arrow",
+      "to": "clickhouse"
+    },
+    {
+      "from": "parquet",
+      "to": "iceberg"
+    },
+    {
+      "from": "parquet",
+      "to": "spark"
+    },
+    {
+      "from": "parquet",
+      "to": "duckdb"
+    },
+    {
+      "from": "parquet",
+      "to": "trino"
+    },
+    {
+      "from": "parquet",
+      "to": "hudi"
+    },
+    {
+      "from": "parquet",
+      "to": "delta-lake"
+    },
+    {
+      "from": "java",
+      "to": "hudi"
+    },
+    {
+      "from": "hudi",
+      "to": "spark"
+    },
+    {
+      "from": "scala",
+      "to": "delta-lake"
+    },
+    {
+      "from": "delta-lake",
+      "to": "spark"
+    },
+    {
+      "from": "python",
+      "to": "airflow"
+    },
+    {
+      "from": "java",
+      "to": "trino"
+    },
+    {
+      "from": "iceberg",
+      "to": "trino"
+    },
+    {
+      "from": "go",
+      "to": "kubernetes"
+    },
+    {
+      "from": "etcd",
+      "to": "kubernetes"
+    },
+    {
+      "from": "linux",
+      "to": "kubernetes"
+    },
+    {
+      "from": "operating-systems",
+      "to": "kubernetes"
+    },
+    {
+      "from": "go",
+      "to": "docker"
+    },
+    {
+      "from": "linux",
+      "to": "docker"
+    },
+    {
+      "from": "operating-systems",
+      "to": "docker"
+    },
+    {
+      "from": "c",
+      "to": "redis"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "redis"
+    },
+    {
+      "from": "c",
+      "to": "postgres"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "postgres"
+    },
+    {
+      "from": "cpp",
+      "to": "rocksdb"
+    },
+    {
+      "from": "rocksdb",
+      "to": "tikv"
+    },
+    {
+      "from": "rocksdb",
+      "to": "cockroach"
+    },
+    {
+      "from": "rocksdb",
+      "to": "flink"
+    },
+    {
+      "from": "linux",
+      "to": "ebpf"
+    },
+    {
+      "from": "c",
+      "to": "ebpf"
+    },
+    {
+      "from": "ebpf",
+      "to": "cilium"
+    },
+    {
+      "from": "cpp",
+      "to": "grpc"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "grpc"
+    },
+    {
+      "from": "cpp",
+      "to": "envoy"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "envoy"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "spanner"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "cockroach"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "dynamo"
+    },
+    {
+      "from": "consistent-hashing",
+      "to": "kafka"
+    },
+    {
+      "from": "lamport-clocks",
+      "to": "spanner"
+    },
+    {
+      "from": "lamport-clocks",
+      "to": "cockroach"
+    },
+    {
+      "from": "lamport-clocks",
+      "to": "paxos"
+    },
+    {
+      "from": "two-phase-commit",
+      "to": "spanner"
+    },
+    {
+      "from": "two-phase-commit",
+      "to": "cockroach"
+    },
+    {
+      "from": "two-phase-commit",
+      "to": "tikv"
     }
   ]
 }
