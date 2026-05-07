@@ -3,15 +3,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { forceCollide } from 'd3-force';
-import {
-  graphNodes,
-  graphEdges,
-  type NodeType,
-  type EdgeKind,
-  type NodeResource,
-} from '../src/data/graph';
-import { nodeDetails } from '../src/data/details';
-import Logo from './Logo';
+import graphData from '../src/data/graph.json';
+import nodeDetailsRaw from '../src/data/details.json';
+import type {
+  EdgeKind,
+  GraphEdge,
+  GraphNode,
+  NodeDetail,
+  NodeResource,
+  NodeType,
+} from '../src/data/types';
 import {
   ArrowUpRight,
   Box,
@@ -19,6 +20,10 @@ import {
   Lightbulb,
   X as IconX,
 } from 'lucide-react';
+
+const graphNodes = graphData.nodes as GraphNode[];
+const graphEdges = graphData.edges as GraphEdge[];
+const nodeDetails = nodeDetailsRaw as Record<string, NodeDetail>;
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), {
   ssr: false,
@@ -369,7 +374,13 @@ export default function Graph() {
     <div className={`full-graph ${selected ? 'has-panel' : ''}`}>
       <header className="graph-header">
         <a className="brand" href="/">
-          <Logo size={22} className="brand-logo" />
+          <img
+            src="/logo.svg"
+            alt=""
+            width={22}
+            height={Math.round((22 * 413) / 724)}
+            className="brand-logo"
+          />
           <span className="brand-name">StackSense</span>
         </a>
       </header>
