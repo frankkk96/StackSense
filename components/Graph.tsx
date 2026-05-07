@@ -630,24 +630,21 @@ export default function Graph() {
         </div>
       </header>
 
-      <div className="top-right-cluster">
-        <a
-          className="contact-link"
-          href={`mailto:${contactEmail}`}
-          title={contactEmail}
-        >
-          {contactEmail}
-        </a>
-        <button
-          type="button"
-          className="graph-lang-btn"
-          onClick={() => switchLocale(locale === 'en' ? 'zh' : 'en')}
-          aria-label={t.langSwitcherLabel}
-          title={t.langSwitcherLabel}
-        >
-          {t.langGlyph}
-        </button>
-      </div>
+      <select
+        className="graph-lang-select"
+        value={locale}
+        onChange={(e) => switchLocale(e.target.value as Locale)}
+        aria-label={t.langSwitcherLabel}
+        title={t.langSwitcherLabel}
+      >
+        <option value="en">English</option>
+        <option value="zh">中文</option>
+      </select>
+
+      <p className="maintained-by">
+        maintained by{' '}
+        <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+      </p>
 
       <div ref={containerRef} className="graph-canvas-wrap">
         {size.w > 0 && size.h > 0 && (

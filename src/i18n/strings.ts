@@ -23,8 +23,6 @@ export interface UIStrings {
   nodeTypeLabel: Record<NodeType, string>;
 
   langSwitcherLabel: string;
-  // The 1-2 char glyph shown on the language toggle button itself.
-  langGlyph: string;
 }
 
 const en: UIStrings = {
@@ -50,7 +48,6 @@ const en: UIStrings = {
   },
 
   langSwitcherLabel: 'Switch language',
-  langGlyph: '中',
 };
 
 const zh: UIStrings = {
@@ -76,7 +73,6 @@ const zh: UIStrings = {
   },
 
   langSwitcherLabel: '切换语言',
-  langGlyph: 'EN',
 };
 
 export const STRINGS: Record<Locale, UIStrings> = { en, zh };

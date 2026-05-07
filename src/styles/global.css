@@ -279,62 +279,85 @@ hr {
   opacity: 0.5;
 }
 
-/* ── Top-right cluster (contact + language switcher) ───────── */
-.top-right-cluster {
+/* ── Language switcher (top-right dropdown) ────────────────── */
+.graph-lang-select {
   position: absolute;
   top: 22px;
   right: 28px;
   z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.contact-link {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.01em;
-  color: rgb(var(--color-text-main) / 0.55);
-  text-decoration: none;
-  transition: color 0.18s ease;
-}
-
-.contact-link:hover {
-  color: rgb(var(--color-accent));
-}
-
-.graph-lang-btn {
   height: 34px;
-  min-width: 44px;
-  padding: 0 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0 30px 0 12px;
+  /* Strip native chrome; we draw our own caret. */
+  appearance: none;
+  -webkit-appearance: none;
   font-family: var(--font-sans);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: rgb(var(--color-text-main) / 0.78);
-  background: rgb(var(--color-bg-elev) / 0.7);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgb(var(--color-text-main) / 0.85);
+  background-color: rgb(var(--color-bg-elev) / 0.7);
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      rgb(var(--color-text-main) / 0.55) 50%
+    ),
+    linear-gradient(135deg, rgb(var(--color-text-main) / 0.55) 50%, transparent 50%);
+  background-position: calc(100% - 14px) 50%, calc(100% - 9px) 50%;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
   border: 1px solid rgb(var(--color-border-main) / 0.14);
   border-radius: 8px;
   cursor: pointer;
   backdrop-filter: blur(8px);
   transition:
-    background 0.18s ease,
+    background-color 0.18s ease,
     border-color 0.18s ease,
     color 0.18s ease;
 }
 
-.graph-lang-btn:hover {
-  background: rgb(var(--color-bg-elev) / 0.92);
-  color: rgb(var(--color-accent));
+.graph-lang-select:hover {
+  background-color: rgb(var(--color-bg-elev) / 0.92);
   border-color: rgb(var(--color-accent) / 0.45);
+  color: rgb(var(--color-accent));
 }
 
-/* When the side panel slides open it covers the top-right corner; hide
-   the cluster so it doesn't peek through the panel's blurred edge. */
-.full-graph.has-panel .top-right-cluster {
+.graph-lang-select:focus-visible {
+  outline: 1px solid rgb(var(--color-accent) / 0.55);
+  outline-offset: 1px;
+}
+
+.full-graph.has-panel .graph-lang-select {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* ── Maintained-by credit (bottom-right, deliberately quiet) ── */
+.maintained-by {
+  position: absolute;
+  right: 16px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  z-index: 5;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.02em;
+  color: rgb(var(--color-text-main) / 0.32);
+  pointer-events: none;
+}
+
+.maintained-by a {
+  color: inherit;
+  text-decoration: none;
+  pointer-events: auto;
+  transition: color 0.18s ease;
+}
+
+.maintained-by a:hover {
+  color: rgb(var(--color-accent) / 0.85);
+}
+
+.full-graph.has-panel .maintained-by {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
@@ -737,18 +760,16 @@ img.panel-icon-brand {
     flex-wrap: wrap;
     gap: 8px;
   }
-  .top-right-cluster {
+  .graph-lang-select {
     top: 12px;
     right: 14px;
-    gap: 0;
-  }
-  .contact-link {
-    display: none;
-  }
-  .graph-lang-btn {
     height: 36px;
-    min-width: 36px;
-    padding: 0 8px;
+    padding: 0 26px 0 10px;
+    background-position: calc(100% - 12px) 50%, calc(100% - 7px) 50%;
+  }
+  .maintained-by {
+    font-size: 9.5px;
+    right: 12px;
   }
   .graph-header .brand-name {
     font-size: 16px;
