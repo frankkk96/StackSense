@@ -5,6 +5,12 @@ export type NodeType = 'concept' | 'project' | 'language';
 
 export type Domain = 'AI' | 'Data' | 'Systems' | 'Math' | 'Language';
 
+export type Locale = 'en' | 'zh';
+
+export const LOCALES: Locale[] = ['en', 'zh'];
+
+export const DEFAULT_LOCALE: Locale = 'en';
+
 export type ResourceKind =
   | 'paper'
   | 'project'

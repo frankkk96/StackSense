@@ -1,0 +1,1678 @@
+{
+  "linear-algebra": {
+    "blurb": "The bedrock math of the AI stack: from attention's QK^T projection, to PCA, SVD, to embedding-space geometry — every modern neural network operation is built on vector spaces and matrix decomposition.",
+    "concepts": [
+      "Vector Spaces",
+      "SVD",
+      "Eigenvalues",
+      "Matrix Multiplication",
+      "Orthogonal Projection"
+    ],
+    "questions": [
+      "What is attention's Q·K^T actually computing through a linear-algebra lens?",
+      "Why is SVD's low-rank approximation the fundamental reason LoRA fine-tuning works?",
+      "How do you derive the equivalence of PCA and SVD? Why do covariance-matrix eigenvectors point toward maximum-variance directions?",
+      "Why does the singular-value distribution of a weight matrix predict training stability?",
+      "Why do the weight matrices of neural networks naturally exhibit low-rank structure?"
+    ]
+  },
+  "calculus": {
+    "blurb": "Backprop is fundamentally just the multivariable chain rule; understanding Jacobians, Taylor expansion, and gradient flow is understanding how autograd runs inside every framework.",
+    "concepts": [
+      "Chain Rule",
+      "Jacobian",
+      "Gradient",
+      "Taylor Expansion",
+      "Partial Derivatives"
+    ],
+    "questions": [
+      "Why does Backprop use reverse-mode autodiff rather than forward-mode? What's the complexity argument?",
+      "Adam's second-moment estimate corresponds to which order of curvature in a Taylor expansion?",
+      "Why do smooth activations like GELU/Swish train more stably than ReLU?",
+      "Why does the derivative of softmax w.r.t. logits naturally take the 'probability minus ground truth' form?",
+      "What's the calculus intuition behind the continuous-time limit (SDE/ODE) of diffusion models?"
+    ]
+  },
+  "probability": {
+    "blurb": "From cross-entropy to dropout, temperature sampling, and diffusion models — every 'sampling, normalization, uncertainty' operation in AI is backed by classical tools: probability distributions, conjugacy, MCMC.",
+    "concepts": [
+      "MLE/MAP",
+      "KL Divergence",
+      "Gaussian Distribution",
+      "MCMC",
+      "Bayesian Inference"
+    ],
+    "questions": [
+      "Why is cross-entropy the MLE for classification? How does it map to KL divergence?",
+      "In the VAE ELBO derivation, how does the trade-off between the KL term and the reconstruction term shape the latent space?",
+      "Why can Dropout be viewed as a Bayesian approximation?",
+      "What's the statistical meaning of temperature/top-p in LLM sampling?",
+      "How do score matching and the variational lower bound unify in diffusion models?"
+    ]
+  },
+  "convex-optimization": {
+    "blurb": "Neural networks are non-convex, but the dual perspective, convergence analysis, and constraint modeling from convex optimization remain the theoretical roots of SGD/Adam/RLHF objective design. Convexity is the fastest lens for judging 'should this loss converge?'",
+    "concepts": [
+      "Convexity",
+      "Lagrange Duality",
+      "KKT",
+      "Gradient Methods",
+      "Lipschitz"
+    ],
+    "questions": [
+      "Why does gradient descent still find good solutions on non-convex losses?",
+      "How do you derive AdamW's decoupled weight decay from convex-optimization convergence analysis?",
+      "Why can RLHF's KL constraint be written as a Lagrangian dual?",
+      "How does PPO's borrowing of trust-region ideas from convex optimization map over?",
+      "What do Lipschitz-smoothness / strong-convexity assumptions imply about learning-rate upper bounds?"
+    ]
+  },
+  "information-theory": {
+    "blurb": "Information theory, founded by Shannon in 1948: entropy, KL divergence, mutual information — cross-entropy loss, quantization compression bit rates, and InfoNCE in contrastive learning all stem from this toolkit.",
+    "concepts": [
+      "Shannon Entropy",
+      "KL Divergence",
+      "Mutual Information",
+      "Rate-Distortion",
+      "Cross-Entropy"
+    ],
+    "questions": [
+      "What is the relationship between perplexity and Shannon entropy? Why does it measure LM quality?",
+      "How does the asymmetry of KL(p||q) affect forward-KL vs. reverse-KL training?",
+      "How does rate-distortion theory inform the lower bounds of LLM quantization (INT4/FP8)?",
+      "Why is mutual information used as the theoretical justification for self-supervised contrastive learning (InfoNCE)?",
+      "What lower bound does Shannon's source coding theorem provide for token compression / byte-level LMs?"
+    ]
+  },
+  "backpropagation": {
+    "blurb": "The algorithm systematized by Rumelhart, Hinton, and Williams in 1986: use the chain rule to propagate output error backward from the top layer to every weight. The algorithmic cornerstone of every modern autograd framework.",
+    "concepts": [
+      "Chain Rule",
+      "Reverse-mode AD",
+      "Computation Graph",
+      "Gradient Backprop",
+      "Hidden-Layer Learning"
+    ],
+    "questions": [
+      "Core difference between reverse-mode and forward-mode autodiff? When is each appropriate?",
+      "Why was backpropagation only widely accepted in 1986? Compute vs. algorithm — which was the bottleneck?",
+      "Backprop vs. numerical differentiation — the precision/efficiency trade-off?",
+      "Why did Hinton later want to replace Backprop with Forward-Forward?",
+      "Inside attention, where does the chain rule's actual compute cost go?"
+    ]
+  },
+  "sgd": {
+    "blurb": "The stochastic version of gradient descent: estimate the full gradient with a mini-batch. Simple yet surprisingly capable of training modern deep networks — backed by intricate theory around implicit regularization and noise escaping flat minima.",
+    "concepts": [
+      "Mini-batch",
+      "Momentum",
+      "Critical Batch Size",
+      "Implicit Regularization",
+      "Learning Rate"
+    ],
+    "questions": [
+      "Why does SGD noise actually help generalization? How does it tie to implicit regularization?",
+      "What is critical batch size? Why does scaling the batch further yield sharply diminishing returns?",
+      "Mathematically, Momentum is equivalent to discretizing which ODE?",
+      "Why is LR warmup nearly mandatory for transformer training?",
+      "What's the difference between saddle points SGD can escape vs. those a second-order method can?"
+    ]
+  },
+  "adam": {
+    "blurb": "Kingma & Ba 2014: combines Momentum's first-moment estimate with RMSProp's second-moment estimate plus bias correction. The de facto default optimizer of deep learning; AdamW further dominates large-model training.",
+    "concepts": [
+      "First Moment",
+      "Second Moment",
+      "Bias Correction",
+      "AdamW",
+      "Adaptive Learning Rate"
+    ],
+    "questions": [
+      "Adam vs. SGD+Momentum — the generalization trade-off?",
+      "Why is bias correction non-optional?",
+      "What problem in Adam does AdamW's decoupled weight decay solve?",
+      "Essential difference between Adam and RMSProp?",
+      "Why do large models prefer AdamW over LAMB/Adafactor?"
+    ]
+  },
+  "batch-norm": {
+    "blurb": "Ioffe & Szegedy 2015: per-layer mini-batch normalization plus learnable γ/β. BN lets deep CNNs train at higher learning rates; but in Transformer / small-batch settings it's been replaced by LayerNorm.",
+    "concepts": [
+      "Internal Covariate Shift",
+      "Mini-batch Statistics",
+      "γβ Affine",
+      "Running Mean",
+      "LayerNorm"
+    ],
+    "questions": [
+      "Why does BN work — covariate shift, or loss-landscape smoothing?",
+      "BN vs. LayerNorm — the trade-off in Transformer settings?",
+      "Why does BN's performance collapse at small batch sizes?",
+      "What's the root cause of BN's train/inference behavior mismatch?",
+      "Where does each of GroupNorm / InstanceNorm / RMSNorm fit?"
+    ]
+  },
+  "dropout": {
+    "blurb": "Srivastava, Hinton 2014: randomly zero out neurons during training, equivalent to ensembling exponentially many sub-networks. One of the most important regularizers of the deep-learning era; modern large models, conversely, rely on it less.",
+    "concepts": [
+      "Random Deactivation",
+      "Model Ensembling",
+      "Inverted Dropout",
+      "Regularization",
+      "Co-adaptation"
+    ],
+    "questions": [
+      "Why can Dropout be interpreted as model ensembling?",
+      "Inverted Dropout vs. the original — the trade-off?",
+      "Why do modern large models rely less on Dropout?",
+      "Why do Dropout and BatchNorm conflict when used together?",
+      "Differences between Dropout, DropConnect, and DropPath?"
+    ]
+  },
+  "word2vec": {
+    "blurb": "Mikolov 2013: a shallow CBOW + Skip-gram model with Negative Sampling, scaled word embeddings to billion-token corpora. 'king − man + woman ≈ queen' revealed the linear semantic structure of word-vector space and inspired every subsequent distributed representation.",
+    "concepts": [
+      "Skip-gram",
+      "CBOW",
+      "Negative Sampling",
+      "Distributed Representation",
+      "Word-Vector Arithmetic"
+    ],
+    "questions": [
+      "Skip-gram vs. CBOW — the trade-off on rare words?",
+      "Essential difference between Negative Sampling and Hierarchical Softmax?",
+      "Why does vector arithmetic reflect semantic relationships?",
+      "Word2Vec vs. GloVe — comparing their objective functions?",
+      "Fundamental gap between Word2Vec-era static embeddings and Transformer-era contextual embeddings?"
+    ]
+  },
+  "alexnet": {
+    "blurb": "Krizhevsky et al. 2012: an 8-layer CNN that cut ImageNet top-5 error from 26% to 15%; first to train a large-scale deep network on GPU, introducing ReLU, Dropout, and data augmentation. The result that detonated the deep-learning revolution.",
+    "concepts": [
+      "ReLU Activation",
+      "GPU Training",
+      "Data Augmentation",
+      "LRN",
+      "Conv-Layer Stacking"
+    ],
+    "questions": [
+      "Why can ReLU replace sigmoid/tanh and resolve vanishing gradients?",
+      "How does AlexNet's dual-GPU split relate to modern model parallelism?",
+      "Why was Local Response Normalization later supplanted by BN?",
+      "AlexNet's key insight vs. the compute dividend — what's the trade-off?",
+      "Why is the ImageNet dataset itself more important than the model?"
+    ]
+  },
+  "resnet": {
+    "blurb": "He Kaiming 2015: residual connections H(x)=F(x)+x let the network learn residuals rather than the direct mapping, enabling successful training of 152- and even 1000-layer networks. The residual idea later threads through Transformer and nearly every modern architecture.",
+    "concepts": [
+      "Residual Connection",
+      "Identity Mapping",
+      "Bottleneck",
+      "Deep Networks",
+      "Gradient Flow"
+    ],
+    "questions": [
+      "Why do residual connections alleviate degradation in deep networks?",
+      "Identity shortcut vs. projection shortcut — the trade-off?",
+      "Why is Pre-Activation ResNet easier to train than the original?",
+      "ResNet's key insight vs. Highway Network — what's the difference?",
+      "Why must Transformer also use residual connections?"
+    ]
+  },
+  "transformer": {
+    "blurb": "Google 2017: replaces RNN/CNN with multi-head self-attention for sequence dependency, injecting order via positional encoding. The foundation of BERT, GPT, and nearly every later large model.",
+    "concepts": [
+      "Self-Attention",
+      "Multi-Head",
+      "Positional Encoding",
+      "Encoder-Decoder",
+      "QKV Projection"
+    ],
+    "questions": [
+      "Why does attention divide by sqrt(d_k) for scaling?",
+      "What's the key insight of multi-head over a single large attention head?",
+      "Why sin/cos positional encoding instead of learned embeddings? What did RoPE / ALiBi improve?",
+      "Self-attention vs RNN trade-off on long-range dependency?",
+      "Why does Transformer use LayerNorm instead of BatchNorm?"
+    ]
+  },
+  "bert": {
+    "blurb": "Devlin et al 2018: a Transformer-Encoder bidirectional pretraining model using Masked LM + NSP on large unlabeled corpora to learn deep language representations. Opened the \"pretrain + fine-tune\" paradigm and dominated NLU benchmarks for years.",
+    "concepts": [
+      "Masked LM",
+      "Bidirectional Encoder",
+      "NSP",
+      "pretrain-finetune",
+      "WordPiece"
+    ],
+    "questions": [
+      "Why does BERT's MLM use the 80/10/10 mask strategy?",
+      "Why is BERT Encoder-only while GPT is Decoder-only? How do their attention masks decide capability boundaries?",
+      "What ablations did RoBERTa use to show NSP isn't necessary?",
+      "What's the root cause that BERT can't be used for autoregressive generation directly?",
+      "Why can BERT's [CLS] token representation stand for whole-sentence semantics during fine-tuning?"
+    ]
+  },
+  "gpt": {
+    "blurb": "OpenAI's GPT series: Decoder-only autoregressive language models. GPT-3 (175B) showed that scaling alone enables few-shot tasks via in-context learning, establishing prompt engineering and the \"scale is all you need\" engineering paradigm.",
+    "concepts": [
+      "in-context learning",
+      "few-shot",
+      "Decoder-only",
+      "autoregressive",
+      "emergent abilities"
+    ],
+    "questions": [
+      "Is in-context learning really \"learning\"? How to explain it from a gradient perspective?",
+      "On which tasks do few-shot performance curves show emergent abilities vs model scale?",
+      "What training-cost problem did GPT-3's sparse attention (alternating dense/sparse) solve?",
+      "What are the capability-boundary differences between GPT and BERT?",
+      "How to make GPT handle documents beyond its context window without fine-tuning?"
+    ]
+  },
+  "diffusion": {
+    "blurb": "DDPM (Ho et al 2020) rigorously connects diffusion with variational inference and score matching, training a U-Net via a simplified ε-prediction objective. The theoretical foundation of Stable Diffusion / Imagen / Sora and other modern generative models.",
+    "concepts": [
+      "Forward noising",
+      "ε-prediction",
+      "U-Net",
+      "classifier-free guidance",
+      "Latent Diffusion"
+    ],
+    "questions": [
+      "Relationship between DDPM's L_simple and the original ELBO? Why does removing the weighting work better?",
+      "Why can the forward process q(x_t|x_0) be sampled in closed form? Why is the β schedule choice critical?",
+      "How are DDPM, DDIM, and score-based SDE views unified? Why can sampling steps drop from 1000 to 20?",
+      "Mathematical form of classifier-free guidance? Why does an overly large scale lead to saturation?",
+      "Which engineering bottlenecks does Latent Diffusion solve over pixel-space DDPM?"
+    ]
+  },
+  "scaling-laws": {
+    "blurb": "Kaplan et al 2020: power-law fits between LM loss and parameters N, data D, compute C, with compute-optimal allocation guidelines. The theoretical basis for GPT-3's \"stack parameters first\" decision — later corrected by Chinchilla.",
+    "concepts": [
+      "Power law",
+      "compute-optimal",
+      "N/D/C relation",
+      "irreducible loss",
+      "critical batch size"
+    ],
+    "questions": [
+      "What N-vs-D optimal ratio did Kaplan give? Why was it later disproved?",
+      "What's the physical meaning of irreducible loss? Does it correspond to dataset entropy?",
+      "Why does batch size also have a critical value?",
+      "Do scaling laws still hold if architecture (depth/width ratio) is fixed?",
+      "How to back out the GPU-hours required for a target performance from a scaling law?"
+    ]
+  },
+  "chinchilla": {
+    "blurb": "Hoffmann et al 2022: refit scaling laws via 400+ training runs, proposing that under fixed compute N and D should scale equally (~20 tokens/param), proving GPT-3 and peers were severely undertrained. 70B Chinchilla beats 280B Gopher with more tokens.",
+    "concepts": [
+      "compute-optimal",
+      "20 tokens/param",
+      "IsoFLOP",
+      "Equal scaling",
+      "Undertraining"
+    ],
+    "questions": [
+      "Which core Kaplan conclusion did Chinchilla scaling refute? Where's the math difference?",
+      "How are IsoFLOP curves fit? Why do all three fitting methods agree?",
+      "If data has a hard ceiling (data wall), does Chinchilla-optimal still hold?",
+      "Why does the Llama series deliberately train past Chinchilla-optimal token counts?",
+      "Did it account for fine-tuning / RLHF compute? Would that change the optimal ratio?"
+    ]
+  },
+  "lora": {
+    "blurb": "Hu et al 2021: freeze pretrained weights W and train only a low-rank decomposition ΔW = BA (rank r ≪ d), cutting trainable params by orders of magnitude with almost no quality loss. The de facto standard for current PEFT and diffusion fine-tuning.",
+    "concepts": [
+      "Low-rank decomposition",
+      "PEFT",
+      "ΔW = BA",
+      "rank r",
+      "QLoRA"
+    ],
+    "questions": [
+      "LoRA assumes weight updates have \"low intrinsic rank\" — what's the empirical evidence?",
+      "Does LoRA add inference latency? After merging, can adapters still be swapped?",
+      "How to choose rank r? Which tasks need only r=1, which need r=64+?",
+      "Essential differences between LoRA / Adapter / Prefix-tuning in expressiveness and memory cost?",
+      "Why is QLoRA's NF4 better than INT4?"
+    ]
+  },
+  "rlhf": {
+    "blurb": "InstructGPT (Ouyang et al 2022) aligned GPT-3 to human preferences via three stages: SFT → Reward Model → PPO. 1.3B InstructGPT beat 175B GPT-3 on instruction following, establishing RLHF as the standard alignment route for ChatGPT / Claude-class chat models.",
+    "concepts": [
+      "SFT",
+      "Reward Model",
+      "PPO",
+      "KL constraint",
+      "DPO"
+    ],
+    "questions": [
+      "Role of the KL penalty in RLHF? What reward hacking emerges without it?",
+      "Why does the reward model use pairwise ranking loss instead of regressing scores directly?",
+      "What do PPO's actor / critic correspond to in LM settings? Difference between value head and RM?",
+      "How does DPO bypass explicit RM and PPO via a closed-form solution? Data-efficiency trade-off?",
+      "What is alignment tax? On which benchmarks did InstructGPT show capability regression?"
+    ]
+  },
+  "moe": {
+    "blurb": "Switch Transformer (Fedus et al 2021): replace FFN with N experts + top-1 routing, pushing parameter count to trillions (1.6T) at the same FLOPs. Starting point of the Mixtral / DeepSeek-MoE / GPT-4 lineage.",
+    "concepts": [
+      "Sparse MoE",
+      "Top-1 Routing",
+      "Capacity Factor",
+      "Load-balancing loss",
+      "Expert Parallel"
+    ],
+    "questions": [
+      "Trade-off of Switch's top-1 routing vs top-2?",
+      "Form of the load-balancing auxiliary loss? Why are pure token counts non-differentiable?",
+      "What happens if the capacity factor is set too low / too high?",
+      "How does expert parallel combine with tensor / pipeline parallel? How is all-to-all communication amortized?",
+      "Why doesn't MoE inference memory drop proportionally?"
+    ]
+  },
+  "zero": {
+    "blurb": "Microsoft 2019: Zero Redundancy Optimizer shards optimizer states / gradients / parameters across DP ranks, dropping data-parallel memory from O(N) to O(N/DP). Foundational algorithm for modern large-model training memory optimization.",
+    "concepts": [
+      "Optimizer sharding",
+      "Gradient sharding",
+      "Parameter sharding",
+      "Stage 1/2/3",
+      "FSDP"
+    ],
+    "questions": [
+      "How much extra communication does ZeRO-3 add over plain DP? Why is it still worth it?",
+      "Why are optimizer states the memory hog? Which Adam terms specifically?",
+      "Essential difference between ZeRO and tensor parallel? Can they substitute for each other?",
+      "What engineering simplifications did FSDP make over ZeRO-3?",
+      "How is the memory budget computed for ZeRO under bf16 + fp32 master weights?"
+    ]
+  },
+  "paxos": {
+    "blurb": "Lamport's plain-language rewrite of the Paxos paper, defining the Prepare/Accept two phases to reach single-value consensus. The theoretical origin of distributed consensus; Multi-Paxos extends it to log replication.",
+    "concepts": [
+      "Prepare/Accept",
+      "Proposal Number",
+      "Quorum",
+      "Single-decree",
+      "Multi-Paxos"
+    ],
+    "questions": [
+      "Why does Paxos need two rounds instead of one?",
+      "How does Multi-Paxos extend from single-decree to log replication?",
+      "Where does the equivalence between Paxos and Raft show up? Why did Raft win in engineering?",
+      "How is the livelock problem mitigated via leader election?",
+      "What latency does Fast Paxos / EPaxos each reduce?"
+    ]
+  },
+  "raft": {
+    "blurb": "Ongaro & Ousterhout 2014: an understandable consensus algorithm. Explicitly splits leader election / log replication / safety; the de facto industry standard consensus protocol (etcd / TiKV / CockroachDB).",
+    "concepts": [
+      "Leader Election",
+      "Log Matching",
+      "Term",
+      "Commit Index",
+      "Membership Change"
+    ],
+    "questions": [
+      "How does Raft's log matching property guarantee safety?",
+      "Why doesn't Raft allow committing log entries from previous terms?",
+      "Joint consensus vs single-server membership change trade-off?",
+      "What liveness problems under partition do Pre-vote / CheckQuorum solve?",
+      "How does the ReadIndex optimization let linearizable reads skip writing the log?"
+    ]
+  },
+  "spanner": {
+    "blurb": "Google 2012: explicitly models clock uncertainty via the TrueTime API to deliver externally consistent cross-datacenter transactions. Inspired a generation of distributed SQL databases — CockroachDB / YugabyteDB / TiDB.",
+    "concepts": [
+      "TrueTime",
+      "External Consistency",
+      "2PC over Paxos",
+      "Tablet",
+      "Commit Wait"
+    ],
+    "questions": [
+      "How does TrueTime's commit wait use physical clocks to guarantee linearizability?",
+      "How does Spanner run 2PC on top of Paxos groups while staying live?",
+      "How do vendors without atomic clocks emulate TrueTime via HLC, and at what cost?",
+      "What scalability boundaries does the relationship between tablet and Paxos group set?",
+      "Where are the OLTP / real-time analytics boundaries of the F1 / Spanner design?"
+    ]
+  },
+  "computer-architecture": {
+    "blurb": "The ultimate answer to every performance question lives here: pipelines, cache hierarchy, virtual memory, SIMD, branch prediction. Understand this layer and you can finally explain why the same code runs several times faster on a different CPU.",
+    "concepts": [
+      "CPU Pipeline",
+      "Cache Hierarchy",
+      "TLB / Virtual Memory",
+      "NUMA",
+      "SIMD"
+    ],
+    "questions": [
+      "How does an instruction parallelize from fetch, decode, execute to writeback on an out-of-order superscalar CPU?",
+      "What categories do cache misses fall into? How do you measure them with perf?",
+      "How much more expensive is \"remote\" vs \"local\" access on NUMA? Why do databases pin cores?",
+      "How does TLB miss cost compare to cache miss? When are huge pages actually useful?",
+      "Roughly how costly is the AVX-512 frequency downclock? When should you not use it?"
+    ]
+  },
+  "operating-systems": {
+    "blurb": "Every piece of infra above is built on syscalls. Processes, virtual memory, scheduling, file systems, IO — understanding this layer is the entry point for performance tuning, fault diagnosis, and container/virtualization internals.",
+    "concepts": [
+      "Process / Thread",
+      "Virtual Memory",
+      "Scheduler (CFS/EEVDF)",
+      "VFS / page cache",
+      "epoll / io_uring"
+    ],
+    "questions": [
+      "The full path of a syscall from user space to kernel space?",
+      "What design motivations drove the shift from CFS to the EEVDF scheduler?",
+      "page cache vs direct IO trade-off in the database scenario?",
+      "Why is io_uring better than epoll + thread pool under high IOPS?",
+      "How do namespace + cgroup jointly implement container isolation, and what does each lack?"
+    ]
+  },
+  "tcp-ip": {
+    "blurb": "From TCP three-way handshake and congestion control to TLS 1.3, HTTP/2, QUIC — distributed systems, inference RPC, and observability all sit on top of the network stack.",
+    "concepts": [
+      "TCP State Machine",
+      "Congestion Control",
+      "TLS 1.3",
+      "HTTP/2 / QUIC",
+      "eBPF / XDP"
+    ],
+    "questions": [
+      "What gotchas live in the TCP three-way handshake / four-way teardown state machine (TIME_WAIT, CLOSE_WAIT)?",
+      "Evolution motivation behind TCP congestion control (Reno / CUBIC / BBR)?",
+      "What round trips does TLS 1.3 cut versus 1.2? Security cost of 0-RTT?",
+      "What does HTTP/2 multiplexing solve? How does QUIC further fix HOL blocking?",
+      "Why is eBPF + XDP packet filtering orders of magnitude faster than iptables?"
+    ]
+  },
+  "spectre": {
+    "blurb": "CPU speculative execution vulnerabilities disclosed in 2018: leak data across privilege boundaries via branch prediction and cache side-channels. Forced the entire hardware/software stack to revisit the microarchitectural security model.",
+    "concepts": [
+      "Speculative Execution",
+      "Branch Prediction",
+      "Cache Side-channel",
+      "KPTI",
+      "Retpoline"
+    ],
+    "questions": [
+      "Essential difference between Spectre and Meltdown in attack vector?",
+      "Why is speculative execution fundamentally hard to fully fix?",
+      "Where does the perf cost of mitigations like KPTI / Retpoline come from?",
+      "How does cache timing side-channel amplify microarchitectural state leaks?",
+      "What does this class of vulnerabilities imply for future CPU design (e.g., separated speculation domains)?"
+    ]
+  },
+  "vllm": {
+    "blurb": "UC Berkeley's open-source LLM inference engine: PagedAttention at the core to tackle KV Cache memory fragmentation, paired with continuous batching to push single-GPU throughput to the limit. The current de facto standard for self-hosted LLM serving.",
+    "concepts": [
+      "PagedAttention",
+      "Continuous Batching",
+      "Prefix Caching",
+      "Tensor Parallel",
+      "Chunked Prefill"
+    ],
+    "questions": [
+      "How does PagedAttention use a block table to mimic OS virtual memory paging?",
+      "How does continuous batching prevent long prompts from killing latency when prefill / decode mix?",
+      "How to design hit granularity and eviction policy for prefix caching?",
+      "What did the V1 engine refactor in scheduling and async execution vs. V0?",
+      "Throughput / usability trade-offs vs. TensorRT-LLM and SGLang?"
+    ]
+  },
+  "tensorrt-llm": {
+    "blurb": "NVIDIA's official LLM inference optimization library: builds on TensorRT graph compilation to fuse attention, GEMM, and quantization ops into fused kernels, squeezing the hardware limit on H100/B200.",
+    "concepts": [
+      "In-flight Batching",
+      "FP8/FP4 Quantization",
+      "Fused Kernel",
+      "Plugin",
+      "Speculative Decoding"
+    ],
+    "questions": [
+      "Why does TensorRT-LLM's engine compilation hurt deployment flexibility?",
+      "Implementation differences between in-flight batching and vLLM's continuous batching?",
+      "Precision trade-offs of FP8 quantization across attention / KV Cache / GEMM?",
+      "How are Hopper's TMA / WGMMA exploited in attention kernels?",
+      "Why did NVIDIA build TensorRT-LLM instead of optimizing vLLM?"
+    ]
+  },
+  "nanogpt": {
+    "blurb": "Karpathy's minimal GPT training implementation: ~300 lines of PyTorch covering the full pipeline from tokenization to training loop. Reading it once beats reading ten survey papers.",
+    "concepts": [
+      "Causal Self-attention",
+      "AdamW",
+      "Gradient Accumulation",
+      "DDP",
+      "Tied Embedding"
+    ],
+    "questions": [
+      "Why does nanoGPT use LayerNorm pre-norm rather than post-norm?",
+      "What does weight tying buy in memory and accuracy?",
+      "Engineering rationale for learning rate warmup + cosine decay?",
+      "Scaling from nanoGPT to hundreds of billions of parameters: which components fail first?",
+      "How much do bf16 and torch.compile each contribute to training stability / speed?"
+    ]
+  },
+  "megatron": {
+    "blurb": "NVIDIA's large-model training framework, the first open-source implementation to systematically combine tensor parallel, pipeline parallel, and sequence parallel. Llama / GPT-3 class training stacks essentially borrow from Megatron.",
+    "concepts": [
+      "Tensor Parallel",
+      "Pipeline Parallel",
+      "Sequence Parallel",
+      "Selective Recompute",
+      "1F1B Schedule"
+    ],
+    "questions": [
+      "TP column-parallel vs. row-parallel: differences in all-reduce communication volume?",
+      "How does the 1F1B pipeline schedule reduce bubbles? Trade-off vs. interleaved schedule?",
+      "How does sequence parallel cover LayerNorm / Dropout memory that TP doesn't shard?",
+      "Why is TP size usually capped at 8? Relation to NVLink topology?",
+      "How to combine Megatron + ZeRO? Which parallelism does each handle?"
+    ]
+  },
+  "deepspeed": {
+    "blurb": "Microsoft's distributed training framework: core is the ZeRO series sharding optimizer states / gradients / parameters, plus offload, 3D parallelism, and inference optimization. Lets a single multi-GPU box train tens-of-billions-parameter models.",
+    "concepts": [
+      "ZeRO-1/2/3",
+      "CPU/NVMe Offload",
+      "ZeRO-Infinity",
+      "3D Parallelism",
+      "ZeRO++"
+    ],
+    "questions": [
+      "Where does ZeRO-3 fall short vs. FSDP in communication scheduling and implementation complexity?",
+      "Is the bottleneck of CPU/NVMe offload PCIe or the software stack?",
+      "How does ZeRO++'s hierarchical partitioning solve cross-node communication?",
+      "Route divergence between DeepSpeed-Inference and vLLM / TensorRT-LLM?",
+      "Why are big shops gradually migrating training back from DeepSpeed to Megatron + FSDP?"
+    ]
+  },
+  "cutlass": {
+    "blurb": "NVIDIA's open-source CUDA C++ template library, providing composable primitives for high-performance GEMM/convolution. Exposes the full stack from warp-level MMA to tile scheduler — the mainstream choice for writing custom kernels that bypass the cuBLAS black box.",
+    "concepts": [
+      "Tile / Warp MMA",
+      "Epilogue Fusion",
+      "CuTe",
+      "Tensor Core",
+      "Pipelined GEMM"
+    ],
+    "questions": [
+      "How do the tile / warp / thread three-layer abstractions map onto SMs?",
+      "What classic CUTLASS pain points does CuTe's Layout algebra solve?",
+      "Why use TMA + warp-specialized pipeline on Hopper instead of classic ping-pong?",
+      "Where does the perf gap of epilogue fusion vs. a separate kernel come from?",
+      "Engineering trade-offs vs. hand-written cuBLAS / Triton?"
+    ]
+  },
+  "flashattn": {
+    "blurb": "Tri Dao's team's IO-aware attention kernel: tiling + online softmax cuts attention memory traffic from O(N^2) to O(N). De facto standard for LLM training / inference.",
+    "concepts": [
+      "Online Softmax",
+      "Tiling",
+      "IO-aware",
+      "Recompute Backward",
+      "TMA / WGMMA"
+    ],
+    "questions": [
+      "How is numerical stability of online softmax guaranteed?",
+      "What does v2's shift of the parallelism dimension from batch/head to seq solve?",
+      "How does v3 leverage TMA and warp-specialized pipelines on Hopper?",
+      "Why does the backward choose recompute instead of storing intermediate softmax?",
+      "Essential difference vs. xformers memory-efficient attention?"
+    ]
+  },
+  "triton": {
+    "blurb": "OpenAI's Python DSL + compiler: with block-level tensors as first-class citizens, lets algorithm engineers produce GPU kernels approaching hand-tuned perf without writing CUDA. Core backend of PyTorch 2 inductor.",
+    "concepts": [
+      "Block Programming",
+      "Auto Schedule",
+      "MLIR Backend",
+      "Autotuning",
+      "Shared Memory"
+    ],
+    "questions": [
+      "What does Triton's block programming model hide and expose vs. CUDA's thread model?",
+      "How does the compiler auto-allocate shared memory and do swizzle?",
+      "Why does Triton lag CUTLASS on Hopper, and where's the bottleneck?",
+      "How is the autotune search space pruned?",
+      "Trade-offs of torch.compile using Triton for codegen?"
+    ]
+  },
+  "nccl": {
+    "blurb": "NVIDIA's GPU collective communication library: implements topology-aware AllReduce / AllGather via ring/tree/double binary tree. Directly schedules NVLink, PCIe, IB — the de facto bottom layer for distributed training communication.",
+    "concepts": [
+      "Ring AllReduce",
+      "Tree AllReduce",
+      "NVLink / IB",
+      "Topology Aware",
+      "GPUDirect RDMA"
+    ],
+    "questions": [
+      "How to choose ring vs. tree allreduce across different scales and message sizes?",
+      "How does NCCL probe topology and auto-pick channel counts?",
+      "Why use SHARP / in-network reduction at large scale?",
+      "Fundamental design philosophy difference vs. MPI and Gloo?",
+      "Concrete path of GPUDirect RDMA bypassing CPU?"
+    ]
+  },
+  "spark": {
+    "blurb": "General-purpose distributed compute engine: built on the RDD abstraction and DAG scheduling; Catalyst optimizer + Tungsten execution engine make it the de facto standard for offline batch and ETL.",
+    "concepts": [
+      "RDD",
+      "Catalyst",
+      "Tungsten",
+      "Shuffle",
+      "AQE"
+    ],
+    "questions": [
+      "Trade-off between RDD lineage and checkpoint?",
+      "What phases does the Catalyst optimizer have? How are logical/physical plans transformed?",
+      "Why is shuffle a performance bottleneck? How to choose between sort-based and hash-based?",
+      "Which pain points of static optimization does AQE solve?",
+      "Why did Spark choose the JVM rather than going native like DuckDB?"
+    ]
+  },
+  "flink": {
+    "blurb": "Stateful compute engine for unified stream and batch: centered on event-time, watermark, and exactly-once state semantics. The industry benchmark for streaming ETL and real-time data warehouses.",
+    "concepts": [
+      "Event Time",
+      "Watermark",
+      "Checkpoint",
+      "State Backend",
+      "Exactly-once"
+    ],
+    "questions": [
+      "How does Flink's Chandy-Lamport checkpoint achieve exactly-once?",
+      "How do watermarks handle out-of-order events? What about late data?",
+      "Trade-off between RocksDB state backend and heap state backend?",
+      "Essential difference between Flink and Spark Structured Streaming?",
+      "Why does Flink treat batch as a special case of streaming?"
+    ]
+  },
+  "kafka": {
+    "blurb": "Distributed durable log system: high-throughput sequential writes via partition + replication. The core bus for event-driven architecture, streaming pipelines, and CDC.",
+    "concepts": [
+      "Log Abstraction",
+      "ISR",
+      "Consumer Group",
+      "Exactly-once",
+      "KRaft"
+    ],
+    "questions": [
+      "Why an append-only log instead of the traditional message queue model?",
+      "How does the ISR mechanism balance availability and consistency? Is acks=all really safe?",
+      "What architectural pain point did KRaft solve by replacing ZooKeeper?",
+      "Why is consumer rebalance slow? How does cooperative rebalance improve it?",
+      "Design differences between Kafka and Pulsar on storage-compute separation?"
+    ]
+  },
+  "iceberg": {
+    "blurb": "Open table format standard: provides ACID transactions, schema evolution, time travel, and hidden partitioning on top of object storage. The core metadata layer of the lakehouse.",
+    "concepts": [
+      "Manifest",
+      "Snapshot",
+      "Hidden Partition",
+      "Schema Evolution",
+      "Copy-on-Write/MoR"
+    ],
+    "questions": [
+      "Why is Iceberg's metadata hierarchy (snapshot / manifest list / manifest) designed this way?",
+      "Trade-off between CoW and MoR for update workloads?",
+      "What makes hidden partitioning better than Hive partitioning?",
+      "Core architectural differences among Iceberg vs Delta Lake vs Hudi?",
+      "How is atomic commit achieved on S3? What role does the catalog play?"
+    ]
+  },
+  "duckdb": {
+    "blurb": "In-process embedded OLAP database: vectorized execution + columnar storage, reshaping the engineering paradigm of an \"analytical SQLite\" for single-node analytics and local data science.",
+    "concepts": [
+      "Vectorized Execution",
+      "Columnar Storage",
+      "Embedded",
+      "Morsel-driven",
+      "Pushdown"
+    ],
+    "questions": [
+      "Where do the performance gains of vectorized execution over the Volcano model come from?",
+      "Why did DuckDB choose an embedded architecture instead of client-server?",
+      "How does morsel-driven parallelism implement NUMA-aware scheduling?",
+      "How is zero-copy on Parquet/Arrow achieved?",
+      "Where is the boundary between single-node OLAP and distributed OLAP?"
+    ]
+  },
+  "clickhouse": {
+    "blurb": "Columnar OLAP database for massive data: MergeTree engine, vectorized execution, and LSM-like merging deliver sub-second aggregations. The industry first choice for real-time analytics and observability.",
+    "concepts": [
+      "MergeTree",
+      "Vectorized Execution",
+      "Sparse Index",
+      "Materialized View",
+      "Distributed Table"
+    ],
+    "questions": [
+      "Similarities and differences between MergeTree's part merging and LSM-tree?",
+      "Why is a sparse primary key index sufficient? Trade-off vs B+ tree?",
+      "Why is ClickHouse not good at high-concurrency point queries?",
+      "How does ReplicatedMergeTree do replica sync? Is ZooKeeper a bottleneck?",
+      "Design differences between ClickHouse and Druid / Pinot on real-time ingestion?"
+    ]
+  },
+  "etcd": {
+    "blurb": "Raft-based distributed KV store: the de facto standard for the Kubernetes control plane; offers linearizable reads, watch, and lease.",
+    "concepts": [
+      "Raft",
+      "MVCC",
+      "Watch",
+      "Lease",
+      "Linearizable Read"
+    ],
+    "questions": [
+      "How does etcd's linearizable read use ReadIndex to skip the log write?",
+      "How does watch guarantee clients don't lose events after compaction?",
+      "Why does etcd use boltdb/bbolt instead of LSM?",
+      "What are the common patterns in which K8s overloads etcd, and how to mitigate them?"
+    ]
+  },
+  "tikv": {
+    "blurb": "Distributed transactional KV store, the storage layer of TiDB: Raft multi-replica + Region sharding + Percolator model for cross-Region distributed transactions.",
+    "concepts": [
+      "Multi-Raft",
+      "Region Split",
+      "Percolator",
+      "RocksDB",
+      "TSO"
+    ],
+    "questions": [
+      "How does Multi-Raft Region split / merge avoid breaking consistency?",
+      "Trade-off between Percolator 2PC and Spanner TrueTime approaches?",
+      "Will PD's TSO single-point become a bottleneck? How to scale it?",
+      "How is load balancing for hot Regions done?"
+    ]
+  },
+  "cockroach": {
+    "blurb": "Spanner-inspired open-source distributed SQL database: Range sharding + Raft replication + HLC clock for serializable cross-region transactions.",
+    "concepts": [
+      "Range Sharding",
+      "Raft",
+      "HLC",
+      "Serializable",
+      "Follower Read"
+    ],
+    "questions": [
+      "Without TrueTime, how to simulate external consistency with HLC + uncertainty interval?",
+      "How are Range split / rebalance and lease transfer coordinated?",
+      "How does the read refresh mechanism under serializable isolation avoid abort storms?",
+      "Compared to Spanner / TiDB, what are CRDB's engineering trade-offs?"
+    ]
+  },
+  "zookeeper": {
+    "blurb": "Classic distributed coordination service: ZAB-based protocol providing a sequentially consistent small-file namespace. The coordination infrastructure of the Hadoop / Kafka / HBase era.",
+    "concepts": [
+      "ZAB",
+      "Znode",
+      "Watch",
+      "Session",
+      "Sequential Consistency"
+    ],
+    "questions": [
+      "Essential difference between ZAB and Paxos / Raft?",
+      "Why is ZK sequentially consistent rather than linearizable?",
+      "What pitfalls have come from watch's one-shot design?",
+      "How do session expiration and ephemeral nodes coordinate to avoid split-brain?"
+    ]
+  },
+  "linux": {
+    "blurb": "The de facto OS kernel of modern infrastructure: covers process scheduling, virtual memory, VFS, network stack, cgroup/namespace. Containers, KVM, eBPF, io_uring are all built on top of it.",
+    "concepts": [
+      "CFS / EEVDF",
+      "VFS",
+      "Network Stack",
+      "cgroup / namespace",
+      "eBPF"
+    ],
+    "questions": [
+      "How did the design motivation shift from CFS to the EEVDF scheduler?",
+      "Trade-off between page cache and direct IO in database scenarios?",
+      "Why is io_uring better than epoll + thread pool under high IOPS?",
+      "How do namespace + cgroup jointly implement container isolation?",
+      "Why can eBPF safely run user bytecode inside the kernel?"
+    ]
+  },
+  "nginx": {
+    "blurb": "High-performance HTTP / reverse-proxy server: master-worker + event-driven + non-blocking IO, the industrial benchmark for 100K+ concurrent connections on a single box.",
+    "concepts": [
+      "Event-driven",
+      "Master-Worker",
+      "Reverse Proxy",
+      "Zero-copy",
+      "Phase Handler"
+    ],
+    "questions": [
+      "Why pick master-worker multi-process over multi-threading?",
+      "How does the phase handler design balance extensibility and performance?",
+      "Fundamental difference from Envoy in data-plane architecture?",
+      "How has load balancing between workers (accept_mutex / SO_REUSEPORT) evolved?",
+      "Key implementation points of the tcp/http upstream keepalive pool?"
+    ]
+  },
+  "cilium": {
+    "blurb": "eBPF-based cloud-native network / security / observability data plane: implements service mesh, network policy, and L7 routing directly at kernel hook points, bypassing the iptables / kube-proxy performance bottleneck.",
+    "concepts": [
+      "eBPF Datapath",
+      "XDP",
+      "Identity-based Policy",
+      "Service Mesh",
+      "Hubble"
+    ],
+    "questions": [
+      "Why can eBPF replace iptables / kube-proxy? Where does the performance gap come from?",
+      "Advantages of Cilium's identity-based policy over IP-based?",
+      "Trade-off between XDP and tc hook, and where each sits in the stack?",
+      "Engineering trade-off of sidecarless service mesh vs Istio sidecar?",
+      "How does Hubble do zero-intrusion L7 observability on the data plane?"
+    ]
+  },
+  "python": {
+    "blurb": "The default control layer of the AI / Data stack: training scripts, DAGs, and the shell of inference services are all Python. CPython's GIL and reference counting dictate that hot paths must sink into C/C++ kernels — Python only does orchestration.",
+    "concepts": [
+      "GIL",
+      "asyncio",
+      "CPython Bytecode",
+      "pybind11 / Cython",
+      "duck typing"
+    ],
+    "questions": [
+      "Roughly how many orders of magnitude is the GIL's throughput gap between CPU-bound and IO-bound?",
+      "Why do PyTorch / NumPy release the GIL in the C++ layer?",
+      "What is the relationship between asyncio's event loop and OS thread scheduling?",
+      "What changes did PEP 703 free-threaded CPython make to reference counting?",
+      "Are type hints enforced at runtime?"
+    ]
+  },
+  "cpp": {
+    "blurb": "The mother tongue of infrastructure: RAII, templates, UB, performance. C++ is the implementation language of nearly all databases, inference runtimes, and game engines; understanding its memory model and ABI is the entry ticket to industrial infra.",
+    "concepts": [
+      "RAII",
+      "Smart Pointer",
+      "Move Semantics",
+      "Memory Model",
+      "Templates"
+    ],
+    "questions": [
+      "Why is RAII more thorough than try/finally or defer?",
+      "Why do Google / LLVM ban exceptions? What is the engineering trade-off?",
+      "Difference between memory_order_relaxed / acquire / release / seq_cst? When can you safely use relaxed?",
+      "What is the underlying mechanism of C++20 coroutines? Trade-off vs stackful coroutines?",
+      "What ABI-stability problems does pimpl solve? At what cost?"
+    ]
+  },
+  "rust": {
+    "blurb": "Ownership + borrowing: eliminating use-after-free class bugs at compile time. Rust is taking C++'s place in databases, browsers, and operating systems.",
+    "concepts": [
+      "Ownership",
+      "Lifetimes",
+      "Send / Sync",
+      "async/await",
+      "Unsafe"
+    ],
+    "questions": [
+      "Which C++ operations does ownership + the borrow checker forbid?",
+      "What do the Send / Sync traits each mean? Why is Rc<T> not Sync but Arc<T> is?",
+      "Rust async is zero-cost yet needs an executor — what does Pin solve on top of that?",
+      "What privileges does Unsafe Rust unlock? When is it unavoidable?",
+      "What scenarios are declarative macros vs procedural macros each suited for?"
+    ]
+  },
+  "go": {
+    "blurb": "Goroutine + channel: the dominant cloud-native language. K8s, Docker, etcd, Prometheus, CockroachDB are all written in Go. Its selling point is not language innovation but combining goroutines + a single toolchain + strong conventions in a way that lets average teams ship reliably.",
+    "concepts": [
+      "Goroutine / GMP",
+      "Channel",
+      "GC",
+      "Context",
+      "Memory Model"
+    ],
+    "questions": [
+      "How much lighter is a goroutine than an OS thread? What does signal-based async preemption solve?",
+      "What is the underlying hchan of channels? Wake-up semantics of buffered vs unbuffered?",
+      "What does the write barrier in concurrent mark-and-sweep solve? What's the typical STW today?",
+      "Correct usage of context.Context? How does cancel propagate down to syscalls?",
+      "What does sync.Pool solve? What is its behavior during GC?"
+    ]
+  },
+  "java": {
+    "blurb": "The industrial mother tongue of data infrastructure: Kafka, Flink, Spark, HDFS, Cassandra, Elasticsearch are nearly all JVM-based. GC, JIT, and off-heap memory management are unavoidable real problems when writing big-data systems.",
+    "concepts": [
+      "JVM / JIT",
+      "GC (G1 / ZGC)",
+      "off-heap",
+      "NIO / Netty",
+      "Project Loom"
+    ],
+    "questions": [
+      "How many orders of magnitude apart are G1 and ZGC on stop-the-world time?",
+      "Why do Flink / Spark both go off-heap to bypass the JVM heap?",
+      "Trigger conditions for JIT's C1 / C2 / tiered compilation?",
+      "How does Java's NIO map to Linux epoll? What does Netty add?",
+      "How much does Project Loom's virtual threads disrupt reactive programming?"
+    ]
+  },
+  "scala": {
+    "blurb": "The mother tongue of Spark / Flink core code: runs on the JVM but with an ML-style type system; implicit / case class / functional collections make DSLs and distributed operators much tighter than Java.",
+    "concepts": [
+      "implicit / given",
+      "case class",
+      "Akka actor",
+      "Future / Effect",
+      "Type class"
+    ],
+    "questions": [
+      "Why does implicit resolution often slow down compilation?",
+      "Why does Spark's DataFrame DSL pick Scala over Java?",
+      "Design differences between Scala 2 and Scala 3 on implicits / metaprogramming?",
+      "Trade-off between Akka actor model and Erlang OTP?",
+      "How is the type class pattern implemented in Scala? What is cut compared to Haskell?"
+    ]
+  },
+  "c": {
+    "blurb": "The de facto standard for operating systems, database storage engines, and network stacks: manual memory management + near-zero runtime. Understanding C is understanding the Linux source.",
+    "concepts": [
+      "Pointer / Aliasing",
+      "undefined behavior",
+      "ABI",
+      "memory model",
+      "Macros / Preprocessor"
+    ],
+    "questions": [
+      "How to work around strict aliasing when writing high-performance SIMD?",
+      "How does the C11 memory model's acquire / release map to x86 / ARM hardware guarantees?",
+      "Why does the Linux kernel still stick to C rather than C++?",
+      "What does signed integer overflow being UB mean for compiler optimization?",
+      "How much benefit can the restrict keyword actually deliver to the optimizer?"
+    ]
+  },
+  "cuda-cpp": {
+    "blurb": "The main battlefield for GPU kernels: extends C++ with __global__ / __device__ and thread/block/grid abstractions. Developers must simultaneously manage register, shared memory, and warp behavior; performance tuning is essentially writing memory access patterns.",
+    "concepts": [
+      "warp / SIMT",
+      "shared memory",
+      "memory coalescing",
+      "stream / event",
+      "occupancy"
+    ],
+    "questions": [
+      "Why does warp divergence cut performance in half on a single if-else?",
+      "How do shared memory bank conflicts occur? How to lay out data to avoid them?",
+      "How does the tensor core WMMA / MMA API differ in programming model from regular CUDA cores?",
+      "Why does raising occupancy not necessarily raise throughput?",
+      "Where does CUDA Graph optimize launch overhead compared to traditional streams?"
+    ]
+  },
+  "ptx": {
+    "blurb": "NVIDIA GPU's virtual ISA: the intermediate layer between CUDA C++ and the actual SASS, providing cross-architecture instruction abstraction. Unavoidable when hand-writing fused kernels, tuning cp.async / mma instructions, or reading disassembly.",
+    "concepts": [
+      "Virtual ISA",
+      "SASS Mapping",
+      "cp.async",
+      "mma Instruction",
+      "Predicate Register"
+    ],
+    "questions": [
+      "Relationship between PTX and SASS? Why doesn't NVIDIA expose SASS directly?",
+      "Latency-hiding difference between cp.async and regular ld.global?",
+      "Why do FlashAttention / cutlass write PTX inline asm directly?",
+      "How does the fragment layout of mma.sync map to the tensor core hardware?",
+      "How big a difference does ptxas optimization level -O3 vs -O0 actually make?"
+    ]
+  },
+  "assembly": {
+    "blurb": "The x86 / ARM / RISC-V machine instruction layer: the final form you must read on performance-critical paths (memcpy, crypto, SIMD kernel, JIT exit) and when debugging core dumps or reading perf annotate.",
+    "concepts": [
+      "calling convention",
+      "SIMD (AVX / NEON)",
+      "Register Allocation",
+      "memory ordering",
+      "ABI"
+    ],
+    "questions": [
+      "Where do x86's strong memory model and ARM's weak model differ when writing lock-free structures?",
+      "Roughly how much frequency downclock does AVX-512 cost? When should you not use it?",
+      "How to map hot instructions back to C source when reading perf annotate?",
+      "Design philosophy difference between RISC-V vector extension and x86 SIMD?",
+      "Why does syscall use a specific register convention?"
+    ]
+  },
+  "pytorch": {
+    "blurb": "Meta's flagship deep learning framework: dynamic compute graph + autograd + ATen / c10 C++ tensor backend + CUDA kernels. The entire LLM stack from nanoGPT to Megatron / vLLM runs on it.",
+    "concepts": [
+      "Autograd",
+      "ATen / c10",
+      "torch.compile",
+      "TorchScript",
+      "Distributed (DDP/FSDP)"
+    ],
+    "questions": [
+      "PyTorch dynamic graph vs. TF static graph: trade-offs in debugging and performance?",
+      "How does torch.compile + TorchInductor use Triton for codegen?",
+      "Core differences between DDP and FSDP in communication scheduling and memory?",
+      "How do TorchScript / FX / Dynamo each capture the compute graph?",
+      "Why does PyTorch increasingly fall back from cuDNN directly to cuBLASLt in large-scale training?"
+    ]
+  },
+  "jax": {
+    "blurb": "Google's functional numerical computation library: pure functions + JIT + vmap / pmap, with nearly all ops eventually compiled to XLA HLO targeting GPU/TPU. The de facto foundation for Gemini / Flax / EasyLM and other large-model projects.",
+    "concepts": [
+      "pure functions",
+      "JIT / XLA",
+      "vmap / pmap",
+      "PyTrees",
+      "shard_map"
+    ],
+    "questions": [
+      "Essential difference between JAX's functional transformation and PyTorch's imperative model?",
+      "Hierarchical relationship between vmap and pmap in auto-parallelization?",
+      "PyTree + tracing vs. PyTorch dynamo: which is more thorough?",
+      "How does JAX implement SPMD on TPU? What drives the shard_map / xmap evolution?",
+      "Why do almost no large-scale inference engines use JAX?"
+    ]
+  },
+  "xla": {
+    "blurb": "Google's ML compiler: lowers high-level HLO IR to GPU/TPU/CPU backends, doing operator fusion, layout selection, and distributed SPMD partitioning. Shared backend for JAX / TF / PyTorch (PJRT).",
+    "concepts": [
+      "HLO",
+      "operator fusion",
+      "layout assignment",
+      "GSPMD",
+      "PJRT"
+    ],
+    "questions": [
+      "Relationship between HLO and MLIR? How does OpenXLA converge on StableHLO going forward?",
+      "How is GSPMD auto-partitioning actually used in large-model SPMD training?",
+      "How does XLA coexist with NVIDIA's own stack (cuDNN / TensorRT) on Hopper / Blackwell?",
+      "What cross-hardware pain points does the PJRT runtime abstraction solve?"
+    ]
+  },
+  "mlir": {
+    "blurb": "LLVM subproject: multi-level IR + dialect + pattern rewrite framework. Triton, TVM, torch-mlir, IREE, and OpenXLA all treat it as the standard middle layer, enabling horizontal reuse across operators / scheduling / hardware backends.",
+    "concepts": [
+      "dialect",
+      "rewrite pattern",
+      "PassManager",
+      "lowering pipeline",
+      "linalg / affine"
+    ],
+    "questions": [
+      "Core difference between MLIR and LLVM IR? Why does ML compilation need multi-level IR?",
+      "What scheduling optimizations are linalg vs. affine dialect each suited for?",
+      "Why are Triton, TVM Unity, and torch-mlir all rebuilt on top of MLIR?",
+      "How does IREE use MLIR to compile models directly to edge hardware?"
+    ]
+  },
+  "tvm": {
+    "blurb": "Open-source ML compiler for heterogeneous hardware: Relay / Relax high-level IR + tensor IR + schedule + auto-tuning. The academic benchmark in ML compilers, with XLA, TensorRT, and IREE as main competitors.",
+    "concepts": [
+      "Relay / Relax",
+      "TensorIR",
+      "AutoTVM / Ansor",
+      "BYOC",
+      "Unity"
+    ],
+    "questions": [
+      "Difference between TVM's schedule and Halide's same-named concept?",
+      "How does Ansor / MetaSchedule prune the auto-scheduling search space?",
+      "Engineering pattern for plugging cuDNN / TensorRT into BYOC?",
+      "How does TVM evolve multi-stage compilation post-Unity?"
+    ]
+  },
+  "hf-transformers": {
+    "blurb": "Hugging Face's open-source model library: smooths over the API, tokenizer, generation, and training loop for nearly every transformer architecture. The de facto upper layer on top of PyTorch for the NLP / multimodal community.",
+    "concepts": [
+      "AutoModel",
+      "tokenizers",
+      "generate()",
+      "Trainer",
+      "PEFT"
+    ],
+    "questions": [
+      "How does Transformers use config + AutoModel abstraction to support hundreds of architectures?",
+      "How are sampling / beam / speculative organized internally in generate()?",
+      "What pickle security issues does Hugging Face Hub's safetensors solve?",
+      "Why was the Tokenizers library rewritten in Rust? Where's the perf gap?",
+      "Why do big companies prefer in-house solutions over directly using Trainer?"
+    ]
+  },
+  "ray": {
+    "blurb": "UC Berkeley distributed Python framework: actor + task model lets you write multi-machine code as if it were single-machine. Ray Train / Tune / Serve / RLlib form a complete AI stack; vLLM and a lot of OpenAI's training / inference infra run on top.",
+    "concepts": [
+      "Actor / Task",
+      "Object Store",
+      "Placement Group",
+      "Ray Train",
+      "RLlib"
+    ],
+    "questions": [
+      "Design differences between Ray actors and Erlang actors / Akka?",
+      "How does the object store use plasma + shared memory to avoid serialization overhead?",
+      "How does Ray Train cooperate with DeepSpeed / DDP?",
+      "Why did vLLM choose Ray over K8s-native?",
+      "Ray cluster autoscaling vs. K8s HPA trade-offs?"
+    ]
+  },
+  "llama": {
+    "blurb": "Meta's open-source LLM series: Llama 2/3 turned the modern decoder-only template (RoPE, GQA, SwiGLU, RMSNorm) into a de facto standard. The open-source ecosystem (QLoRA, vLLM, llama.cpp) is built almost entirely around it.",
+    "concepts": [
+      "RoPE",
+      "GQA",
+      "SwiGLU",
+      "RMSNorm",
+      "instruction tuning"
+    ],
+    "questions": [
+      "RoPE's advantage over absolute positional encoding / ALiBi for long-context extrapolation?",
+      "What does GQA / MQA save on inference KV cache vs MHA?",
+      "Key changes in data / tokenizer / context length from Llama 2 to 3?",
+      "Why did the community converge on Llama instead of Mistral as the mainstream ecosystem?",
+      "The scaling-law math behind Llama 3's choice of 405B parameters?"
+    ]
+  },
+  "gan": {
+    "blurb": "Goodfellow 2014: the generator-vs-discriminator minimax game pushed generative models into the implicit-distribution era. BigGAN / StyleGAN dominated high-fidelity image generation until partly displaced by diffusion models.",
+    "concepts": [
+      "Minimax game",
+      "Mode Collapse",
+      "Wasserstein GAN",
+      "StyleGAN",
+      "Spectral Norm"
+    ],
+    "questions": [
+      "GAN's minimax structurally resembles RLHF's reward / policy game — is the analogy valid?",
+      "Root cause of mode collapse? How do WGAN / WGAN-GP mitigate it?",
+      "Why is StyleGAN's latent space so disentangleable?",
+      "Why has diffusion gradually replaced GAN at large data scale? Is training stability the crux?",
+      "Relationship between GAN and EBM, normalizing flow?"
+    ]
+  },
+  "vae": {
+    "blurb": "Kingma & Welling 2013: extends autoencoders to a probabilistic framework, doing variational inference via ELBO (reconstruction + KL). Ancestor of diffusion's score matching; VQ-VAE in turn laid the basis for modern multimodal tokenization.",
+    "concepts": [
+      "ELBO",
+      "Reparameterization",
+      "Posterior Collapse",
+      "VQ-VAE",
+      "Latent prior"
+    ],
+    "questions": [
+      "How does the KL-vs-reconstruction trade-off in ELBO control latent expressiveness?",
+      "What gradient problem does the reparameterization trick solve?",
+      "Why is posterior collapse severe on VAE-LMs? How to mitigate?",
+      "How does VQ-VAE discretize continuous latents? Relation to SimVLM / Parti tokenizers?",
+      "Unification of VAE and diffusion under a score-matching view?"
+    ]
+  },
+  "clip": {
+    "blurb": "OpenAI 2021: pulls vision and text encoders into a shared embedding space via contrastive learning on image-text pairs. Opened the whole paradigm of zero-shot visual classification, diffusion conditioning, and multimodal retrieval.",
+    "concepts": [
+      "Contrastive learning",
+      "InfoNCE",
+      "Image-text pair",
+      "Zero-shot classification",
+      "Frozen encoder"
+    ],
+    "questions": [
+      "Why does InfoNCE scale more easily than triplet loss?",
+      "Why does CLIP's zero-shot prompt design matter so much?",
+      "How is the CLIP text encoder aligned as conditioning input in Stable Diffusion?",
+      "What did OpenCLIP / SigLIP improve mathematically over InfoNCE?",
+      "Feature differences between CLIP's vision encoder and a purely supervised ViT?"
+    ]
+  },
+  "mamba": {
+    "blurb": "Gu & Dao 2023: selective state space model + hardware-friendly scan algorithm. Offers Transformer a viable alternative dropping sequence complexity from O(N²) to O(N), spawning Hybrid SSM / Attention architectures.",
+    "concepts": [
+      "SSM",
+      "Selective scan",
+      "HiPPO",
+      "Hardware-aware kernel",
+      "Hybrid arch"
+    ],
+    "questions": [
+      "What did selective SSM add over S4? Why is this Mamba's performance breakthrough?",
+      "Key points for hardware-friendly implementation of selective scan kernel (SRAM, blocked scan)?",
+      "Where does Mamba's real edge over Transformer lie on long context / inference?",
+      "Why are mainstream large models still picking Transformer over SSM?",
+      "Can hybrid Mamba + Attention (Jamba / Zamba) become the next-gen default architecture?"
+    ]
+  },
+  "speculative-decoding": {
+    "blurb": "Leviathan 2022: a small draft model guesses K tokens that the target large model verifies in parallel. Lifts throughput 2-3× without changing the output distribution — standard kit for modern LLM inference optimization.",
+    "concepts": [
+      "Draft Model",
+      "Verification",
+      "Acceptance Rate",
+      "Tree Speculation",
+      "Medusa"
+    ],
+    "questions": [
+      "Why does the speculative-sampling acceptance probability derivation strictly preserve the original distribution?",
+      "How much do tree / multi-branch speculation (SpecInfer / EAGLE / Medusa) lift the acceptance rate?",
+      "How to pick a draft model? Must it be the same family as the target?",
+      "How does speculation schedule alongside continuous batching under batched serving?",
+      "Why does speculation's gain curve degrade in long-context settings?"
+    ]
+  },
+  "continuous-batching": {
+    "blurb": "Iteration-level scheduling proposed by Orca 2022: stitch different sequences into one batch advancing step-by-step, paired with KV Cache + PagedAttention to push LLM-serving throughput and latency to industry-grade simultaneously.",
+    "concepts": [
+      "Iteration-level batching",
+      "KV Cache",
+      "Paged Attention",
+      "Prefill / Decode separation",
+      "Chunked Prefill"
+    ],
+    "questions": [
+      "Why is static batching completely unworkable for LLM serving?",
+      "What external-fragmentation problem does PagedAttention solve by abstracting KV cache as page tables?",
+      "Operator and bandwidth differences between the prefill and decode phases?",
+      "How do chunked prefill and disaggregated serving (DistServe) push optimization further?",
+      "Do speculative decoding and continuous batching conflict in scheduling?"
+    ]
+  },
+  "reinforcement-learning": {
+    "blurb": "Markov Decision Processes + policy / value learning: from TD learning to Policy Gradient to PPO. AlphaGo, ChatGPT RLHF, robot control — nearly every autonomous decision system rests on this math.",
+    "concepts": [
+      "MDP",
+      "Bellman equation",
+      "Policy Gradient",
+      "Actor-Critic",
+      "PPO / TRPO"
+    ],
+    "questions": [
+      "Policy gradient vs supervised learning: how many orders of magnitude apart on sample efficiency? Why?",
+      "What approximation does PPO's clip correspond to under the trust-region view?",
+      "Trade-off between RM + PPO and offline RL (DPO) in RLHF?",
+      "Similarities and differences between AlphaZero self-play and LLM RLHF?",
+      "Why does LLM RLHF now usually run only very short PPO?"
+    ]
+  },
+  "mapreduce": {
+    "blurb": "Dean & Ghemawat 2004: abstracts large-scale data processing into three stages — map + shuffle + reduce — with automatic fault tolerance and parallelism. Directly spawned the Hadoop era and later Spark / Flink; the ancestor of modern distributed compute.",
+    "concepts": [
+      "Map / Reduce",
+      "Shuffle",
+      "Data Locality",
+      "Speculative Execution",
+      "Master / Worker"
+    ],
+    "questions": [
+      "Essential difference between MapReduce fault tolerance and Spark RDD lineage?",
+      "Why is shuffle the performance bottleneck of MapReduce? Motivation behind the sort-based design?",
+      "What kind of straggler does speculative execution solve?",
+      "What are the limitations of MapReduce? Why could DAG engines replace it?",
+      "What scenarios today still suit pure MapReduce over Spark / Flink?"
+    ]
+  },
+  "gfs": {
+    "blurb": "Ghemawat et al 2003: a fault-tolerant distributed file system designed for large-scale analytics — append-heavy, chunk replication, master metadata. HDFS and Colossus are direct descendants; object storage semantics also borrow from it.",
+    "concepts": [
+      "Master / Chunkserver",
+      "Chunk Replication",
+      "Append-only",
+      "Lease",
+      "Atomic Record Append"
+    ],
+    "questions": [
+      "Where is the bottleneck of GFS's single master? How did Colossus solve it?",
+      "Why is GFS append-optimized rather than optimized for random writes?",
+      "Why is GFS's consistency model loose? How does record append handle it?",
+      "Essential differences between S3 / object storage and GFS in metadata / consistency / network model?",
+      "Why do modern lakehouses still need a transaction layer (Iceberg/Delta/Hudi) on top of object storage?"
+    ]
+  },
+  "bigtable": {
+    "blurb": "Google 2006: a column-family sparse KV table on top of GFS — sorted row keys, SSTable + memtable write path. HBase, Cassandra, TiKV, ScyllaDB are all spiritual descendants; the foundational paper of the LSM-tree era.",
+    "concepts": [
+      "LSM-tree",
+      "SSTable / memtable",
+      "Tablet",
+      "Sorted Row Key",
+      "Column Family"
+    ],
+    "questions": [
+      "Where does Bigtable's LSM write path mainly differ from modern RocksDB?",
+      "How do tablet split / merge map to TiKV's region concept?",
+      "Trade-offs of sparse column families for wide-table / time-series workloads?",
+      "Bigtable's consistency is strong within a row, none across rows — does that trade-off still hold today?",
+      "Evolution from Bigtable to Spanner? Why is external consistency needed?"
+    ]
+  },
+  "dynamo": {
+    "blurb": "Amazon 2007: decentralized KV with consistent hashing + vector clock + tunable NRW + sloppy quorum. The flagship of the AP route under CAP, inspiring an entire generation of NoSQL — Cassandra / DynamoDB / Riak.",
+    "concepts": [
+      "Consistent Hashing",
+      "Vector Clock",
+      "NRW",
+      "Sloppy Quorum",
+      "Hinted Handoff"
+    ],
+    "questions": [
+      "Engineering motivation for Dynamo picking AP over CP? Why does Amazon's shopping cart tolerate conflicts?",
+      "Vector clocks were exposed to the client — why were they later widely replaced by LWW + HLC?",
+      "What consistency boundary can sloppy quorum + hinted handoff actually guarantee?",
+      "How does DynamoDB add transactions and strongly consistent reads on top of the Dynamo paper?",
+      "Comparing Cassandra / Riak / Voldemort, why did Cassandra win industrially?"
+    ]
+  },
+  "cap-theorem": {
+    "blurb": "Brewer's conjecture + Gilbert-Lynch's proof: when network partitions are inevitable, strong consistency and high availability are mutually exclusive. The design trade-offs of modern distributed systems (Spanner / Cockroach / Dynamo / Cassandra) all start here.",
+    "concepts": [
+      "Consistency",
+      "Availability",
+      "Partition Tolerance",
+      "PACELC",
+      "AP vs CP"
+    ],
+    "questions": [
+      "The \"C\" in CAP is linearizability, not the C in ACID — how do they map?",
+      "Which CAP shortcomings does PACELC's no-partition latency-vs-consistency trade-off address?",
+      "Spanner claims to be CA — how is that defensible within the CAP framework?",
+      "The \"eventual consistency\" we talk about in production is usually BASE — how far is that from CAP's A?",
+      "Why can true P only be tolerated, not eliminated? Relation to physical network models?"
+    ]
+  },
+  "consistent-hashing": {
+    "blurb": "Karger 1997: maps both nodes and data keys onto the same ring so node changes only affect adjacent segments. Memcached, Dynamo, Cassandra, Kafka partitions, CDN routing all rely on it for minimal data migration.",
+    "concepts": [
+      "Hash Ring",
+      "Virtual Node",
+      "Jump Hash",
+      "Rendezvous Hash",
+      "Bounded Loads"
+    ],
+    "questions": [
+      "What node-imbalance problem on the hash ring do vnodes solve?",
+      "Implementation / memory differences between Jump Consistent Hash and traditional ring hash?",
+      "When is Rendezvous (HRW) hash a better fit than ring hash?",
+      "How does Cassandra's token range map to consistent hashing?",
+      "How is consistent hashing related to distributed hashtables (Chord/Kademlia)?"
+    ]
+  },
+  "lamport-clocks": {
+    "blurb": "Lamport 1978: in distributed systems without a global physical clock, define event ordering via the happen-before partial order. Later extended to vector / hybrid logical clocks — the foundation for Spanner / Cockroach / causal-consistency systems.",
+    "concepts": [
+      "happen-before",
+      "Vector Clock",
+      "HLC",
+      "Causal Consistency",
+      "Logical Time"
+    ],
+    "questions": [
+      "Why can Lamport timestamps yield a total order while losing real causal information?",
+      "Difference between Vector Clock and Version Vector?",
+      "What pure-logical-clock pain points does Hybrid Logical Clock solve?",
+      "How much cheaper are causal consistency / session consistency than linearizability in engineering?",
+      "Why did Spanner choose TrueTime + real physical clocks over pure HLC?"
+    ]
+  },
+  "two-phase-commit": {
+    "blurb": "Classic distributed transaction protocol: the coordinator runs prepare then commit, guaranteeing atomicity at the cost of blocking risk. Spanner, TiKV, and CockroachDB all build usable distributed transactions via 2PC variants + Paxos / Raft replication.",
+    "concepts": [
+      "prepare / commit",
+      "Coordinator",
+      "Blocking",
+      "3PC",
+      "Percolator"
+    ],
+    "questions": [
+      "What is classic 2PC's blocking problem? Does 3PC really solve it?",
+      "How does Spanner's 2PC over Paxos avoid the coordinator single point?",
+      "The Percolator model uses client-side 2PC + Bigtable for transactions — where's the perf bottleneck?",
+      "How do TiKV's async commit / 1PC optimizations cut a phase?",
+      "Saga vs 2PC trade-off in microservice scenarios?"
+    ]
+  },
+  "ebpf": {
+    "blurb": "A safe bytecode VM inside the Linux kernel: dynamically inject user programs at syscall / tracing / network hook points, with the verifier statically guaranteeing safety. Cilium's data plane, bpftrace, katran, and eBPF-based observability all build on it.",
+    "concepts": [
+      "BPF VM",
+      "Verifier",
+      "kprobe / uprobe",
+      "XDP / tc",
+      "BTF / CO-RE"
+    ],
+    "questions": [
+      "How does the verifier statically prove bytecode terminates and is memory-safe?",
+      "Why are BPF maps, shared between kernel and userspace, the core?",
+      "Position and performance gap between XDP and tc / netfilter?",
+      "What pain point of running eBPF programs across kernel versions do BTF + CO-RE solve?",
+      "Why is Cilium with eBPF much faster than iptables / kube-proxy?"
+    ]
+  },
+  "arrow": {
+    "blurb": "Cross-language columnar in-memory format + zero-copy transport standard: DuckDB / Spark / Polars / ClickHouse / pandas 2.0 all use it as a shared memory layer. Flight extends it into a cross-process RPC protocol.",
+    "concepts": [
+      "Columnar Memory",
+      "Zero-copy",
+      "Flight",
+      "ADBC",
+      "Compute Kernels"
+    ],
+    "questions": [
+      "Essential difference between Arrow's columnar layout and Parquet's columnar file?",
+      "How many times faster is Arrow Flight than ODBC/JDBC for big-data workloads? Where is the bottleneck?",
+      "What is ADBC trying to unify? Its relationship to Flight SQL?",
+      "How does DuckDB do zero-copy execution on Arrow?",
+      "Which NumPy pain points does the pandas 2.0 Arrow backend solve?"
+    ]
+  },
+  "parquet": {
+    "blurb": "Columnar file format originating at Twitter / Cloudera: row group + column chunk + page, with dictionary / RLE / delta encoding. The de facto storage format of the lakehouse era (Iceberg / Hudi / Delta Lake).",
+    "concepts": [
+      "Row Group",
+      "Column Chunk",
+      "Encoding (RLE/Delta/Dict)",
+      "Predicate Pushdown",
+      "Statistics"
+    ],
+    "questions": [
+      "Essential difference between Parquet and ORC in row group / stripe design?",
+      "Why are Dictionary + RLE encodings particularly effective on wide sparse columns?",
+      "How far down can predicate pushdown reach in Parquet?",
+      "What did Parquet v2 → v3 add in logical type / Bloom filter / page index?",
+      "Why do all lakehouse formats choose Parquet over Arrow IPC?"
+    ]
+  },
+  "hudi": {
+    "blurb": "Lakehouse table format originating at Uber: native support for upsert / incremental query / record-level index. MoR / CoW dual table types fit different write-heavy / read-heavy workloads, competing head-to-head with Iceberg / Delta.",
+    "concepts": [
+      "Copy-on-Write",
+      "Merge-on-Read",
+      "Record Index",
+      "Incremental Query",
+      "Timeline"
+    ],
+    "questions": [
+      "Trade-off between MoR and CoW table types on write amplification / read amplification?",
+      "Where is Hudi's record-level index faster than Iceberg's manifest index?",
+      "How does Hudi's timeline implement ACID commits? Difference from Iceberg's snapshot model?",
+      "Engineering value of incremental query (incremental pull) in CDC pipelines?",
+      "Hudi vs Iceberg vs Delta: real differences when picking one in production at scale?"
+    ]
+  },
+  "delta-lake": {
+    "blurb": "Lakehouse table format from Databricks: Parquet + JSON / checkpoint transaction log delivers ACID, time travel, and schema evolution. The most natural lakehouse storage layer for the Spark ecosystem.",
+    "concepts": [
+      "Transaction Log",
+      "Optimistic Concurrency",
+      "Time Travel",
+      "Z-Order",
+      "Liquid Clustering"
+    ],
+    "questions": [
+      "Design trade-offs between Delta's transaction log and Iceberg's manifest?",
+      "Difference between Z-Order and Hilbert curve for multi-dimensional data skipping?",
+      "Which Z-Order pain point does Liquid Clustering solve?",
+      "Why has Delta on non-Spark engines (DuckDB / Trino) always lagged behind Iceberg in read/write?",
+      "Is Delta UniForm's Iceberg compatibility real or marketing?"
+    ]
+  },
+  "airflow": {
+    "blurb": "Batch scheduling framework originating at Airbnb: DAG-as-code, Python operator + scheduler + executor trio. The de facto industry standard for ETL / ML pipeline orchestration in data teams; Prefect / Dagster are later rivals.",
+    "concepts": [
+      "DAG",
+      "Operator",
+      "Scheduler",
+      "Executor",
+      "XCom"
+    ],
+    "questions": [
+      "Where are the common bottlenecks of Airflow scheduler's single-point scalability?",
+      "Trade-off between Celery / Kubernetes / Local executor?",
+      "Why is XCom unsuitable for passing big data? How does the industry usually work around it?",
+      "Fundamental difference between Airflow and Dagster / Prefect on data asset abstraction?",
+      "Why are ML pipelines now leaning toward Argo / Kubeflow rather than Airflow?"
+    ]
+  },
+  "trino": {
+    "blurb": "Facebook Presto fork: an MPP in-memory execution engine that federates a single SQL query across Hive / Iceberg / Postgres / S3. The industry first choice for ad-hoc / BI on the lakehouse; competitors include Starburst / Spark SQL / DuckDB.",
+    "concepts": [
+      "MPP",
+      "Connector",
+      "Cost-based Optimizer",
+      "Pipeline Execution",
+      "Coordinator / Worker"
+    ],
+    "questions": [
+      "Why is the Presto / Trino in-memory execution model unsuitable for long-running queries?",
+      "How does the connector framework plug in Iceberg / Hive metastore?",
+      "Trade-off between Trino and Spark SQL for ad-hoc vs ETL workloads?",
+      "How are native engines like Aria / Velox integrated into Trino?",
+      "Why can ClickHouse / DuckDB challenge Trino on single-node OLAP?"
+    ]
+  },
+  "kubernetes": {
+    "blurb": "The open-source successor to Google Borg: abstracts container orchestration into declarative API + control loop + etcd. The de facto standard of the cloud-native era; all Service Mesh / GitOps / Operator patterns are built on its controller pattern.",
+    "concepts": [
+      "Pod / Deployment",
+      "Controller / Reconcile",
+      "Scheduler",
+      "etcd",
+      "CRD / Operator"
+    ],
+    "questions": [
+      "What is the essence of Kubernetes' declarative reconcile model?",
+      "Difference between the scheduler's predicate / priority and Borg's?",
+      "What are etcd's bottlenecks at large scale (tens of thousands of nodes), and how to mitigate?",
+      "Performance ceiling of kube-proxy / iptables mode, and how does eBPF (Cilium) replace it?",
+      "Evolution trend of the Operator pattern and sidecarless service mesh?"
+    ]
+  },
+  "docker": {
+    "blurb": "Wraps namespace + cgroup + overlayfs into a developer-friendly image / container abstraction. Later split into the OCI spec and the standardized containerd / runc runtimes; the entry point of the entire cloud-native software delivery chain.",
+    "concepts": [
+      "namespace",
+      "cgroup",
+      "overlayfs",
+      "OCI image",
+      "containerd / runc"
+    ],
+    "questions": [
+      "Where is the essential difference between Docker and LXC?",
+      "What does namespace vs cgroup each handle? How do they jointly implement isolation?",
+      "What pain points of Docker v1 image did the OCI image format solve?",
+      "Relationship between containerd / CRI-O / Docker shim? Why did K8s drop dockershim?",
+      "Trade-offs of rootless container / gVisor / Kata along the security dimension?"
+    ]
+  },
+  "redis": {
+    "blurb": "An in-memory data structure server written in C by Salvatore Sanfilippo: single-threaded + IO multiplexing + multiple data structures + AOF/RDB persistence. The de facto standard for caching, distributed locks, message queues, and session storage.",
+    "concepts": [
+      "Single-threaded Event Loop",
+      "AOF / RDB",
+      "Cluster Slots",
+      "Streams",
+      "RESP Protocol"
+    ],
+    "questions": [
+      "Why did Redis pick single-threaded? How to scale in the multi-core era?",
+      "Durability / performance trade-off between AOF rewrite and RDB snapshot?",
+      "What is the trade-off of Redis Cluster's 16384-slot design vs consistent hashing?",
+      "Comparison between Redis Streams and Kafka in lightweight scenarios?",
+      "What did Redis 7's functions / RESP3 / multi-threaded IO change?"
+    ]
+  },
+  "postgres": {
+    "blurb": "Industrial-grade open-source relational database: MVCC, extensible type system, rich indexes, partial / expression indexes. From OLTP to GIS, JSONB, and vector search (pgvector) it can carry almost any data workload.",
+    "concepts": [
+      "MVCC",
+      "WAL",
+      "B-tree / GIN / GIST",
+      "TOAST",
+      "Logical Replication"
+    ],
+    "questions": [
+      "Essential difference between PG's MVCC and MySQL InnoDB's? Why is vacuum necessary?",
+      "How do WAL + logical replication enable cross-version primary-secondary replication?",
+      "What data distributions are GIN / GIST / BRIN each suited for?",
+      "Feasibility of pgvector / IVFFlat pushing PG into a vector database?",
+      "Why is PG the de facto base of choice for Aurora / Cockroach / TimescaleDB?"
+    ]
+  },
+  "rocksdb": {
+    "blurb": "Facebook's high-performance embedded KV store forked from LevelDB: LSM-tree + WAL + column family + rich compaction strategies. The underlying engine of TiKV / CockroachDB / MyRocks / Flink state backend.",
+    "concepts": [
+      "LSM-tree",
+      "Compaction (Leveled / Universal)",
+      "Column Family",
+      "Block Cache",
+      "WAL"
+    ],
+    "questions": [
+      "Trade-offs of Leveled / Universal / FIFO compaction across the write / read / space amplification triangle?",
+      "Trade-off between RocksDB and PG / InnoDB on NVMe + large memory?",
+      "Why do TiKV / CockroachDB both pick RocksDB, but TiKV later had to add Pessimistic Lock?",
+      "How much space can MyRocks save over InnoDB in write-heavy scenarios?",
+      "Common GC / compaction tuning experience for Flink using RocksDB as state backend?"
+    ]
+  },
+  "grpc": {
+    "blurb": "Google's high-performance RPC framework: HTTP/2 multiplexing + Protobuf binary + streaming calls. The de facto communication standard for distributed systems / microservices, long-coexisting with REST / Thrift / Cap'n Proto.",
+    "concepts": [
+      "HTTP/2",
+      "Protobuf",
+      "Stream RPC",
+      "Deadline / Cancellation",
+      "Interceptor"
+    ],
+    "questions": [
+      "Why is gRPC multiplexing more efficient than HTTP/1 keepalive? Does head-of-line blocking still exist?",
+      "How much smaller is Protobuf wire format than JSON? Where does the deserialization overhead lie?",
+      "What scenarios suit each of gRPC streaming's four modes (unary / server / client / bidi)?",
+      "Performance / scheduling gap between grpc-go and grpc-java?",
+      "How do Cap'n Proto / FlatBuffers do zero-copy outside of gRPC?"
+    ]
+  },
+  "envoy": {
+    "blurb": "Lyft's L4/L7 data-plane proxy: xDS configuration protocol + rich filter chain + strong observability. The de facto data plane of Service Mesh (Istio / Consul / AWS App Mesh), with a role completely diverged from nginx.",
+    "concepts": [
+      "xDS",
+      "Filter Chain",
+      "Listener / Cluster",
+      "Hot Restart",
+      "Observability"
+    ],
+    "questions": [
+      "What essential advantage does Envoy's xDS API have over nginx's reload model?",
+      "Design difference between filter chain and nginx phase handler?",
+      "How does Envoy hot restart achieve zero downtime?",
+      "Trade-off between Envoy sidecar and Cilium ambient for Service Mesh?",
+      "Memory / config-distribution bottlenecks of Envoy at large mesh scale?"
+    ]
+  }
+}

@@ -2,16 +2,21 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import graphData from '../src/data/graph.json';
-import nodeDetailsRaw from '../src/data/details.json';
+import graphEn from '../src/data/graph.en.json';
+import graphZh from '../src/data/graph.zh.json';
+import detailsEnRaw from '../src/data/details.en.json';
+import detailsZhRaw from '../src/data/details.zh.json';
 import type {
   Domain,
   GraphEdge,
   GraphNode,
+  Locale,
   NodeDetail,
   NodeResource,
   NodeType,
 } from '../src/data/types';
+import { DEFAULT_LOCALE, LOCALES } from '../src/data/types';
+import { STRINGS } from '../src/i18n/strings';
 import {
   ArrowUpRight,
   Box,
@@ -24,9 +29,26 @@ import {
   X as IconX,
 } from 'lucide-react';
 
-const graphNodes = graphData.nodes as GraphNode[];
-const graphEdges = graphData.edges as GraphEdge[];
-const nodeDetails = nodeDetailsRaw as Record<string, NodeDetail>;
+// Edges only carry IDs (`from`/`to`), so they're locale-agnostic — the EN file
+// is the canonical source for topology.
+const graphEdges = graphEn.edges as GraphEdge[];
+
+const nodesByLocale: Record<Locale, GraphNode[]> = {
+  en: graphEn.nodes as GraphNode[],
+  zh: graphZh.nodes as GraphNode[],
+};
+
+const detailsByLocale: Record<Locale, Record<string, NodeDetail>> = {
+  en: detailsEnRaw as Record<string, NodeDetail>,
+  zh: detailsZhRaw as Record<string, NodeDetail>,
+};
+
+const nodesByIdByLocale: Record<Locale, Map<string, GraphNode>> = {
+  en: new Map(nodesByLocale.en.map((n) => [n.id, n])),
+  zh: new Map(nodesByLocale.zh.map((n) => [n.id, n])),
+};
+
+const LOCALE_STORAGE_KEY = 'stacksense.locale';
 
 const ForceGraph2D = dynamic(() => import('react-force-graph-2d'), {
   ssr: false,
@@ -192,6 +214,36 @@ export default function Graph() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [activeResult, setActiveResult] = useState(0);
 
+  // ── Locale ─────────────────────────────────────────────────
+  // Default to the build-time default; client-side hydration reads the saved
+  // preference from localStorage. We keep SSR output stable by NOT reading
+  // localStorage during initial render.
+  const [locale, setLocale] = useState<Locale>(DEFAULT_LOCALE);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const saved = window.localStorage.getItem(LOCALE_STORAGE_KEY);
+    if (saved && (LOCALES as string[]).includes(saved)) {
+      setLocale(saved as Locale);
+    }
+  }, []);
+
+  const switchLocale = useCallback((next: Locale) => {
+    setLocale(next);
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(LOCALE_STORAGE_KEY, next);
+      document.documentElement.setAttribute(
+        'lang',
+        next === 'zh' ? 'zh-CN' : 'en'
+      );
+    }
+  }, []);
+
+  const t = STRINGS[locale];
+  // Derive locale-scoped data with stable identity per locale so downstream
+  // useMemo / useCallback deps don't re-fire on every render.
+  const graphNodes = useMemo(() => nodesByLocale[locale], [locale]);
+  const nodeDetails = useMemo(() => detailsByLocale[locale], [locale]);
 
   useEffect(() => {
     const update = () => {
@@ -228,11 +280,11 @@ export default function Graph() {
         if (n.label.toLowerCase().includes(q)) return true;
         if (n.id.toLowerCase().includes(q)) return true;
         if (n.domain.toLowerCase().includes(q)) return true;
-        for (const t of n.tags) if (t.toLowerCase().includes(q)) return true;
+        for (const tag of n.tags) if (tag.toLowerCase().includes(q)) return true;
         return false;
       })
       .slice(0, 12);
-  }, [searchQuery]);
+  }, [searchQuery, graphNodes]);
 
   useEffect(() => {
     setActiveResult(0);
@@ -253,6 +305,7 @@ export default function Graph() {
   }, []);
 
   // No pinning — let the force simulation lay nodes out organically (Obsidian-style).
+  // Re-derives when locale changes: labels are baked into FGNode for canvas painting.
   const graphData = useMemo(
     () => ({
       nodes: graphNodes.map(
@@ -268,7 +321,7 @@ export default function Graph() {
         target: e.to,
       })) as FGLink[],
     }),
-    []
+    [graphNodes]
   );
 
   // Tune the d3-force simulation so connected nodes settle into clusters
@@ -488,7 +541,7 @@ export default function Graph() {
     [isLinkLit]
   );
 
-  const panel = derivePanel(selected);
+  const panel = useMemo(() => derivePanel(selected, locale), [selected, locale]);
 
   return (
     <div className={`full-graph ${selected ? 'has-panel' : ''}`}>
@@ -517,7 +570,7 @@ export default function Graph() {
             ref={searchInputRef}
             type="text"
             className="graph-search-input"
-            placeholder="搜索节点…"
+            placeholder={t.searchPlaceholder}
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -546,7 +599,7 @@ export default function Graph() {
                 else searchInputRef.current?.blur();
               }
             }}
-            aria-label="搜索节点"
+            aria-label={t.searchAria}
           />
           <kbd className="graph-search-hint" aria-hidden="true">
             ⌘K
@@ -567,13 +620,23 @@ export default function Graph() {
                 >
                   <span className="graph-search-result-label">{n.label}</span>
                   <span className="graph-search-result-type">
-                    {labelForType(n.type)}
+                    {labelForType(n.type, locale)}
                   </span>
                 </li>
               ))}
             </ul>
           )}
         </div>
+
+        <button
+          type="button"
+          className="graph-lang-btn"
+          onClick={() => switchLocale(locale === 'en' ? 'zh' : 'en')}
+          aria-label={t.langSwitcherLabel}
+          title={t.langSwitcherLabel}
+        >
+          {t.langGlyph}
+        </button>
       </header>
 
       <div ref={containerRef} className="graph-canvas-wrap">
@@ -611,13 +674,13 @@ export default function Graph() {
         )}
       </div>
 
-      <div className="graph-zoom-controls" role="group" aria-label="缩放">
+      <div className="graph-zoom-controls" role="group" aria-label={t.zoomIn}>
         <button
           type="button"
           className="graph-zoom-btn"
           onClick={handleZoomIn}
-          aria-label="放大"
-          title="放大"
+          aria-label={t.zoomIn}
+          title={t.zoomIn}
         >
           <Plus size={15} strokeWidth={1.8} />
         </button>
@@ -625,8 +688,8 @@ export default function Graph() {
           type="button"
           className="graph-zoom-btn"
           onClick={handleZoomOut}
-          aria-label="缩小"
-          title="缩小"
+          aria-label={t.zoomOut}
+          title={t.zoomOut}
         >
           <Minus size={15} strokeWidth={1.8} />
         </button>
@@ -634,8 +697,8 @@ export default function Graph() {
           type="button"
           className="graph-zoom-btn"
           onClick={handleZoomFit}
-          aria-label="适应窗口"
-          title="适应窗口"
+          aria-label={t.zoomFit}
+          title={t.zoomFit}
         >
           <Maximize2 size={13} strokeWidth={1.8} />
         </button>
@@ -651,6 +714,7 @@ export default function Graph() {
         panel={panel}
         onClose={() => setSelected(null)}
         onSelectNode={focusNode}
+        locale={locale}
       />
     </div>
   );
@@ -699,12 +763,11 @@ interface PanelData {
   related: RelatedNode[];
 }
 
-const nodesById = new Map(graphNodes.map((n) => [n.id, n]));
-
 // Edges are treated as undirected here — a connection is just a connection,
 // regardless of which side is `from`/`to` in the JSON. Same node connected
 // via multiple edges only appears once.
-function buildRelated(nodeId: string): RelatedNode[] {
+function buildRelated(nodeId: string, locale: Locale): RelatedNode[] {
+  const byId = nodesByIdByLocale[locale];
   const seen = new Set<string>();
   const out: RelatedNode[] = [];
   for (const e of graphEdges) {
@@ -714,7 +777,7 @@ function buildRelated(nodeId: string): RelatedNode[] {
     else continue;
     if (seen.has(otherId)) continue;
     seen.add(otherId);
-    const other = nodesById.get(otherId);
+    const other = byId.get(otherId);
     if (!other) continue;
     out.push({ id: other.id, label: other.label, type: other.type });
   }
@@ -722,11 +785,11 @@ function buildRelated(nodeId: string): RelatedNode[] {
   return out;
 }
 
-function derivePanel(selected: Selected): PanelData | null {
+function derivePanel(selected: Selected, locale: Locale): PanelData | null {
   if (!selected) return null;
-  const node = nodesById.get(selected.nodeId);
+  const node = nodesByIdByLocale[locale].get(selected.nodeId);
   if (!node) return null;
-  const detail = nodeDetails[node.id];
+  const detail = detailsByLocale[locale][node.id];
   return {
     iconType: node.type,
     homepage: node.homepage,
@@ -737,7 +800,7 @@ function derivePanel(selected: Selected): PanelData | null {
     resources: node.resources,
     domain: node.domain,
     tags: node.tags,
-    related: buildRelated(node.id),
+    related: buildRelated(node.id, locale),
   };
 }
 
@@ -745,11 +808,14 @@ function SidePanel({
   panel,
   onClose,
   onSelectNode,
+  locale,
 }: {
   panel: PanelData | null;
   onClose: () => void;
   onSelectNode: (id: string) => void;
+  locale: Locale;
 }) {
+  const t = STRINGS[locale];
   return (
     <aside className={`side-panel${panel ? ' is-open' : ''}`} aria-hidden={!panel}>
       <div className="side-panel-inner">
@@ -757,8 +823,8 @@ function SidePanel({
           type="button"
           className="side-panel-close"
           onClick={onClose}
-          aria-label="关闭"
-          title="关闭"
+          aria-label={t.close}
+          title={t.close}
         >
           <IconX size={15} strokeWidth={1.6} />
         </button>
@@ -770,7 +836,7 @@ function SidePanel({
               <div>
                 <h2 className="side-panel-title">{panel.title}</h2>
                 <span className="side-panel-type">
-                  {labelForType(panel.iconType)}
+                  {labelForType(panel.iconType, locale)}
                 </span>
               </div>
             </header>
@@ -790,7 +856,7 @@ function SidePanel({
 
             {panel.resources && panel.resources.length > 0 && (
               <section className="side-panel-section">
-                <h3>资源 · {panel.resources.length}</h3>
+                <h3>{t.sectionResources(panel.resources.length)}</h3>
                 <div className="side-panel-chip-list">
                   {panel.resources.map((r) => (
                     <a
@@ -812,7 +878,7 @@ function SidePanel({
 
             {panel.concepts.length > 0 && (
               <section className="side-panel-section">
-                <h3>核心概念</h3>
+                <h3>{t.sectionConcepts}</h3>
                 <ul className="side-panel-concepts">
                   {panel.concepts.map((c, i) => (
                     <li key={i}>{c}</li>
@@ -823,7 +889,7 @@ function SidePanel({
 
             {panel.related.length > 0 && (
               <section className="side-panel-section">
-                <h3>相关节点 · {panel.related.length}</h3>
+                <h3>{t.sectionRelated(panel.related.length)}</h3>
                 <div className="side-panel-chip-list">
                   {panel.related.map((r) => (
                     <button
@@ -831,7 +897,7 @@ function SidePanel({
                       type="button"
                       className={`side-panel-chip side-panel-chip-related type-${r.type}`}
                       onClick={() => onSelectNode(r.id)}
-                      title={`跳转到 ${r.label}`}
+                      title={t.jumpTo(r.label)}
                     >
                       <span className="chip-label">{r.label}</span>
                     </button>
@@ -842,7 +908,7 @@ function SidePanel({
 
             {panel.questions.length > 0 && (
               <section className="side-panel-section">
-                <h3>学完后你应该能回答</h3>
+                <h3>{t.sectionQuestions}</h3>
                 <ol className="side-panel-questions">
                   {panel.questions.map((q, i) => (
                     <li key={i}>{q}</li>
@@ -909,13 +975,6 @@ function PanelIcon({
   );
 }
 
-function labelForType(type: NodeType): string {
-  switch (type) {
-    case 'project':
-      return '开源项目';
-    case 'concept':
-      return '概念 / 知识';
-    case 'language':
-      return '编程语言';
-  }
+function labelForType(type: NodeType, locale: Locale): string {
+  return STRINGS[locale].nodeTypeLabel[type];
 }

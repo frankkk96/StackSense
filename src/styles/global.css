@@ -279,6 +279,36 @@ hr {
   opacity: 0.5;
 }
 
+/* ── Language switcher (header) ────────────────────────────── */
+.graph-lang-btn {
+  height: 34px;
+  min-width: 44px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgb(var(--color-text-main) / 0.78);
+  background: rgb(var(--color-bg-elev) / 0.7);
+  border: 1px solid rgb(var(--color-border-main) / 0.14);
+  border-radius: 8px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.graph-lang-btn:hover {
+  background: rgb(var(--color-bg-elev) / 0.92);
+  color: rgb(var(--color-accent));
+  border-color: rgb(var(--color-accent) / 0.45);
+}
+
 /* ── Graph canvas wrapper (fills viewport behind overlays) ── */
 .graph-canvas-wrap {
   position: absolute;
