@@ -1,6 +1,6 @@
 {
   "linear-algebra": {
-    "blurb": "AI 技术栈最底层的数学：从 attention 的 QK^T 投影、PCA、SVD 到嵌入空间几何，所有现代神经网络的运算都建立在向量空间和矩阵分解之上。",
+    "blurb": "AI 技术栈最底层的数学：从 attention 的 QK^T 投影、PCA、SVD 到嵌入空间几何，所有现代神经网络的运算都建立在向量空间和矩阵分解之上。一次 70B LLM 前向 pass 本质上就是上万亿次 GEMM kernel；理解 rank、conditioning、orthogonality，是把 LoRA 调出感觉的人和真正能讲清楚 LoRA 为什么 work 的人之间的分水岭。",
     "concepts": [
       "向量空间",
       "SVD",
@@ -13,11 +13,26 @@
       "SVD 的低秩近似为什么是 LoRA 微调有效的根本原因？",
       "PCA 与 SVD 的等价性怎么推？协方差矩阵特征向量为何指向最大方差方向？",
       "权重矩阵的奇异值分布为什么能预示训练稳定性？",
-      "为什么神经网络的 weight matrices 会出现自然的低秩结构？"
+      "为什么神经网络的 weight matrices 会出现自然的低秩结构？",
+      "LoRA 中 rank r 的选择如何在表达力和参数量之间取舍？怎么从 base weight 的谱分析里反推合理的 r？",
+      "训练时激活爆炸，怎么用 W 的 spectral norm / condition number 在你伸手 grad clip 之前先定位问题？",
+      "为什么 Gram-Schmidt 在数值上不稳定，现代框架（如 Householder QR）怎么处理 projection 层的正交化？",
+      "Transformer MHA 把 d_model 切成 h 个 head（每个 d_k = d_model/h），FLOPs 总量不变，几何上每个 head 能表达的东西却变了——为什么？",
+      "随机初始化矩阵为什么近似等距（Johnson-Lindenstrauss），这怎么为 FAISS HNSW + PQ 这类随机投影检索做理论背书？",
+      "Eckart-Young 定理怎么对一个权重矩阵给出 INT4 量化「损失多少」的定量答案？",
+      "混合精度训练为何需要 loss-scaling？这反映了 FP16 GEMM kernel 对 dynamic range 的什么要求？",
+      "attention 的 K/V cache 显存如何随 seq_len 增长？MQA / GQA / MLA 这些 projection 技巧利用了线性代数的什么结构来压缩它？",
+      "深度网络 Hessian 近似低秩这件事，为什么对 K-FAC、Shampoo 这类二阶优化器至关重要？",
+      "RoPE 把 Q、K 在 2D 子空间里旋转的几何直觉是什么？为什么比加性正弦位置编码更好地保留相对位置？",
+      "两个不同模型的 embedding matrix，要做对齐应该用哪些线性代数工具（Procrustes、CCA）？在 embedding 空间各向异性时它们为何失效？",
+      "softmax(Q·K^T) 的行为为何随 d_k 增大而急剧变化？1/sqrt(d_k) 缩放从高斯方差角度怎么修复？",
+      "如果让你为稀疏 MoE 层设计一个定制 GEMM，你会利用 routing matrix 的哪些线性代数性质？",
+      "Neural Tangent Kernel 怎么把无限宽网络重新表达为一个固定的核矩阵？这给 scaling 时为何「宽度往往胜过深度」提供了什么解释？",
+      "为什么训练好的 Transformer 权重的奇异值分布是重尾的（偏离 Marchenko-Pastur）？这对 pruning vs distillation 的取舍意味着什么？"
     ]
   },
   "calculus": {
-    "blurb": "反向传播本质上就是多变量链式法则；理解 Jacobian、泰勒展开、梯度流，等于理解 autograd 在每个 framework 里的运行方式。",
+    "blurb": "反向传播本质上就是多变量链式法则；理解 Jacobian、泰勒展开、梯度流，等于理解 autograd 在每个 framework 里的运行方式。无论你是在 debug 一个自定义 CUDA kernel 里的 NaN、推导扩散模型的 score、还是论证 GELU 的平滑性为什么重要——一切都归结到导数、极限、以及误差如何沿着计算图复合传播。",
     "concepts": [
       "链式法则",
       "Jacobian",
@@ -30,11 +45,26 @@
       "Adam 的二阶矩估计在泰勒展开下对应曲率的哪一阶？",
       "为什么 GELU/Swish 这类平滑激活比 ReLU 训得更稳？",
       "softmax 对 logits 的导数为何天然带 \"概率减真值\" 形式？",
-      "扩散模型的连续时间极限（SDE/ODE）背后的微积分直觉是什么？"
+      "扩散模型的连续时间极限（SDE/ODE）背后的微积分直觉是什么？",
+      "PyTorch loss 跑出 NaN 时，怎么仅靠 autograd hook 反推出哪个 Jacobian entry 先炸的？",
+      "JAX 的 jvp + vjp 为何能同时给你 Jacobian-vector 和 vector-Jacobian product？对 Nx1 vs 1xN 函数各自更便宜的是哪一个？",
+      "FlashAttention 后向不存完整 N×N 矩阵也能 recompute attention，微积分上为什么成立？运算量 vs 显存的代价是什么？",
+      "Gradient checkpointing 用计算换显存，最佳 recompute 边界怎么从链式法则里推出来？",
+      "扩散模型的 score function ∇_x log p(x) 通过 Tweedie 公式怎么和 denoising 联系起来？",
+      "为什么网络梯度的 Lipschitz 常数（光滑性）是选择学习率的核心量？实操中怎么估？",
+      "ReLU 在 0 处的次梯度按理说不可微，为什么实际上不会让 SGD 崩？",
+      "Implicit differentiation 怎么让你 backprop 穿过一个不动点求解器（DEQ、neural ODE）？背后 implicit function theorem 要求什么条件？",
+      "Straight-through estimator 作为量化等不可微 op 的梯度替身为什么 work？又在什么场景下被证明会失败？",
+      "当 model + tokenizer + loss 串成一条 pipeline 而 tokenizer 不可微时，链式法则在哪里断开？为什么这阻塞了端到端梯度流？",
+      "cross-entropy 在最优 logit 处的泰勒展开，怎么解释 label smoothing 改善 calibration？",
+      "softmax-attention 层的梯度为何在 seq_len 上是稠密的，即使前向输出稀疏？这对训练时显存意味着什么？",
+      "怎么推导一个自定义 Triton kernel 的梯度，并在不爆炸测试时长的前提下用有限差分做数值验证？",
+      "VQ-VAE / GAN / RLHF reward modeling 里为什么要 stop-gradient？链式法则告诉你你切断的是什么？",
+      "natural gradient（Fisher-vector product）跟 KL 的二阶泰勒展开是什么关系？TRPO/PPO 为什么 care？"
     ]
   },
   "probability": {
-    "blurb": "从 cross-entropy 到 dropout、temperature 采样、扩散模型——AI 一切\"采样、归一化、不确定性\"操作背后都是概率分布、共轭性、MCMC 这些经典工具。",
+    "blurb": "从 cross-entropy 到 dropout、temperature 采样、扩散模型——AI 一切「采样、归一化、不确定性」操作背后都是概率分布、共轭性、MCMC 这些经典工具。现代系统把这套用到极致：RLHF 是 Bradley-Terry MLE，beam search 是有偏的 MAP decoding，老老实实评估 LLM 意味着用频率学派思维去给上千 prompt 算置信区间。",
     "concepts": [
       "MLE/MAP",
       "KL 散度",
@@ -47,11 +77,26 @@
       "VAE 的 ELBO 推导中，KL 项与重构项的权衡如何控制 latent space？",
       "Dropout 为何可以视作贝叶斯近似？",
       "LLM 采样里 temperature/top-p 的统计含义是什么？",
-      "扩散模型的 score matching 与变分下界如何统一？"
+      "扩散模型的 score matching 与变分下界如何统一？",
+      "reparameterization trick（z = μ + σ·ε）为什么能让梯度穿过随机节点？在离散 latent 上为什么会失效？",
+      "Bradley-Terry 模型怎么撑起 RLHF 的 preference learning？为什么它等价于在 reward 差分上做 softmax？",
+      "Importance sampling 在高维 LLM rollout 里方差为何爆炸？PPO 的 clip 和 KL penalty 实际上修复了什么？",
+      "为什么 beam search 是有偏的 MAP estimator？它生成的文本为何比 nucleus sampling 更短、更没多样性？",
+      "拿 1000 prompt 做两个 LLM 的 A/B 评测时，怎么算一个考虑了 prompt 级方差的合理 p-value？",
+      "为什么 Gumbel-max 等价于从 categorical 采样？Gumbel-softmax 怎么让你 backprop 穿过它？",
+      "DDPM 前向过程的高斯假设怎么把反向过程简化成可解析的均值预测？",
+      "Rejection sampling 在高维后验上为什么基本不可行？为什么 Langevin / HMC 才是 energy-based model 的实战工具？",
+      "重尾分布下大数定律为什么会骗你？这跟 LLM benchmark 方差的关系是什么？",
+      "GAN 的 mode collapse 对应 reverse-KL 的什么病理？这怎么影响 f-GAN、WGAN、diffusion 之间的取舍？",
+      "用 Laplace 近似在 MAP 周围做 Bayesian deep learning 时，Hessian 的特征结构告诉你 uncertainty 的什么信息？",
+      "中心极限定理为什么让 mini-batch 梯度噪声近似高斯？这对 SGD 的等效 SDE 意味着什么？",
+      "怎么给 LLM 在多选任务上画 calibration plot？miscalibration 又怎么揭示 RLHF 的 over-optimization？",
+      "为什么 Kalman filter 还能出现在 Mamba 这类现代 state-space model 里？它隐藏状态的概率解释是什么？",
+      "tokenizer 在字符串上诱导一个非双射映射意味着什么？这为什么让跨 tokenizer 的「真实 likelihood」对比变得复杂？"
     ]
   },
   "convex-optimization": {
-    "blurb": "神经网络非凸，但凸优化的对偶视角、收敛分析、约束建模仍然是 SGD/Adam/RLHF 训练目标设计的理论根。理解凸性是判断\"我这个 loss 应该能收敛吗\"的最快路径。",
+    "blurb": "神经网络非凸，但凸优化的对偶视角、收敛分析、约束建模仍然是 SGD/Adam/RLHF 训练目标设计的理论根。理解凸性是判断「我这个 loss 应该能收敛吗」的最快路径。Boyd & Vandenberghe 那本教材至今仍是理解 AdamW 的 weight decay 为何 decoupled、PPO 为何 clip、DPO 为何能写出闭式 loss 最干净的入口。",
     "concepts": [
       "凸性",
       "Lagrange 对偶",
@@ -64,11 +109,26 @@
       "AdamW 的 decoupled weight decay 怎么从凸优化收敛分析推出？",
       "RLHF 的 KL 约束为何能写成 Lagrangian 对偶形式？",
       "PPO 借用了凸优化里的 trust-region 思想是怎么对应的？",
-      "Lipschitz 平滑/强凸假设对学习率上界意味着什么？"
+      "Lipschitz 平滑/强凸假设对学习率上界意味着什么？",
+      "KKT 条件怎么解释 DPO 闭式 loss 是从约束 RLHF 目标里掉出来的？",
+      "softmax 分类器的 NLL 在 logits 上凸但在网络权重上非凸，这对 transfer learning 有什么启示？",
+      "Proximal gradient descent 怎么把 SGD + weight decay 一般化？这视角为何能照亮 L1 vs L2 正则的取舍？",
+      "Frank-Wolfe / conditional-gradient 为什么在稀疏 adapter / MoE routing 问题里又重新有意义？",
+      "解约束 RLHF 时，为什么增大 KL 系数 β 等价于在 reward 与 reference fidelity 的 Pareto 前沿上移动？",
+      "duality gap 怎么告诉你微调时一个 safety constraint 是不是真的在 binding？",
+      "为什么 mirror descent 等价于某个 Bregman divergence 下的 natural gradient？这跟 Adam 的自适应几何怎么关联？",
+      "怎么用 Polyak-Lojasiewicz 不等式证明过参数化网络在非凸下仍然线性收敛？",
+      "Subgradient method 在非平滑 loss（hinge、ReLU）上为什么收敛 O(1/sqrt(T)) 而不是 O(1/T)？这在微调里什么时候真正重要？",
+      "为什么 gradient clipping 本质上等价于在梯度空间做 ball 投影？凸优化怎么解释？",
+      "Nesterov 加速的下界论证怎么解释「没有曲率信息就没法再改进 momentum」？",
+      "L2 正则线性回归的对偶为什么是 kernel ridge regression？这跟 attention 的 kernel 视角怎么连？",
+      "怎么为微调里的 fairness / safety constraint 写出 Lagrangian？dual ascent 比一个固定 penalty 多给你什么？",
+      "Stochastic mirror descent 的分析怎么干净解释「per-coordinate 自适应（Adam、Adagrad）在稀疏梯度上为何 work」？",
+      "Beam search / 序列级优化的凸松弛是什么？为什么它通常无法 recover 离散最优解？"
     ]
   },
   "information-theory": {
-    "blurb": "Shannon 1948 奠基的信息论：熵、KL 散度、互信息——cross-entropy loss、量化压缩比特率、对比学习的 InfoNCE 全部源自这一套。",
+    "blurb": "Shannon 1948 奠基的信息论：熵、KL 散度、互信息——cross-entropy loss、量化压缩比特率、对比学习的 InfoNCE 全部源自这一套。现代 AI 字面意义上就是「把互联网压缩进模型权重」的产业；Hutter 奖 + 「compression = intelligence」框架让 Shannon 的理论在 2026 比 1998 时还要更切题。",
     "concepts": [
       "香农熵",
       "KL 散度",
@@ -81,11 +141,26 @@
       "KL(p||q) 不对称对 forward-KL vs reverse-KL 训练有何影响？",
       "率失真理论如何指导 LLM 量化（INT4/FP8）的下界？",
       "互信息为何用作自监督对比学习（InfoNCE）的理论解释？",
-      "Shannon 源编码定理给 token 压缩 / 字节级 LM 提供了什么下界？"
+      "Shannon 源编码定理给 token 压缩 / 字节级 LM 提供了什么下界？",
+      "为什么跨不同 tokenizer 比较 LM 时，bits-per-byte（BPB）比 perplexity 更公平？",
+      "RAG 系统里冻结 embedding 模型时，data-processing inequality 怎么给下游可恢复 MI 设上限？",
+      "T<1 的 temperature 采样为何降低输出分布的熵？这对合成数据多样性意味着什么？",
+      "DPO / GRPO 的目标函数里 mode-seeking reverse-KL 是怎么显现的？会带来哪些失败模式？",
+      "给定一个固定 embedding bottleneck，Fano 不等式怎么说出检索的不可消除误差下界？",
+      "为什么互信息约束了 soft attention head 的容量？这又怎么激励了 sparse / hard attention？",
+      "Arithmetic coding 怎么把 LM 直接变成接近最优的压缩器？为什么这是「LLM 即压缩」论调的实证内核？",
+      "激活的熵和有效 rank 是什么关系？为什么这能作为 representation collapse 的诊断信号？",
+      "MINE（Mutual Information Neural Estimator）实操上为何 biased 且方差大？什么时候应该用它而不是 InfoNCE？",
+      "怎么对一个有噪声的 reward model 算 channel capacity？RLHF 能向 policy 传输的 bit-rate 上限是多少？",
+      "cross-entropy 为什么 collapse 成 KL + 数据熵？这告诉你固定 tokenizer 的 LM 不可消除 loss 下界是什么？",
+      "Information Bottleneck 原理怎么界定一个 encoder 层应保留 vs 丢弃什么？训练后的网络里有哪些经验证据？",
+      "Kolmogorov complexity 对模型蒸馏的极限说了什么？为什么它「道义上」相关但实操上不相关？",
+      "LLM 下一 token 分布的熵为什么是检索 / 幻觉检测的有用 uncertainty 信号？阈值怎么校准？",
+      "Typical-set sampling 跟 top-p 有何不同？为什么信息论采样有时能产出更「自然」的文本？"
     ]
   },
   "backpropagation": {
-    "blurb": "Rumelhart、Hinton、Williams 1986 年系统化的算法：用链式法则把输出误差从顶层反向传至每个权重。所有现代 autograd 框架的算法基石。",
+    "blurb": "Rumelhart、Hinton、Williams 1986 年系统化的算法：用链式法则把输出误差从顶层反向传至每个权重。所有现代 autograd 框架的算法基石——PyTorch、JAX、TensorFlow 本质上都归结为构建一张计算 DAG、注册 vjp 规则、然后反向遍历它。四十年过去，几乎所有突破仍然站在它的肩上。",
     "concepts": [
       "链式法则",
       "Reverse-mode AD",
@@ -98,11 +173,26 @@
       "为什么反向传播在 1986 年才被广泛接受？算力 vs 算法谁是瓶颈？",
       "Backprop 跟数值微分在精度与效率上的取舍？",
       "为什么 Hinton 后来想用 Forward-Forward 替代 Backprop？",
-      "在 attention 这种结构里，链式法则的实际计算成本主要花在哪？"
+      "在 attention 这种结构里，链式法则的实际计算成本主要花在哪？",
+      "LLM 反传时为什么是 activation memory 占满 VRAM？gradient checkpointing 用什么代价修复它？",
+      "PyTorch `.backward()` 动态构图 vs JAX 的 trace，在大规模训练 debug 时各自带来什么优劣？",
+      "FlashAttention 后向怎么在不实例化 N×N attention 矩阵的前提下仍计算精确梯度？",
+      "RNN 的 vanishing/exploding gradient through time 根源是什么？BPTT truncation 实际上以多少依赖范围为代价？",
+      "一个混着 Python control flow 和 CUDA kernel 的自定义 op，计算图长什么样？怎么干净地为它注册 vjp？",
+      "为什么 reverse-mode AD 算 Hessian 不高效？K-FAC / Shampoo 怎么在不显式构建完整 Hessian 的前提下做近似？",
+      "REINFORCE / Gumbel-softmax / straight-through 各自怎么 backprop 穿过离散采样？每种方式偏向哪里？",
+      "为什么有 stateful op（dropout、BN）的层不能简单 reuse forward activation 来做 backward？",
+      "Pipeline 并行的 bubble 开销是怎么从后向依赖链产生的？1F1B / interleaved schedule 怎么压缩它？",
+      "ZeRO-3 在 backward 时为什么要通信 gradient shard？相对前向 all-reduce 的带宽代价多大？",
+      "Checkpoint recomputation 跟 FP8 / 混合精度怎么交互？为什么 recomputed activation 会有数值差异？",
+      "训练态和推理态下，对 LLM 的 KV cache 反传有什么区别？为什么推理时 cache 通常被冻结？",
+      "为什么生物学上 backprop 的合理性有争议（weight transport、locality）？feedback alignment、equilibrium prop 这些替代各试图修复什么？",
+      "现代 AI infra 里有哪些场景下 forward-mode AD 反而更优（如 Hessian-vector product、敏感度分析）？",
+      "怎么 debug 一个自定义 autograd Function 里悄悄算错的梯度——你的 gradcheck / 有限差分工作流是什么？"
     ]
   },
   "sgd": {
-    "blurb": "梯度下降的随机版：用 mini-batch 估计完整梯度。简单但出奇地能训出现代深度网络——背后是 implicit regularization、噪声逃离平坦极小值的复杂理论。",
+    "blurb": "梯度下降的随机版：用 mini-batch 估计完整梯度。简单但出奇地能训出现代深度网络——背后是 implicit regularization、噪声逃离平坦极小值的复杂理论。即便到 2026，最大的模型本质上仍是 1951 年 Robbins-Monro 算法在更新——只不过加上了 momentum、warmup、cosine decay 和 10 万张 GPU 的 ring all-reduce。",
     "concepts": [
       "mini-batch",
       "Momentum",
@@ -115,11 +205,26 @@
       "critical batch size 是什么？继续放大 batch 为何边际收益骤降？",
       "Momentum 在数学上等价于哪种 ODE 的离散化？",
       "为什么 LR warmup 对 transformer 训练几乎是必须的？",
-      "SGD 能逃离的 saddle point 跟 second-order method 能逃的差别？"
+      "SGD 能逃离的 saddle point 跟 second-order method 能逃的差别？",
+      "为什么 linear-scaling 规则（lr ∝ batch_size）最终会失效？McCandlish 等人的 gradient noise scale 怎么预测拐点？",
+      "Cosine decay 跟 inverse-sqrt、linear decay 在 LLM pretraining 实战里有什么差别？为什么它成为默认？",
+      "Smith & Le 用 SDE 视角分析 SGD，为什么 temperature = lr / batch_size 才是该调的真旋钮？",
+      "SGD + momentum 怎么隐式偏向平坦 minima？「平坦度」实操中怎么量化（Hessian trace vs sharpness vs SAM）？",
+      "AdamW 的 decoupled weight decay 跟 plain SGD 的 L2 正则有何不同？SGD-momentum 实际实现的是哪一种？",
+      "Sophia / Lion / Shampoo 都声称在 scale 上击败 AdamW，从 SGD 风格的理论看支持还是反对？",
+      "LR=3e-4 时 loss 发散，怎么 debug 是 warmup、gradient norm、还是 precision 问题？",
+      "Gradient accumulation 跟真大 batch 在优化轨迹上为何略有不同？什么时候这差异 matter？",
+      "稳定的 preference fine-tuning 里 LR schedule 起什么作用？为什么 DPO 比 pretraining 要用低得多的 LR？",
+      "ZeRO / FSDP 怎么影响 effective batch size 和 SGD noise scale？分片之后该怎么重调 LR？",
+      "凸问题上无 momentum 的 SGD 还能 work，为什么深度网络上不行？而无噪声的 plain GD 又会过拟合？",
+      "Welling & Teh 的 SGLD 把 SGD 跟 Bayesian 后验采样联系起来，这视角对 uncertainty 有什么意义？",
+      "Mini-batch 采样方式（有放回 vs 无放回、是否每 epoch shuffle）实际上怎么影响 SGD 的方差？",
+      "长 pretraining 中 loss 在 10% / 30% 处突然 spike 的现象，从 SGD 轨迹角度怎么解释？",
+      "1024 卡训 70B 模型时，单纯加大 batch 为什么不一定加快收敛？SGD-noise 给出的解释是什么？"
     ]
   },
   "adam": {
-    "blurb": "Kingma & Ba 2014：融合 Momentum 的一阶矩与 RMSProp 的二阶矩估计 + bias correction。是深度学习事实上的默认优化器；AdamW 进一步主导了大模型训练。",
+    "blurb": "Kingma & Ba 2014：融合 Momentum 的一阶矩与 RMSProp 的二阶矩估计 + bias correction。是深度学习事实上的默认优化器；AdamW 进一步主导了大模型训练。GPT-3 之后几乎所有旗舰 LLM——Llama、GPT-4、Gemini、Claude——都是用 AdamW 在万亿 token 规模上训出来的；optimizer state（每参数 8 字节）是显存的主导成本，ZeRO 和 8-bit Adam 的存在就是为了摊销这一项。",
     "concepts": [
       "一阶矩",
       "二阶矩",
@@ -132,11 +237,26 @@
       "Bias correction 为什么不可省略？",
       "AdamW 的 decoupled weight decay 解决了 Adam 的什么问题？",
       "Adam 跟 RMSProp 的本质差异是什么？",
-      "为什么大模型偏爱 AdamW 而非 LAMB/Adafactor？"
+      "为什么大模型偏爱 AdamW 而非 LAMB/Adafactor？",
+      "为什么 Adam 的 optimizer state 是模型参数量的 2 倍（m 和 v）？8-bit Adam / Adafactor 怎么把它压下去？",
+      "Adam 的自适应缩放为何相当于一个对角 preconditioner？这种近似什么时候帮你、什么时候坑你？",
+      "Adam 的 epsilon 在 FP16 / BF16 下怎么影响数值稳定？为什么 LLM 训练里有时把它调到 1e-6？",
+      "在 LLM 规模下，gradient clipping（如 global-norm 1.0）几乎成了标配，它跟二阶矩更新如何相互影响？",
+      "(β1, β2) 怎么影响噪声平滑？为什么 LLM 稳定性场景下 β2=0.95 有时优于默认的 0.999？",
+      "Reddi 等人的 AMSGrad 论文证明 Adam 在某些凸问题上不收敛，这在实操中真的 matter 吗？",
+      "Adafactor 把二阶矩沿 row/col 因子化，这种低秩近似什么时候会让你付出代价？",
+      "Lion（Chen 2023）把二阶矩换成 sign 操作，为什么在 LLM 上效果出奇地好？",
+      "Adam-mini 那篇 paper 主张 (m, v) 实际上只需要一个子集，分组怎么把 optimizer 显存压下来？",
+      "Adam 早期训得快但在小 CV 模型上输给 SGD，在 Transformer 上却完胜——为什么？",
+      "ZeRO-1 / ZeRO-2 / ZeRO-3 怎么分别切分 Adam 的 optimizer state？你通常会卡在哪一级？",
+      "Adam 跟 cosine + warmup 这种 LR schedule 一起用为什么需要特别小心？warmup 在 Adam 里到底修复了什么？",
+      "长训过程中 optimizer state 出现 NaN（m 或 v）怎么诊断？checkpoint 恢复策略应该怎么设计？",
+      "Shampoo / K-FAC 给出的论证是「Adam 的对角 preconditioner 留下了真实的二阶结构没用」，怎么理解？",
+      "Adam 每参数的 effective LR 在训练初期天然像一个自动 warmup，这跟显式 warmup 又怎么相互作用？"
     ]
   },
   "batch-norm": {
-    "blurb": "Ioffe & Szegedy 2015：每层激活做 mini-batch 归一化 + 可学习 γ/β。BN 让深层 CNN 可以用更大学习率训练；但在 Transformer / 小 batch 场景被 LayerNorm 取代。",
+    "blurb": "Ioffe & Szegedy 2015：每层激活做 mini-batch 归一化 + 可学习 γ/β。BN 让深层 CNN 可以用更大学习率训练；但在 Transformer / 小 batch 场景被 LayerNorm 取代。Santurkar 2018 后来证明 BN 真正起作用的是 loss landscape smoothing，而不是原 paper 里讲的「internal covariate shift」——一个标准的「论文有用但解释错了」案例。",
     "concepts": [
       "Internal Covariate Shift",
       "Mini-batch 统计",
@@ -149,11 +269,26 @@
       "BN 跟 LayerNorm 在 Transformer 场景的取舍？",
       "为什么 BN 在小 batch 下性能崩溃？",
       "BN 训练态和推理态行为不一致的根源是什么？",
-      "GroupNorm / InstanceNorm / RMSNorm 各自适用场景？"
+      "GroupNorm / InstanceNorm / RMSNorm 各自适用场景？",
+      "为什么 BN 跟 sequence-parallel、pipeline-parallel 训练基本不兼容，而 LayerNorm 没这问题？",
+      "BN 的 running mean / variance buffer 跟基于 EMA 的模型平均（如自蒸馏里的 EMA student）怎么相互作用？",
+      "为什么现代 LLM（Llama、Mistral、Gemma）偏爱 RMSNorm 而非 LayerNorm？它在数学上做了什么简化？代价是什么？",
+      "推理时分布偏移（domain shift）下 BN 表现如何？为什么它是个公认的鲁棒性隐患？",
+      "微调时冻结 BN running stats 经常优于继续更新，特别是下游 batch 小的时候——为什么？",
+      "Sync-BN 跨 GPU 怎么实现？相对卷积本身的 all-reduce 代价占多大？",
+      "BN 让网络输出在 batch 内不再 permutation-invariant，这在哪些场景咬人（contrastive learning、数据顺序）？",
+      "BN 对梯度幅值做了什么导致高 LR 也能稳？从 γ 里推出 rescaling 论证。",
+      "Weight Standardization 跟 BN 比怎么样？为什么在小 batch 的检测 / 分割任务里有时更受欢迎？",
+      "GroupNorm 为什么是物体检测（Detectron 时代）的干净 fallback？为什么没在 Transformer 里普及？",
+      "在量化推理图里怎么推理 BN 的行为？BN folding 进 conv 权重真的能保住数值吗？",
+      "Filter Response Normalization 那篇 paper 主张完全干掉 BN，为什么没火起来？",
+      "BN 训练态 vs 推理态行为的非对称性，怎么微妙地偏置一个模型的 calibration？",
+      "归一化的位置选择（Pre-LN vs Post-LN）怎么跟 Transformer 深度交互、解释 100+ 层的训练不稳定？",
+      "ConvNeXt 这类现代 CNN 风格架构，明明是 CNN，为什么仍偏好 LN 而不是 BN？"
     ]
   },
   "dropout": {
-    "blurb": "Srivastava、Hinton 2014：训练时随机置零神经元，等价于训练指数级子网络的集成。深度学习时代最重要的正则化手段之一；现代大模型对 Dropout 依赖反而下降。",
+    "blurb": "Srivastava、Hinton 2014：训练时随机置零神经元，等价于训练指数级子网络的集成。深度学习时代最重要的正则化手段之一；现代大模型对 Dropout 依赖反而下降——海量数据 + weight decay 带来的隐式正则化把 dropout 原本的位子挤掉了。但它在该 load-bearing 的地方仍然存活：某些 Transformer 配方里的 attention dropout、做廉价 epistemic uncertainty 的 MC-Dropout、以及 ViT 里的 DropPath。",
     "concepts": [
       "随机失活",
       "模型集成",
@@ -166,11 +301,26 @@
       "Inverted Dropout 跟原版 Dropout 的取舍？",
       "为什么现代大模型对 Dropout 依赖反而下降？",
       "Dropout 跟 BatchNorm 同时使用为什么会冲突？",
-      "Dropout 跟 DropConnect、DropPath 的差异？"
+      "Dropout 跟 DropConnect、DropPath 的差异？",
+      "MC-Dropout 的方差估计为何是 Bayesian 后验的廉价（但有偏）近似？什么场景下会失败？",
+      "Transformer 里 attention dropout 跟 FFN dropout 的差异？哪一个对稳定性 vs 泛化更重要？",
+      "Llama 2/3 pretraining 时为什么 dropout=0？模型 / 数据规模到什么级别 dropout 反而有害？",
+      "ViT 里 DropPath / stochastic depth 怎么 work？为什么对深网络比 per-neuron dropout scale 得更好？",
+      "Dropout 是一种 scale-dependent 的正则化——这对不同宽度层的 p 选择意味着什么？",
+      "前向激活的方差怎么随 dropout p 变化？这怎么 motivate 了 inverted-dropout 的 1/(1-p) 重缩放？",
+      "为什么 dropout 跟 weight tying（如 LM 共享输入输出 embedding）不太合得来？",
+      "Wager 等人的「dropout 即自适应正则化」paper 怎么把它等价成 input-dependent weight 的 L2？",
+      "在生产 LLM 推理里，evaluation-time dropout（test-time augmentation、MC-dropout for calibration）什么时候是合理的？",
+      "Dropout 跟低精度训练（FP8）怎么交互？随机 mask 会不会放大量化噪声？",
+      "对已经预训练好的 LLM，dropout 在微调时为什么有时反而拖累？「正则化预算」论怎么解释？",
+      "R-Drop / consistency regularization 怎么把 dropout 拓展成「用两次前向输出一致性作训练信号」？",
+      "为什么 dropout 经常关在 residual 通路里、开在 FFN 子块内？从残差梯度流里推一下。",
+      "Dropout 在推理时跟 KV cache 怎么交互？为什么必须关闭？开着会触发什么微妙 bug？",
+      "label smoothing、weight decay、dropout 三者放一起为何会有冗余？怎么有原则地选哪一个保留？"
     ]
   },
   "word2vec": {
-    "blurb": "Mikolov 2013：CBOW + Skip-gram 浅层模型 + Negative Sampling，把词嵌入推到亿级语料。\"king-man+woman≈queen\" 揭示了词向量空间的语义线性结构，启发了后来所有的 distributed representation。",
+    "blurb": "Mikolov 2013：CBOW + Skip-gram 浅层模型 + Negative Sampling，把词嵌入推到亿级语料。「king-man+woman≈queen」揭示了词向量空间的语义线性结构，启发了后来所有的 distributed representation。它是现代所有 embedding store——FAISS、pgvector、OpenAI text-embedding-3——的架构祖先；也提醒我们「带负样本的对比学习」比 SimCLR 早了七年。",
     "concepts": [
       "Skip-gram",
       "CBOW",
@@ -183,11 +333,26 @@
       "Negative Sampling 跟 Hierarchical Softmax 的本质差异？",
       "为什么向量加减能反映语义关系？",
       "Word2Vec 跟 GloVe 在目标函数上的对比？",
-      "Word2Vec 时代的 static embedding vs Transformer 时代 contextual embedding 的根本差距？"
+      "Word2Vec 时代的 static embedding vs Transformer 时代 contextual embedding 的根本差距？",
+      "为什么 Skip-gram + Negative Sampling 可证明等价于 shifted PMI 矩阵的隐式分解（Levy & Goldberg 2014）？这怎么解释它为何 work？",
+      "Word2Vec 的 negative sampling 怎么成了 InfoNCE / SimCLR / CLIP 的概念祖先——保留了什么、丢掉了什么？",
+      "Word2Vec embedding 为何会编码训练语料里的偏见（性别、种族）？哪些缓解方法真有效，哪些只是 hand-wave？",
+      "今天要在 fine-tune 一个 Word2Vec、训一个 fastText、或直接调 text-embedding-3 之间做选择，延迟 / 成本 / 质量的临界点怎么算？",
+      "subword embedding（fastText、BPE）为什么在 OOV token 上比纯 Word2Vec 更鲁棒？这怎么对应到现代 tokenizer？",
+      "static embedding 的余弦相似度几何，在 'bank'、'apple' 这类多义词上为什么崩？",
+      "Negative Sampling 里噪声分布 P(w) 起什么作用？为什么 unigram 计数的 3/4 次方不是随便选的？",
+      "Word2Vec 的维度（通常 100-300）跟现代 dense retriever（768-3072）比，为什么维度涨了 10 倍？",
+      "anisotropy 是 contextual embedding（BERT-flow、BERT-whitening）的已知失败模式，为什么在 Word2Vec 上反而不太是问题？",
+      "怎么搭一条复用 Word2Vec 思想（negative sampling、in-batch negatives）的生产推荐 embedding pipeline？",
+      "为什么 analogy benchmark（king-man+woman）其实是个弱评测？它把 Word2Vec 的语义结构夸大了什么？",
+      "Word2Vec 的 window size 怎么把 embedding 在「句法（小窗口）」和「语义（大窗口）」之间切换？",
+      "为什么现代 foundation-model embedding 不再像 Word2Vec 那样固定一个词表？这又怎么改变下游设计？",
+      "生产 RAG store 里 embedding 模型升级时，正确的刷新 / 版本化方式是什么——全部重 embed，还是 shim？",
+      "Hybrid sparse+dense retriever（BM25 + dense，类似 Pyserini / SPLADE）为什么经常优于任一单独？这条线怎么追溯回 Word2Vec 的 PMI 根？"
     ]
   },
   "alexnet": {
-    "blurb": "Krizhevsky et al 2012：8 层 CNN 在 ImageNet 上把 top-5 错误率从 26% 降至 15%；首次在 GPU 上训练大规模深度网络，引入 ReLU、Dropout、数据增强。这一成果直接引爆了深度学习革命。",
+    "blurb": "Krizhevsky et al 2012：8 层 CNN 在 ImageNet 上把 top-5 错误率从 26% 降至 15%，首次在双卡 GTX 580 上训练大规模深度网络。把 ReLU、Dropout、激进数据增强带进主流，也让 GPU 成为机器学习的默认加速器。这一成果直接引爆了深度学习革命，至今仍是\"算力驱动拐点\"的经典范例。",
     "concepts": [
       "ReLU 激活",
       "GPU 训练",
@@ -197,14 +362,29 @@
     ],
     "questions": [
       "为什么 ReLU 能取代 sigmoid/tanh 解决梯度消失？",
-      "AlexNet 的双 GPU 切分跟现代 model parallel 的关系？",
-      "Local Response Normalization 为什么后来被 BN 淘汰？",
-      "AlexNet 的关键洞察跟算力红利的取舍是什么？",
-      "为什么 ImageNet 这个数据集比模型本身更重要？"
+      "AlexNet 的双 GPU 切分跟现代 70B+ 训练里的 model parallel（TP/PP）的关系？",
+      "Local Response Normalization 为什么后来被 BN 淘汰，而 BN 在 Transformer 时代又为什么被淡出？",
+      "AlexNet 的关键洞察跟算力红利的取舍——真正的解锁是架构还是 GPU？",
+      "事后看，为什么 ImageNet 这个数据集比模型本身更重要？",
+      "如果 2026 年用单张 H100 重跑 AlexNet 实验，wall-clock 大概多少？这告诉你什么 scaling 规律？",
+      "Dropout 在现代 Transformer 训练里去哪了？为什么大规模训练通常关掉？",
+      "RandAugment / Mixup / CutMix 等取代了 AlexNet 的 PCA color jitter，哪些在 LLM/VLM pretraining 里还在用？",
+      "为什么 11×11 conv 卷积核被 3×3 堆叠（VGG）和 patch 切分（ViT）取代？",
+      "如果要为 vision-language pretraining 重做一个现代 ImageNet，相比 ILSVRC 你会改什么？",
+      "AlexNet 的 overlap pooling 透露了哪些 implicit regularization 的信息？",
+      "AlexNet 的 ~60M 参数量跟今天 CLIP / DINOv2 视觉 backbone 在 FLOPs/sample 上对比如何？",
+      "为什么 2012 年之前的 ML 框架即便有同样想法也产生不出 AlexNet？",
+      "AlexNet → VGG → ResNet 这条轨迹告诉我们深度跟可训练性之间是什么关系？",
+      "如何挖掘 AlexNet 的失败样本作为现代视觉对比学习的 hard-negative 数据集种子？",
+      "如果今天要把 AlexNet 部署成 inference 服务，会用什么量化 / 编译 pass？",
+      "AlexNet 的 1000 类 softmax head 在 open-world classification 里为什么是个糟糕设计，CLIP 怎么改造的？",
+      "AlexNet 第一层那种 Gabor-like 滤波器该如何解读——是 emergent 特征、数据集偏置还是初始化产物？",
+      "训练 CNN encoder 用于多模态 RAG pipeline 时，AlexNet 时代哪些选择（LRN、grouped conv、固定输入尺寸）必须显式抛弃？",
+      "AlexNet 真的是深度学习革命的因，还是更长那条曲线（LeNet、Cireşan 2010、语音 2011）上一个最显眼的尖峰？"
     ]
   },
   "resnet": {
-    "blurb": "何恺明 2015：残差连接 H(x)=F(x)+x，让网络学习残差而非直接映射，成功训练 152 乃至 1000 层网络。残差思想后来贯穿 Transformer 等几乎所有现代架构。",
+    "blurb": "何恺明 et al 2015：残差连接 H(x) = F(x) + x，让网络学习残差而非直接映射，成功训练 152 乃至 1000 层网络并夺得 ILSVRC 2015。残差思想现在贯穿每个 Transformer block、每个 diffusion U-Net、每个 Mamba 层——可以说是现代 AI 中复用最多的一个 trick。",
     "concepts": [
       "残差连接",
       "Identity Mapping",
@@ -214,14 +394,29 @@
     ],
     "questions": [
       "残差连接为什么能缓解深层网络退化？",
-      "Identity shortcut 跟 projection shortcut 的取舍？",
-      "为什么 Pre-Activation ResNet 比原版更好训？",
-      "ResNet 的关键洞察跟 Highway Network 的差异是什么？",
-      "为什么 Transformer 也必须用残差连接？"
+      "Identity shortcut 跟 projection shortcut 在算力、梯度流、精度上的取舍？",
+      "为什么 Pre-Activation ResNet 比原版 post-activation 更好训？",
+      "ResNet 的关键洞察跟 Highway Network 的差异——gating 真的有用吗？",
+      "为什么 Transformer 也必须用残差连接？拿掉之后训练 loss 会怎样？",
+      "证明 residual + LayerNorm 等价于一次 ODE 积分——这跟 Neural ODE 的关联在哪？",
+      "Pre-norm vs post-norm 在 Transformer 里：基于 ResNet 的 loss landscape 文献，对 100B+ scaling 怎么预测？",
+      "为什么扩散 U-Net 用 residual + attention residual block 堆叠而不是单纯 conv？",
+      "ResNet 的 bottleneck 结构跟 Transformer block 里 FFN 的 expansion ratio 是什么关系？",
+      "Residual stream 宽度跟 PEFT（LoRA 注入位置）的相互作用？",
+      "为什么深度 >24 时即便用 Fixup / T-Fixup 这种精细初始化，去掉 residual 也通常会爆炸？",
+      "Residual stream 视角（Anthropic circuits 框架）如何把 ResNet 重述为加性 feature read/write？",
+      "为什么 INT8/FP8 量化 residual 路径需要特殊 outlier 处理，而 FFN weight 不用？",
+      "ResNet 对 compute-optimal scaling 下的深度/宽度比建议是什么？跟 Chinchilla 一致吗？",
+      "深度 ResNet 不做合理初始化时的\"mode collapse\"——loss 曲线上的故障特征是什么？",
+      "ResNet vs DenseNet：为什么 concat skip 在大规模实践里输给 additive skip？",
+      "为什么残差对长上下文训练里的 gradient checkpointing / activation recomputation 至关重要？",
+      "如何在 Mamba 风格 SSM 里 ablate residual 深度？同样的 scaling 故事还成立吗？",
+      "把 ResNet 视觉 backbone 接到多模态对齐（BLIP / LLaVA 风格）时，从哪一层 tap residual stream？为什么？",
+      "Residual 是一个原则性发现，还是恰好兼容 SGD 偏置的经验 hack？"
     ]
   },
   "transformer": {
-    "blurb": "Google 2017：用 multi-head self-attention 完全替代 RNN/CNN 处理序列依赖，通过位置编码注入顺序信息。后续 BERT、GPT、几乎所有大模型的基础架构。",
+    "blurb": "Vaswani et al 2017：用 multi-head self-attention 完全替代 RNN/CNN 处理序列依赖，通过位置编码注入顺序信息。2026 年仍是绝对主导 backbone——所有前沿 LLM、VLM 和大部分 diffusion 模型都是 Transformer——并且 FlashAttention、KV cache、PagedAttention、MoE 等所有系统优化都是围绕它展开的。",
     "concepts": [
       "Self-Attention",
       "Multi-Head",
@@ -230,15 +425,30 @@
       "QKV 投影"
     ],
     "questions": [
-      "为什么 attention 要除以 sqrt(d_k) 做缩放？",
+      "为什么 attention 要除以 sqrt(d_k) 做缩放？不缩放会出现什么数值问题？",
       "Multi-head 相比单头大 attention 的关键洞察是什么？",
-      "为什么用 sin/cos 位置编码而不是可学习 embedding？RoPE / ALiBi 改进了什么？",
-      "Self-attention 跟 RNN 在长程依赖上的取舍？",
-      "为什么 Transformer 用 LayerNorm 而不是 BatchNorm？"
+      "为什么用 sin/cos 位置编码而不是可学习 embedding？RoPE / ALiBi 改进了什么？YaRN 又怎么扩展 RoPE 的长上下文能力？",
+      "Self-attention 跟 RNN 在长程依赖上的取舍——Mamba 在哪一点上声称翻盘？",
+      "为什么 Transformer 用 LayerNorm 而不是 BatchNorm？现在为什么 RMSNorm 又更常见？",
+      "走一遍 FlashAttention 的 tiling 策略——为什么加速来自 memory bandwidth 而不是 FLOP？",
+      "Attention sink 是什么现象？为什么对 streaming inference 和 KV-cache eviction 关键？",
+      "GQA / MQA 怎么改变 KV cache 占用和 decode 吞吐？",
+      "为什么 pre-norm Transformer 在 100B+ 训练里更稳，但小模型 loss 略差？",
+      "Softmax 引入的 low-rank bottleneck 对超长上下文意味着什么？Linear Attention 怎么绕过？",
+      "MoE FFN（Mixtral / DeepSeek-V3）如何在保留 Transformer scaling law 的同时降低 active FLOPs？",
+      "如果对 QK 乘积粗暴量化到 INT8、softmax 留 FP32，会出什么问题？",
+      "Prefix caching（vLLM、SGLang）如何利用 decoder-only Transformer 的 causal mask 结构？",
+      "Encoder-decoder 至今在翻译/摘要上仍占优，但通用 LLM 为何 decoder-only 胜出？",
+      "用 GPU memory 的视角走一遍 70B Transformer 的一次 forward：weights、KV cache、activations 各占多少？",
+      "Residual stream 视角（read/write/erase）相比 layer-stack 视角，在 debug emergent behavior 时有什么优势？",
+      "为什么 pretraining 早期某些 token 位置 loss 经常爆刺？什么 init / lr-warmup 能修？",
+      "如何重新设计 attention 以支持 1M+ token 上下文而 KV 不无限膨胀？",
+      "为什么 Transformer ablation 出名地脆——同一改动在 1B 时 work，在 70B 时反而 hurt？",
+      "Transformer 是架构上最优，还是只是和当前硬件（matmul-heavy、贴合 Tensor Core）匹配得好？"
     ]
   },
   "bert": {
-    "blurb": "Devlin et al 2018：基于 Transformer Encoder 的双向预训练模型，用 Masked LM + NSP 任务在大规模无标注语料上学习深层语言表示。开启了\"pretrain + fine-tune\"范式，长期主导 NLU 基准。",
+    "blurb": "Devlin et al 2018：基于 Transformer Encoder 的双向预训练模型，用 Masked LM + NSP 任务在大规模无标注语料上学习深层上下文表示。开启了\"pretrain + fine-tune\"范式，长期主导 NLU 基准；今天它的衍生（RoBERTa、DeBERTa、E5、BGE）仍然是 RAG 系统背后大多数生产级检索、分类和 reranker 的支柱。",
     "concepts": [
       "Masked LM",
       "双向 Encoder",
@@ -249,13 +459,28 @@
     "questions": [
       "BERT 的 MLM 为何要用 80/10/10 的 mask 策略？",
       "为什么 BERT 是 Encoder-only 而 GPT 是 Decoder-only？两者注意力 mask 差异如何决定能力边界？",
-      "RoBERTa 通过哪些消融证明 NSP 任务并非必要？",
+      "RoBERTa 通过哪些消融证明 NSP 任务并非必要？后来 ALBERT 的 SOP 等替代了什么？",
       "BERT 不能直接用于自回归生成的根源是什么？",
-      "BERT 的 [CLS] token 表示在 fine-tune 阶段为何能代表整句语义？"
+      "BERT 的 [CLS] token 表示在 fine-tune 阶段为何能代表整句语义？为什么 retrieval 里 mean-pool 经常更好？",
+      "Dynamic masking（RoBERTa）在大规模训练下为什么重要？背后的 gradient noise 论证是什么？",
+      "现代 embedding 模型（E5、BGE、GTE）怎么基于 BERT 但用对比目标——跟 CLIP 是什么关系？",
+      "为什么在 decoder LLM 已经存在的情况下，BERT-large 仍是 RAG 强力 reranker？",
+      "MLM 跟 ELECTRA 的 replaced-token detection 区别在哪？为什么 ELECTRA 样本效率更高？",
+      "如何把 BERT 分类器跑到 100k QPS——量化、蒸馏（DistilBERT）、ONNX 各有什么 trick？",
+      "WordPiece tokenization 在 code、多语种、数值文本里有哪些坑？BPE / Unigram 怎么修？",
+      "BERT 全量 fine-tune vs adapter / LoRA 的成本结构？什么场景下全量微调还是赢？",
+      "BERT 的双向性对分类极其有用，但恰恰扼杀了它的生成能力，为什么？",
+      "DeBERTa 的 disentangled attention 相比 BERT 的位置处理改进了什么？",
+      "搭一个 BM25 + dense retrieval 混合栈时，fine-tune 后的 BERT cross-encoder 放在哪一层？为什么？",
+      "Pretraining 数据的怪癖（Wikipedia + BookCorpus）如何在下游表现里留下偏置？",
+      "能不能用一个冻结 LLM 的中间层 embedding 替代 BERT？检索质量会怎么变？",
+      "为什么 pretraining loss 比 fine-tune loss 更早 plateau？这告诉我们 transfer 的什么？",
+      "MLM pretraining 跟长上下文外推的相互作用？为什么 BERT 卡在 512 token？",
+      "Encoder-only pretraining 是否过时，还是会因为推理时延敏感任务（如 reranker）回归？"
     ]
   },
   "gpt": {
-    "blurb": "OpenAI GPT 系列：Decoder-only 自回归语言模型。GPT-3 (175B) 证明仅靠扩规模即可通过 in-context learning 完成 few-shot 任务，确立了 prompt 工程与\"scale is all you need\"的工程范式。",
+    "blurb": "OpenAI GPT 系列：Decoder-only 自回归语言模型。GPT-2（2019）证明 transfer，GPT-3（175B，2020）证明仅靠扩规模即可通过 in-context learning 完成 few-shot 任务，GPT-4 及后续把工具调用、视觉、RLHF 融进单一产品。它是所有前沿实验室复刻的参考设计，也是定义现代推理栈（KV cache、continuous batching、speculative decoding）的工作负载。",
     "concepts": [
       "in-context learning",
       "few-shot",
@@ -264,15 +489,30 @@
       "emergent abilities"
     ],
     "questions": [
-      "in-context learning 是否真的在\"学习\"？从梯度视角如何解释？",
-      "few-shot 性能曲线相对模型规模在哪些任务出现 emergent abilities？",
-      "GPT-3 的稀疏注意力（dense/sparse 交替）解决了什么训练成本问题？",
+      "in-context learning 是否真的在\"学习\"？从梯度 / induction-head 视角如何解释？",
+      "Few-shot 性能曲线相对模型规模在哪些任务出现 emergent abilities？涌现是真现象还是评测指标人造？",
+      "GPT-3 的稀疏注意力（dense/sparse 交替）解决了什么训练成本问题？为什么 GPT-4 规模又回到 dense？",
       "GPT vs BERT 的能力边界差异是什么？",
-      "如何在不微调前提下，让 GPT 处理超过 context window 的长文档？"
+      "如何在不微调前提下，让 GPT 处理超过 context window 的长文档？",
+      "走一遍 70B GPT-style 模型在 32k 上下文下的 KV cache：每个请求多少显存？128k 时哪里爆？",
+      "Decoder-only 自回归训练相比 MLM 为什么 compute-efficient？用 token-per-FLOP 论证。",
+      "RLHF（SFT → RM → PPO → DPO）如何塑造 GPT base 模型？哪些行为来自哪个阶段？",
+      "什么是 reversal curse？它对 GPT 存储关联的方式意味着什么？",
+      "Temperature / top-p 采样对 agent 循环 vs 单轮 QA 影响差在哪？跟 self-consistency 怎么交互？",
+      "Induction head 在预训练中如何形成？这跟 in-context learning 曲线是什么关系？",
+      "为企业 RAG 产品评测一个 GPT 模型的正确方法——超越 MMLU 还需要什么？",
+      "为什么 speculative decoding 跟 GPT 推理天作之合，但跟 encoder-decoder 反而更难？",
+      "Prefix / system prompt caching 怎么 work？什么用户行为会让 cache 失效？",
+      "GPT 类模型为什么会幻觉？哪些 failure mode 即使做完 RLHF 也存活？",
+      "MoE GPT（Mixtral、DeepSeek-V3）vs dense 在 iso-quality 下：serving 上要改什么（expert routing、all-to-all）？",
+      "Chat template / 特殊 token 为什么变成了安全边界（prompt injection、role confusion）？",
+      "Held-out 文本的 perplexity 跟下游 agent 任务成功率的关系——它们什么时候解耦？",
+      "如果给你 1 万张 H100 小时训一个 GPT-4 级别小模型，你怎么分配 data 和 params（Chinchilla 2024 update 视角）？",
+      "GPT 在 pretraining 收益上是否 plateau？这对未来 18 个月模型进展意味着什么？"
     ]
   },
   "diffusion": {
-    "blurb": "DDPM (Ho et al 2020) 把扩散与变分推断、score matching 严格连接，用简化的 ε-prediction 目标训练 U-Net。Stable Diffusion / Imagen / Sora 等现代生成模型的理论基石。",
+    "blurb": "DDPM (Ho et al 2020) 把扩散与变分推断、score matching 严格连接，用简化的 ε-prediction 目标训练 U-Net。Latent Diffusion（Stable Diffusion 2022）把它做到可工程化；今天它支撑 SD3、FLUX、Imagen、Sora 和绝大部分 SOTA 图像/视频/音频生成，并已渗透到 LLM 解码（diffusion LM）和蛋白质设计。",
     "concepts": [
       "前向加噪",
       "ε-prediction",
@@ -283,13 +523,28 @@
     "questions": [
       "DDPM 的训练目标 L_simple 与原始 ELBO 的关系？为何去权重后效果更好？",
       "前向过程 q(x_t|x_0) 为什么可以闭式采样？β schedule 的选择为何重要？",
-      "DDPM、DDIM、score-based SDE 三种视角如何统一？采样步数为何能从 1000 减到 20？",
-      "classifier-free guidance 的数学形式？scale 过大为何导致饱和？",
-      "Latent Diffusion 相比 pixel-space DDPM 解决了哪些工程瓶颈？"
+      "DDPM、DDIM、score-based SDE 三种视角如何统一？采样步数为何能从 1000 减到 20（再用 consistency model 减到 4）？",
+      "Classifier-free guidance 的数学形式——scale 过大为何导致饱和和色彩漂移？",
+      "Latent Diffusion 相比 pixel-space DDPM 解决了哪些工程瓶颈？",
+      "DiT（SD3、Sora 用的 Diffusion Transformer）为什么在大规模上反超 U-Net？这对 inductive bias 说明了什么？",
+      "Flow matching / rectified flow 相比噪声预测 DDPM 在训练上简化了什么？为什么 FLUX 用它？",
+      "Score matching 等价性相比 variational view 多带来了什么？",
+      "为什么扩散在大数据下取代 GAN——是稳定性、mode coverage 还是单纯算力？",
+      "CLIP / T5 文本条件如何通过 cross-attention 进入？为什么 T5 conditioning 在质感上经常跟 CLIP 不一样？",
+      "走一遍 Sora 风格视频扩散的一次前向——latent shape 是什么？算力消耗在哪？",
+      "Consistency-model / LCM 蒸馏为什么是当前实时图像生成的主路径？牺牲了什么？",
+      "ControlNet 怎么不重训 base 就接入？数学上为什么 work？",
+      "粗暴 INT8 量化扩散 U-Net 会出什么问题？smooth-quant 怎么修？",
+      "如果要 100 QPS serving 扩散——batching、scheduler 选型（DPM-Solver++）、KV-cache 等价物？",
+      "Classifier guidance（无需训练）实践中为什么打不过 CFG（训练时）？",
+      "评估扩散模型的正确方法——FID / CLIPScore / human-eval 各自的盲区？",
+      "视频扩散即便用 patch tokenization 也是 attention compute-bound，时空分解 trick 怎么救？",
+      "Diffusion LM（SEDD、MD4）如何挑战自回归 GPT？根本权衡是什么？",
+      "Noise-to-data 这个表述是基本框架，还是恰好一种好训练的桥接？"
     ]
   },
   "scaling-laws": {
-    "blurb": "Kaplan et al 2020：用幂律拟合 LM loss 与参数量 N、数据量 D、计算量 C 的关系，给出 compute-optimal 配比建议。是 GPT-3 决定\"先堆参数\"的理论依据，但其结论后被 Chinchilla 修正。",
+    "blurb": "Kaplan et al 2020：用幂律拟合 LM loss 与参数量 N、数据量 D、计算量 C 的关系，给出 compute-optimal 配比建议（N 增长比 D 快 5-6×）。是 GPT-3 决定\"先堆参数\"的理论依据，但 LR schedule 的 bug 被发现后被 Chinchilla 修正。今天工程上把 Kaplan / Chinchilla 两条曲线都当 over-training 取舍的输入（Llama 3 已到 ~75 tokens/param）。",
     "concepts": [
       "幂律",
       "compute-optimal",
@@ -300,13 +555,28 @@
     "questions": [
       "Kaplan 给出的 N 与 D 最优配比是多少？为何后来被证伪？",
       "irreducible loss 的物理含义是什么？是否对应数据集的熵？",
-      "为什么 batch size 也存在临界值？",
+      "为什么 batch size 也存在临界值？它如何随 loss 变化？",
       "若把 architecture（深度/宽度比）固定，scaling law 还成立吗？",
-      "如何从 scaling law 反推训练目标性能模型所需的 GPU-hours？"
+      "如何从 scaling law 反推训练目标性能模型所需的 GPU-hours？",
+      "Kaplan 原论文 N/D 比例为什么算错？是 LR schedule、模型形状 sweep，还是两者都有？",
+      "在一个全新预训练栈上从零拟合 scaling law，你会先 sweep 哪几个轴？",
+      "irreducible loss 在不同数据集上不同——它是数据质量代理还是 tokenizer 副产物？",
+      "scaling law 外推什么时候开始失效？超过拟合区间几个 OOM 你就不再相信？",
+      "critical batch size 在训练中会变大——这对 warmup-batch 与 grad-accum schedule 有什么含义？",
+      "下游 eval（MMLU、HumanEval）真的是幂律吗，还是 emergent 阶跃？",
+      "MoE 下 scaling law 怎么改？N 应该算 active params、total params 还是中间值？",
+      "数据质量（过滤后 web 对原始 CommonCrawl）为什么只移动曲线常数而不改指数？",
+      "long-context 训练（32k+）跟 scaling law 怎么交互——只是 D 膨胀还是更深的东西？",
+      "scaling law 跟小规模观测到的 double-descent / grokking 现象有什么关系？",
+      "如果推理 compute 也算成本（Chinchilla-suboptimal 但便宜服务），如何重新推导最优点？",
+      "scaling law 能预测 in-context learning 这种能力，还是只能预测 loss？为什么这个 gap 很尴尬？",
+      "怎么从 scaling law 曲线的拐点检测 regime change（架构、数据、optimizer）？",
+      "开放问题：scaling law 在合成数据 / RL fine-tuning regime 下是否还成立，还是会出现新指数？",
+      "实操：给定 1000 万美金 H100 训练预算，如何从 scaling law 常数推出 N、D、batch、steps？"
     ]
   },
   "chinchilla": {
-    "blurb": "Hoffmann et al 2022：通过 400+ 训练实验重新拟合 scaling law，提出在固定 compute 下 N 与 D 应等比例放大（约 20 tokens/param），证明 GPT-3 等大模型严重训练不足。70B Chinchilla 在更多 token 上击败 280B Gopher。",
+    "blurb": "Hoffmann et al 2022：通过 400+ 训练实验重新拟合 scaling law，提出在固定 compute 下 N 与 D 应等比例放大（约 20 tokens/param），证明 GPT-3、Gopher 等大模型严重训练不足。70B Chinchilla 用 4× token 在同 FLOPs 下击败 280B Gopher。今天大多数开源模型故意训过 Chinchilla-optimal（Llama 3 8B 训到 15T tokens）以摊销推理成本。",
     "concepts": [
       "compute-optimal",
       "20 tokens/param",
@@ -316,14 +586,29 @@
     ],
     "questions": [
       "Chinchilla scaling 反驳了 Kaplan 哪条核心结论？数学差异在哪？",
-      "IsoFLOP 曲线如何拟合？为何三种拟合方法结果一致？",
+      "IsoFLOP 曲线如何拟合？为何三种拟合方法（approach 1/2/3）结果一致？",
       "若数据规模有上限（data wall），Chinchilla-optimal 是否还成立？",
       "Llama 系列为何故意训练超过 Chinchilla-optimal token 数？",
-      "是否考虑了 fine-tuning / RLHF 的 compute？这会改变最优配比吗？"
+      "Chinchilla 是否考虑了 fine-tuning / RLHF 的 compute？算上会改变最优配比吗？",
+      "推一遍 L(N,D) 参数化形式。指数 α≈0.34、β≈0.28 怎么来的？物理直觉是什么？",
+      "Approach 3 拟 loss 曲面，approach 1 拟每条 FLOP 的极小点——外推时你更信哪个？为什么？",
+      "Epoch AI 重新分析后对 Chinchilla 置信区间的批评是什么？20:1 的比例还站得住吗？",
+      "若把推理成本也算进去，Chinchilla-optimal 怎么偏移？把 over-train 倍数推成预期 serving token 的函数？",
+      "为什么部署时人们经常误用 'Chinchilla-optimal'——training-optimal 和 deployment-optimal 的区别在哪？",
+      "如果独有数据已经用尽必须 epoch，Chinchilla 怎么调整？重复多少次曲线开始崩？",
+      "质量 vs 数量：把 CommonCrawl 换成过滤后 code/textbook 数据，20:1 还成立吗？",
+      "Chinchilla 在 MoE 下怎么用？20:1 应该套 active params 还是 total params？",
+      "如果只够训一个 1B + 一个 7B + 一个 70B，怎么用 IsoFLOP 逻辑分配 token？",
+      "Chinchilla 默认 single-epoch，多 epoch 训练（Muennighoff 2023）怎么改最优点？",
+      "Chinchilla 曲线在最优点附近几乎平坦——这对工程上对 D 误差的容忍意味着什么？",
+      "把 Chinchilla 跟 DeepMind 早期的 'compute-efficient training' 文献和 Kaplan 2020 对比，方法学上变了什么？",
+      "Over-training 会怎么影响下游 fine-tuning 时的 catastrophic forgetting？",
+      "开放问题：合成数据 + 蒸馏下，Chinchilla 常数还是 ~20，还是会无限攀升？",
+      "实操：1024 张 H100 跑 90 天训 13B，按 Chinchilla 你的 token 预算是多少？数据从哪来？"
     ]
   },
   "lora": {
-    "blurb": "Hu et al 2021：冻结预训练权重 W，只训练低秩分解 ΔW = BA（rank r ≪ d），把可训练参数减少几个数量级而几乎无性能损失。当前 PEFT 与扩散模型微调的事实标准。",
+    "blurb": "Hu et al 2021：冻结预训练权重 W，只训练低秩分解 ΔW = BA（rank r ≪ d，常用 r=8-64），把可训练参数减少 1000-10000× 而几乎无性能损失。QLoRA（Dettmers 2023）叠 NF4 量化让 65B 模型在单张 48GB GPU 上微调。当前 PEFT、扩散微调、以及多租户 adapter 服务的事实标准。",
     "concepts": [
       "低秩分解",
       "PEFT",
@@ -333,14 +618,29 @@
     ],
     "questions": [
       "LoRA 假设权重更新存在\"low intrinsic rank\"，实证依据是什么？",
-      "LoRA 推理时是否引入额外延迟？合并后还能切换 adapter 吗？",
+      "LoRA 推理时是否引入额外延迟？合并进 W 后还能 hot-swap adapter 吗？",
       "rank r 怎么选？哪些任务 r=1 就够，哪些需要 r=64+？",
       "LoRA / Adapter / Prefix-tuning 在表达能力与显存开销上的本质区别？",
-      "QLoRA 的 NF4 为何比 INT4 更优？"
+      "QLoRA 的 NF4 为何对正态分布权重比 INT4 更优？",
+      "为什么 LoRA 通常只挂在 attention Q,V（而不是 K,O,FFN）？什么时候扩到所有 linear 层才真的划算？",
+      "推一遍 QLoRA 的 double quantization + paged optimizer，每一项显存节省来自哪里？",
+      "LoRA vs full fine-tune 在能力获取 vs 对齐上各赢在哪里？",
+      "S-LoRA 怎么在单卡上服务上千个 adapter？kernel 上的 trick 是什么？",
+      "DoRA 的 magnitude / direction 分解改进，什么场景下真的胜过普通 LoRA？",
+      "为什么把 LoRA merge 回 base 后有时质量比不 merge 的推理更差？",
+      "α（LoRA scaling）怎么选？为什么有 'α = 2r' 这个经验法则？",
+      "在已经 RLHF 过的 base 上做 LoRA fine-tune，会出现什么 alignment 回退？",
+      "LoRA 跟量化 base 权重在推理时如何交互（W4A16 + LoRA）？精度从哪重新引入？",
+      "fine-tune 数学 / 代码任务，full fine-tune 还是更强——'low-rank update' 假设为什么在这里失效？",
+      "实操：用 vLLM 服务 500 个客户专属 adapter，显存与延迟账怎么算？",
+      "怎么检测 LoRA adapter 是过拟合，还是 r 太小拟合不下任务？",
+      "LoRA 跟 PEFT 表亲（IA3、prompt tuning）在显存与收敛上怎么叠？",
+      "扩散 LoRA（Stable Diffusion 微调）跟 LLM LoRA 有什么不同——为什么 r=4 在 UNet 上就够？",
+      "开放问题：能不能从任务数据谱 / Fisher 信息原则性地预测每任务最小 r？"
     ]
   },
   "rlhf": {
-    "blurb": "InstructGPT (Ouyang et al 2022) 用「SFT → Reward Model → PPO」三阶段把 GPT-3 对齐到人类偏好。1.3B InstructGPT 在指令遵循上击败 175B GPT-3，确立 RLHF 为 ChatGPT / Claude 等对话模型的标准对齐路线。",
+    "blurb": "InstructGPT (Ouyang et al 2022) 用「SFT → Reward Model → PPO」三阶段把 GPT-3 对齐到人类偏好。1.3B InstructGPT 在指令遵循上击败 175B GPT-3，确立 RLHF 为 ChatGPT / Claude 等对话模型的标准对齐路线。前沿已经转向 DPO/IPO 闭式解、RLAIF（Constitutional AI）以及 Online DPO、可验证奖励 PPO 这类 online iterative 方法。",
     "concepts": [
       "SFT",
       "Reward Model",
@@ -350,14 +650,29 @@
     ],
     "questions": [
       "RLHF 中 KL 惩罚项的作用？没有它会出现什么 reward hacking？",
-      "为什么 reward model 用 pairwise ranking loss 而不是直接回归分数？",
+      "为什么 reward model 用 pairwise ranking loss（Bradley-Terry）而不是直接回归分数？",
       "PPO 在 LM 场景的 actor / critic 各对应什么？value head 与 RM 区别？",
       "DPO 如何用闭式解绕过显式 RM 与 PPO？数据效率孰优孰劣？",
-      "alignment tax 指什么？InstructGPT 在哪些 benchmark 出现能力回退？"
+      "alignment tax 指什么？InstructGPT 在哪些 benchmark 出现能力回退？",
+      "为什么 RM 训练数据质量比数量更重要？Anthropic / OpenAI 在 labeler 一致性上的经验法则是什么？",
+      "PPO 的 ratio clipping vs KL 惩罚——到底哪个真正在控制 policy drift？为什么两个都要？",
+      "Constitutional AI / RLAIF 怎么替换人工标注者？哪里会崩？",
+      "RM 在训练中期会过拟合 policy 分布——标准缓解（RM ensemble、周期重标）是什么？",
+      "推一下 DPO 从最优 RLHF policy 的推导。reference-policy 项是怎么来的？",
+      "DPO 什么时候真的不如 PPO？IPO 修复 DPO over-confidence 的贡献在哪？",
+      "RLHF vs SFT-only 在安全上：为什么单纯指令微调会留下容易的 jailbreak？",
+      "RLHF 跟 chain-of-thought 训练怎么交互？KL 项会压制合理推理吗？",
+      "为什么 RLHF 后模型变得 mode-collapsed / 多样性下降？PPO 的 entropy bonus 是干什么的？",
+      "怎么给数学任务建 process reward model（PRM）vs outcome RM？为什么 PRM 难 scale？",
+      "Reward hacking 案例：RM 持续误判的模式（迎合、format gaming、答案长度）有哪些？",
+      "Online vs offline DPO：什么规模上 online 迭代会显著超过 offline baseline？",
+      "可验证奖励的 RLHF（数学 / 代码）：为什么这个 regime 更接近经典 RL？PPO 行为有什么不同？",
+      "RLHF 跟 serving 时的安全分类器 / guardrail 怎么组合——冗余还是互补？",
+      "开放问题：纯 RLHF 是不是有天花板（饱和），这是不是驱动业界转向 RLVR / 合成 AI feedback 的原因？"
     ]
   },
   "moe": {
-    "blurb": "Switch Transformer (Fedus et al 2021)：把 FFN 替换为 N 个专家 + top-1 路由，等量 FLOPs 下把参数量推到万亿级（1.6T）。Mixtral / DeepSeek-MoE / GPT-4 路线的起点。",
+    "blurb": "Switch Transformer (Fedus et al 2021)：把 FFN 替换为 N 个专家 + top-1 路由，等量 FLOPs 下把参数量推到万亿级（1.6T）。Mixtral-8x7B（47B 总 / 13B active）和 DeepSeek-V3（671B / 37B active）把 fine-grained MoE 做成前沿默认，GPT-4 也被广泛认为是 MoE。Routing collapse 与 load imbalance 是主要 failure mode。",
     "concepts": [
       "Sparse MoE",
       "Top-1 Routing",
@@ -366,15 +681,30 @@
       "Expert Parallel"
     ],
     "questions": [
-      "Switch 用 top-1 而非 top-2 路由的取舍？",
+      "Switch 用 top-1 而非 top-2（Mixtral）/ top-k fine-grained 路由的取舍？",
       "load balancing auxiliary loss 的形式？为何纯 token 计数不可微？",
       "capacity factor 设过小 / 过大分别会发生什么？",
       "expert parallel 与 tensor / pipeline parallel 如何组合？all-to-all 通信开销如何摊销？",
-      "为什么 MoE 模型推理时显存占用并不能等比例下降？"
+      "为什么 MoE 模型推理时显存并不能按 active 等比例下降？",
+      "推一遍 routing 的前 / 反向。gate 为什么需要 softmax + noise 项？",
+      "Expert collapse：什么训练动力学会让少数专家吃掉所有 token？怎么早期检测？",
+      "DeepSeek 的 fine-grained + shared-expert 设计，每一块相比 Mixtral 8x 各买到了什么？",
+      "MoE 跟 Chinchilla scaling 怎么交互？20:1 应该套 active 还是 total params？",
+      "MoE 为什么这么难服务？真正瓶颈是显存、all-to-all 还是 batch 碎片？",
+      "Auxiliary-loss-free balancing（DeepSeek-V3）：bias trick 如何替换 load-balance loss？",
+      "Expert parallel 的 all-to-all 跨节点怎么 scale？什么时候必须上 DeepEP / NVLink fabric？",
+      "MoE 在量化下表现怎样？为什么 INT4 routing 特别脆？",
+      "把 dense checkpoint upcycle 成 MoE（sparse upcycling），训练动力学有什么变化？",
+      "MoE 推理 batching 怎么做？token 真能在线 pack 到对应专家吗？",
+      "为什么相同 total-param 下 MoE 模型常常比 dense 'undertrained'？",
+      "Routing entropy 作为 debug 信号——entropy 塌缩说明什么？怎么干预？",
+      "MoE 用作多租户微调 vs 容量 scaling 工具——同一架构、设计压力完全不同？",
+      "Speculative decoding 跟 MoE 怎么交互？draft model 也得是 MoE 吗？",
+      "开放问题：MoE 能否在 MoD 风格的 depth-mixing 中替换 dense FFN，还是下一前沿是层级化稀疏？"
     ]
   },
   "zero": {
-    "blurb": "Microsoft 2019：Zero Redundancy Optimizer 把 optimizer states / gradients / parameters 跨 DP rank 切片，把数据并行的显存占用从 O(N) 降到 O(N/DP)。现代大模型训练显存优化的奠基算法。",
+    "blurb": "Microsoft 2019：Zero Redundancy Optimizer 把 optimizer states（Stage 1）、gradients（Stage 2）、parameters（Stage 3）跨 DP rank 切片，把数据并行的显存从 O(N) 降到 ~O(N/DP)。Stage 3 让超过单卡 HBM 的模型可训。现代大模型训练显存优化的奠基算法，PyTorch FSDP / FSDP2 是直接后裔，已经是 HF Accelerate、torchtitan 等开源训练栈的默认。",
     "concepts": [
       "Optimizer 分片",
       "Gradient 分片",
@@ -384,14 +714,29 @@
     ],
     "questions": [
       "ZeRO-3 相比纯 DP 多出多少额外通信？为什么仍然划算？",
-      "为什么 optimizer states 是显存大头？Adam 里具体哪几项？",
+      "为什么 optimizer states 是显存大头？Adam 里具体哪几项（m、v、fp32 master）？",
       "ZeRO 跟 tensor parallel 的本质区别？能否互相替代？",
       "FSDP 对 ZeRO-3 做了什么工程化简化？",
-      "ZeRO 在 bf16 + fp32 master weights 下显存账怎么算？"
+      "ZeRO 在 bf16 + fp32 master weights 下显存账怎么算？以 70B 为例走一遍。",
+      "ZeRO-3 为什么 forward 前需要 all-gather、backward 后需要 reduce-scatter？哪些 overlap 可用？",
+      "ZeRO-Infinity / NVMe offload：什么时候 latency 代价值得，而不是直接多买几张卡？",
+      "对比 ZeRO-3 与 FSDP2：参数 group flatten 与 CPU offload 上变了什么？",
+      "为什么业界从 DeepSpeed ZeRO-3 → FSDP → FSDP2？每一代修了什么？",
+      "ZeRO-3 + Tensor Parallel + Pipeline Parallel（3D 并行）：维度顺序怎么排？为什么？",
+      "ZeRO 跟 activation checkpointing / selective recompute 在显存账上怎么交互？",
+      "什么时候 ZeRO-2（gradient 分片）才是比 ZeRO-3（全分片）更对的选择？",
+      "ZeRO-3 通信随 DP size 线性增长——多大规模后 all-gather 时间会主导计算？",
+      "推一下 ZeRO-3 下的 gradient accumulation：partial gradient 在哪里、什么时候 reduce？",
+      "ZeRO 跟 MoE expert parallel 怎么交互？为什么朴素组合不行？",
+      "Hybrid sharded data parallel（HSDP）：什么时候节点内 shard、节点间 replicate？",
+      "ZeRO-3 影响收敛吗？梯度跟非分片 DP 是 bit-equivalent 吗？",
+      "FP8 训练（Transformer Engine）下 ZeRO 变了什么？master weights 还是 fp32 吗？",
+      "开放问题：sharded parallelism 是否在收敛到一个'最优'切分，还是仍然 workload-dependent？",
+      "实操：1024 H100 训 405B，挑一个并行方案并解释 ZeRO stage 选择。"
     ]
   },
   "paxos": {
-    "blurb": "Lamport 用通俗语言重写的 Paxos 论文，定义 Prepare/Accept 两阶段达成单值共识。分布式共识的理论原点；Multi-Paxos 把它扩展到 log replication。",
+    "blurb": "Lamport 1998《The Part-Time Parliament》、2001《Paxos Made Simple》通俗化重写：Prepare/Accept 两阶段在异步网络上达成单值共识。分布式共识的理论原点；Multi-Paxos 把它扩展到 log replication，是现代 parameter server、模型注册中心、分布式 checkpoint 协调器最终都要趴在上面的协议。",
     "concepts": [
       "Prepare/Accept",
       "Proposal Number",
@@ -404,11 +749,26 @@
       "Multi-Paxos 怎么从 single-decree 扩展到 log replication？",
       "Paxos 跟 Raft 的等价性体现在哪？工程上为什么 Raft 赢了？",
       "活锁问题怎么靠 leader election 缓解？",
-      "Fast Paxos / EPaxos 各自降低了什么 latency？"
+      "Fast Paxos / EPaxos 各自降低了什么 latency？",
+      "Multi-Paxos 的 stable-leader 优化怎么走？为什么 phase 1 能在多次决议间摊销？",
+      "Proposal number 单调性这个 invariant 怎么阻止两个 leader 提交冲突值？",
+      "Quorum intersection 究竟是什么？为什么 N 取奇数对容错很关键？",
+      "Cheap Paxos / Flexible Paxos：什么场景下读 quorum 可以小于多数派？",
+      "为什么 leader lease 一般做在 Paxos 之上，而不是直接写进 safety 证明里？",
+      "怎么用 Multi-Paxos 协调成千上万训练 worker 的分布式 checkpoint commit 而不卡住 step？",
+      "Parameter server 集群弹性扩容需要强一致的成员管理，Paxos 跟 etcd 这种外部协调器各扮演什么角色？",
+      "怎么基于 Paxos 复制做模型注册中心，让 promote-to-prod 和 rollback 是 linearizable 的？",
+      "Multi-Paxos group 重配置时复用 proposal number 会出什么问题？",
+      "Paxos 用 2f+1 节点容忍 f 个故障而不是 f+1，这对一个 3 region ML 控制面意味着什么？",
+      "Mencius / EPaxos 怎么利用可交换性消除 leader 瓶颈，去支撑跨地域 feature store？",
+      "怎么安全做 acceptors 增删（reconfiguration）而不在中途破坏 safety？",
+      "Multi-Paxos 的只读优化为什么不平凡？ReadIndex / lease read 怎么映射回 Paxos 语义？",
+      "Paxos 集群跑 LLM serving 控制面时，split-brain 会怎么表现？哪种检测能抓住它？",
+      "Paxos 工程实现为什么以难写出名？至少举三个真实实现历史上写错过的细微 invariant。"
     ]
   },
   "raft": {
-    "blurb": "Ongaro & Ousterhout 2014：可理解的共识算法。显式拆分 leader election / log replication / safety；工业界共识协议事实标准（etcd / TiKV / CockroachDB）。",
+    "blurb": "Ongaro & Ousterhout 2014 USENIX ATC《In Search of an Understandable Consensus Algorithm》：把共识显式拆成 leader election / log replication / safety，强 leader 简化了证明。工业界事实标准（etcd / TiKV / CockroachDB / Consul / Kafka KRaft / Ray GCS），所以你运维的每个 K8s ML 集群、分布式 feature store、在线推理控制面底下大概率都有它。",
     "concepts": [
       "Leader Election",
       "Log Matching",
@@ -421,11 +781,26 @@
       "为什么 Raft 不允许 commit 之前 term 的 log entry？",
       "Joint consensus vs single-server membership change 的取舍？",
       "Pre-vote / CheckQuorum 解决了哪些 partition 下的活性问题？",
-      "ReadIndex 优化怎么让 linearizable read 不需要写 log？"
+      "ReadIndex 优化怎么让 linearizable read 不需要写 log？",
+      "走一遍 leader-completeness 证明：为什么 candidate 的 log 必须不旧于多数派？",
+      "Leader 变更后用 no-op barrier 提交旧 entry 这件事比看起来微妙得多，它防住的是哪个 bug？",
+      "Pre-vote 怎么阻止一个被分区的 follower 自增 term 去打扰健康的 leader？",
+      "Raft 强 leader 跟 Paxos leaderless 变体相比，为了易懂放弃了什么？",
+      "Lease read 机制是什么？依赖什么时钟偏差假设？lease 长度怎么定？",
+      "etcd / CockroachDB 怎么在不破坏 linearizability 的前提下做 Raft batching + pipelining？",
+      "100GB checkpoint 复制时一个 follower 一直追不上，你怎么判断该 snapshot 还是该缩容集群？",
+      "怎么用 Raft 协调分布式训练里的弹性成员管理——epoch 中途加减 worker？",
+      "Multi-Raft（TiKV / CRDB）：把 Raft group 切成数千个 region 之后，会冒出哪些新的 failure mode？",
+      "突发 checkpoint 写流量下 leader churn 怎么表现？election timeout / heartbeat / batching 这些旋钮怎么调？",
+      "为什么生产环境的配置变更优先用 joint consensus 而非更简单的 add-one-server？",
+      "怎么把模型注册中心架在 Raft 之上，让 promote / demote / rollback 跨区线性一致？",
+      "多区域推理 serving 的只读请求怎么走 follower read / stale read 才合理？",
+      "Witness 副本和 learner：在不对称跨区 ML 元数据集群里你什么时候用？",
+      "怎么排查一个陷入 election storm 的 Raft 集群？哪些指标和日志信号能告诉你根因？"
     ]
   },
   "spanner": {
-    "blurb": "Google 2012：用 TrueTime API 把时钟不确定性显式建模，实现外部一致的跨数据中心事务。启发了 CockroachDB / YugabyteDB / TiDB 等一代分布式 SQL 数据库。",
+    "blurb": "Corbett 等 OSDI 2012：用 TrueTime API（GPS + 原子钟，提供有界 ε）显式建模时钟不确定性，再用 commit-wait 在 2PC over Paxos group 之上交付外部一致（线性一致）的跨数据中心事务。启发了 CockroachDB / YugabyteDB / TiDB 整代分布式 SQL，也是任何多区域事务型 lakehouse / feature store 控制面的参考设计。",
     "concepts": [
       "TrueTime",
       "External Consistency",
@@ -438,11 +813,26 @@
       "Spanner 怎么把 2PC 跑在 Paxos group 之上还能保活？",
       "没有原子钟的厂商怎么用 HLC 模拟 TrueTime，代价是什么？",
       "Tablet 跟 Paxos group 的关系决定了哪些扩展性边界？",
-      "F1 / Spanner 这套设计在 OLTP / 实时分析的边界？"
+      "F1 / Spanner 这套设计在 OLTP / 实时分析的边界？",
+      "走一遍外部一致性的证明：TT.now().latest 在哪一步进入论证？为什么这样安全？",
+      "如果真实时钟偏差超过广告 ε，Spanner 的正确性怎么挂？怎么检测到？",
+      "Commit wait 为什么主导写延迟？ML 元数据负载下 ε 跟吞吐怎么权衡？",
+      "Spanner 怎么为每个 Paxos group 选 leader 副本？这个决策对只读事务为何重要？",
+      "TrueTime 时间戳的 snapshot read：读协议怎么不被进行中的写阻塞？",
+      "对比 Spanner / CockroachDB / YugabyteDB / TiDB 在时钟模型、隔离级别、SQL 表面的差异——各自适合什么场景？",
+      "怎么在 Spanner 上架全球 feature store，让在线推理读到最新特征又不用付 commit-wait 延迟？",
+      "LLM 多区域 serving：哪些工作负载该走 Spanner 强一致，哪些该走最终一致缓存？",
+      "Spanner 凭什么在 CAP 里自称 CA？为什么这并不违反 Gilbert-Lynch？",
+      "单 key 持续写热点导致 tablet split / move，标准缓解手段是什么？",
+      "跨上百个 tablet 的读写事务，为什么参与者数量没把延迟炸掉？",
+      "跨区域 2PC 的成本模型：量化 round-trip 数量，Paxos group 放置如何改变它？",
+      "Spanner 的 schema change 是 online 非阻塞操作，背后是 TrueTime 怎么撑的？",
+      "怎么在 Spanner 上跨 5 个区存放并提供模型注册中心，保证严格的 promote / rollback 顺序？",
+      "为什么 Spanner 被视为分布式数据库的高水位线？后来的系统要超越它必须改什么？"
     ]
   },
   "computer-architecture": {
-    "blurb": "所有性能问题的最终答案都在这里：流水线、cache 层级、虚拟内存、SIMD、分支预测。理解这一层后，你才能解释为什么同样的代码在不同 CPU 上差几倍。",
+    "blurb": "所有性能问题的最终答案都在这里：乱序流水线、多级 cache 层级、虚拟内存 + TLB、SIMD / 向量单元、分支预测，以及内存墙——核心速度与 DRAM 延迟之间不断扩大的鸿沟。理解这一层，你才能解释为什么同样的 PyTorch kernel 在不同 CPU 上差 5 倍，也才能看懂 GPU SM 是同一组思想的可识别后裔。",
     "concepts": [
       "CPU 流水线",
       "Cache 层级",
@@ -452,14 +842,29 @@
     ],
     "questions": [
       "一条指令从取指、译码、执行到写回，在乱序超标量 CPU 上是怎么并行的？",
-      "cache miss 分哪几类？怎么用 perf 量出来？",
-      "NUMA 上的\"远端访问\"比\"本地访问\"贵多少？数据库为什么要绑核？",
-      "TLB miss 跟 cache miss 的代价怎么比较？huge page 何时真正有用？",
-      "AVX-512 触发频率降档的代价大概多少？什么时候不该用？"
+      "cache miss 分哪几类（3C / 4C）？怎么用 perf 计数器量出来？",
+      "NUMA 上的远端访问比本地访问贵多少？数据库 / 训练框架为什么要绑核？",
+      "TLB miss 跟 cache miss 的代价怎么比较？huge page 在 ML 负载里何时真正有用？",
+      "AVX-512 触发频率降档的代价大概多少？什么时候不该用？",
+      "memory wall 是什么？prefetcher / non-temporal store 怎么试图遮盖它？",
+      "分支预测器解剖：BTB + RAS + 间接预测器——Spectre v2 实际投毒的是哪一个？",
+      "为什么 store-to-load forwarding 延迟在 ML 紧密循环里是真实瓶颈？怎么在 profile 里看出来？",
+      "x86 vs ARM（Graviton、Grace）做推理：ARM 更宽的 decode + 弱内存模型在哪里赢，又在哪里吃亏？",
+      "MESI / MOESI 缓存一致性协议怎么解释 false sharing？除了到处 padding 还有什么修法？",
+      "GPU SM 从 CPU 架构借鉴了什么（warp 即 SIMT、寄存器文件、shared memory 当 scratchpad）？又在哪里发散？",
+      "为什么大多数 transformer 在通用 CPU 上推理是被内存带宽而不是 FLOPs 卡住？",
+      "non-inclusive vs inclusive L3 cache 怎么改变 dataloader 跨核扇出的代价？",
+      "page-walk 代价为什么在大 embedding 表上特别明显？THP defrag 失败长什么样？",
+      "Apple M 系列的统一内存模型怎么改写设备端推理的 CPU/GPU 数据搬运故事？",
+      "speculation、prefetch、replay 在哪些地方变成安全侧信道（Spectre / MDS / Downfall）？",
+      "功耗 / 热限（RAPL、package C-state）怎么悄悄改写共享云 VM 上的 benchmark 数字？",
+      "在 96 核 + Python GIL 的串行段面前，Amdahl 定律到底在说什么？",
+      "比较加速器时，roofline 模型为什么比 peak FLOPs 更重要？",
+      "怎么从第一性原理推断一个 kernel 为什么只跑到 30% 峰值——pipeline stall、cache、内存带宽还是指令组合？"
     ]
   },
   "operating-systems": {
-    "blurb": "上面所有 infra 都建在 syscall 之上。进程、虚拟内存、调度、文件系统、IO——理解这一层是性能调优、故障定位、容器/虚拟化原理的入口。",
+    "blurb": "上面所有 infra 都建在 syscall 之上。进程与线程、虚拟内存、调度器（Linux 的 CFS 到 EEVDF）、VFS / page cache、现代异步 IO（epoll、io_uring）——理解这一层是性能调优、故障定位、容器/虚拟化原理的入口。在 ML 集群里，它也是 GPU 驱动、NUMA-aware 放置、cgroup 配额一起决定一个训练任务是顺利跑完还是抖成 thrash 的地方。",
     "concepts": [
       "进程 / 线程",
       "虚拟内存",
@@ -468,15 +873,30 @@
       "epoll / io_uring"
     ],
     "questions": [
-      "一次系统调用从 user space 到 kernel space 的完整路径？",
+      "一次系统调用从 user space 到 kernel space 的完整路径（trap、MSR、trampoline）？",
       "CFS 到 EEVDF 调度器的设计动机变化？",
-      "page cache 跟 direct IO 在数据库场景的取舍？",
+      "page cache 跟 direct IO 在数据库 / dataloader 场景的取舍？",
       "为什么 io_uring 比 epoll + thread pool 在高 IOPS 下更优？",
-      "namespace + cgroup 怎么共同实现容器隔离，各自缺什么？"
+      "namespace + cgroup 怎么共同实现容器隔离，各自缺什么？",
+      "走一遍 fork + execve：copy-on-write 在 200 GB Python 训练进程上实际代价多大？",
+      "为什么 mmap + page cache 在大 parquet shard 上常常打 read()，但在 NVMe 上又输给 O_DIRECT？",
+      "优先级反转的故事是什么？RT throttling + PI mutex 怎么缓解？",
+      "内核什么时候决定 swap？为什么 swap = 推理服务延迟死亡？",
+      "卡在 D 状态的任务在告诉你什么？怎么不重启就调试？",
+      "NUMA balancing 怎么和 PyTorch dataloader worker、pinned memory 互相干扰？",
+      "信号在哪里会丢或者被合并？为什么 SIGPIPE 一直在吃掉 Python 任务？",
+      "为什么 THP（透明大页）有时是 30% 的赢，有时是 stall 风暴？",
+      "OOM killer 实际打分依据是什么？怎么靠谱地保护一个长跑训练进程？",
+      "脏页回写阈值（vm.dirty_ratio）怎么把共享 NFS dataloader 的 tail latency 炸上去？",
+      "为什么 futex 是所有用户态锁背后的秘诀？FUTEX_WAIT_BITSET 又给了什么？",
+      "VFS 层怎么抽象 ext4 / xfs / overlayfs？这层抽象在容器里又在哪漏？",
+      "pidfd 解决了 PID-based signaling 解决不了的什么问题？为什么对编排器很重要？",
+      "在一个跑着 nginx + Cilium 的节点上看到大量 softirq CPU 时，从哪里下手？",
+      "“线程很便宜”的假设在 5 万线程时为什么突然失效——内核栈、调度 runqueue、vmalloc？"
     ]
   },
   "tcp-ip": {
-    "blurb": "从 TCP 三次握手、拥塞控制到 TLS 1.3、HTTP/2、QUIC——分布式系统、推理 RPC、可观测性全部建立在网络栈之上。",
+    "blurb": "从 BSD socket 时代的三次握手 / 四次挥手，到拥塞控制家族（Reno / CUBIC / BBR）和 TLS 1.3，再到 HTTP/2、QUIC——分布式系统、推理 RPC、AllReduce-over-TCP、可观测性全部建立在这套栈之上。在 ML 集群里，问题很少是 “TCP 能不能用”，而是 “我的 AllReduce 窗口被 incast、重传、用户态拷贝吃掉了多少”。",
     "concepts": [
       "TCP 状态机",
       "拥塞控制",
@@ -489,11 +909,26 @@
       "TCP 拥塞控制（Reno / CUBIC / BBR）的演进动机？",
       "TLS 1.3 的握手相比 1.2 减掉了什么 round trip？0-RTT 的安全代价？",
       "HTTP/2 多路复用解决了什么？HOL blocking 又被 QUIC 怎么再解决？",
-      "eBPF + XDP 做包过滤为什么比 iptables 快几个数量级？"
+      "eBPF + XDP 做包过滤为什么比 iptables 快几个数量级？",
+      "BDP（带宽时延积）怎么决定跨地域模型同步合适的 SO_SNDBUF？",
+      "为什么 BBRv2 在丢包的长肥管道上吊打 CUBIC？又在哪里行为异常？",
+      "走一遍 SYN flood、SYN cookies、listen backlog 在公网推理端点上的调参思路。",
+      "accept() 上的“惊群”在哪里咬人？SO_REUSEPORT 分片怎么帮上忙？",
+      "TCP_NODELAY vs Nagle vs delayed ACK：哪种组合制造了臭名昭著的 40ms 延迟悬崖？",
+      "GSO / GRO / TSO offload 怎么改写 100 GbE 网卡的 pps 数字？",
+      "为什么 H100 集群上 AllReduce 的标配是 RDMA / RoCEv2？纯 TCP 在哪些情况下能靠 kernel bypass（DPDK、AF_XDP）追上？",
+      "Linux vs FreeBSD 网络栈：mbuf vs sk_buff 怎么改变零拷贝和栈可扩展性？",
+      "QUIC 的 connection ID 怎么真正做到跨 NAT 重绑的连接迁移？",
+      "TFO（TCP Fast Open）实际省了什么？为什么部署起来这么折腾？",
+      "incast collapse 为什么在扇入重的 ML serving 中反复出现？fq、fq_codel 等队列纪律怎么帮？",
+      "TIME_WAIT 耗尽 / 临时端口耗尽怎么干掉连接池里的 feature store？",
+      "10 万 QPS 下的 mTLS 握手 CPU 长什么样？session resumption / 硬件 offload 落在哪？",
+      "TCP_USER_TIMEOUT 跟 keepalive 有什么区别？为什么对挂死的 GPU worker 很关键？",
+      "为什么 PMTU 黑洞是跨 DC 训练流量的隐形杀手？怎么探测？"
     ]
   },
   "spectre": {
-    "blurb": "2018 年披露的 CPU 推测执行漏洞：利用分支预测与缓存侧信道跨权限边界泄露数据。迫使整个软硬件栈重新审视微架构安全模型。",
+    "blurb": "2018 年披露的一次重大事件：把推测执行从性能利好变成安全负债。攻击者通过训练分支预测器并观测 cache 侧信道，跨权限和进程边界泄露数据。它迫使整个软硬件栈重新审视微架构安全模型——KPTI、retpoline、eIBRS、微码更新——也是任何在特权秘密旁边跑不可信代码的多租户推理 / 数据面都该牢记的警示。",
     "concepts": [
       "推测执行",
       "分支预测",
@@ -506,11 +941,26 @@
       "为什么推测执行本质上难以彻底修复？",
       "KPTI / Retpoline 等缓解措施的性能代价从哪来？",
       "cache timing 侧信道如何放大微架构状态泄露？",
-      "这类漏洞对未来 CPU 设计（如分离 speculation domain）有什么启示？"
+      "这类漏洞对未来 CPU 设计（如分离 speculation domain）有什么启示？",
+      "走一遍 Spectre v1（bounds-check bypass）：攻击者需要在受害者里找到什么 gadget？",
+      "为什么 Spectre v2（BTB 投毒）更难？新一代 Intel 上 eIBRS 怎么取代 retpoline？",
+      "Flush+Reload vs Prime+Probe 是什么？为什么前者在共享 L3 上更容易做？",
+      "retpoline 怎么工作？为什么在间接调用密集的代码（Python、V8、内核热路径）里很贵？",
+      "为什么 KPTI 在 syscall 密集（数据库、dataloader）的负载上比计算密集的负载代价更大？",
+      "KAISER / PTI 怎么分离用户/内核页表，又不让每次 syscall 的 TLB 压力翻倍？",
+      "对共享 GPU / 推理多租户意味着什么——恶意租户能不能用 Spectre 泄露另一租户的权重？",
+      "为什么 constant-time 加密代码在推测下突然不再 constant-time？",
+      "后续披露（MDS、L1TF、Downfall、Zenbleed）怎么延续同一套 speculation + 侧信道范式？",
+      "LFENCE / 推测屏障的角色是什么？为什么它不是免费的修法？",
+      "云厂商在裸机 vs VM vs 容器上的多租隔离是怎么做的？Spectre 怎么改写这个 calculus？",
+      "为什么 JIT 引擎（V8、JVM、PyTorch Inductor / Triton）是 Spectre 的肥肉？",
+      "CHERI / 硬件 tagging 等提案里的“speculation domain 隔离”长什么样？",
+      "怎么真实地测量缓解开销——perf stat、/sys/devices/system/cpu/vulnerabilities，还是工作负载 A/B？",
+      "什么时候在一台 ML 训练节点上关掉缓解（mitigations=off）才是真的安全？你接受的威胁模型是什么？"
     ]
   },
   "vllm": {
-    "blurb": "UC Berkeley 开源的 LLM 推理引擎：以 PagedAttention 为核心解决 KV Cache 显存碎片，配合 continuous batching 把单卡吞吐推到极限。当前自托管 LLM 服务的事实标准。",
+    "blurb": "UC Berkeley 开源的 LLM 推理引擎：PagedAttention 把 KV Cache 当 OS 虚拟内存管——固定 block（默认 16 token）+ 每序列 block table，把碎片浪费从 60-80% 压到 ~4%。配合 continuous batching、chunked prefill，成为自托管 LLM 服务吞吐/成本比的领头羊；V1 引擎围绕异步执行和 prefix caching 一等公民重写了调度器。",
     "concepts": [
       "PagedAttention",
       "Continuous Batching",
@@ -523,11 +973,26 @@
       "continuous batching 在 prefill / decode 混跑时怎么避免长 prompt 拖死延迟？",
       "prefix caching 的命中粒度和淘汰策略怎么设计？",
       "V1 引擎相比 V0 在调度和异步执行上做了什么重构？",
-      "跟 TensorRT-LLM、SGLang 在吞吐 / 易用性上的取舍？"
+      "跟 TensorRT-LLM、SGLang 在吞吐 / 易用性上的取舍？",
+      "默认 block size 为什么是 16 token？内部碎片和 block table 开销怎么权衡？",
+      "decode 中途来了高优先级请求，KV block 怎么 swap 或 recompute？vLLM 的抢占机制怎么走？",
+      "走一遍 chunked prefill：怎么在不饿死 decode 的前提下封顶 prefill 延迟？",
+      "speculative decoding 在 draft 拒绝时，怎么和 PagedAttention 的 block manager 协作？",
+      "vLLM 默认调用哪一版 FlashAttention？为什么 FA3 需要不同的 paged-attention kernel？",
+      "tensor-parallel 这一层怎么切 QKV / MLP，NCCL all-reduce 在关键路径上的位置？",
+      "单卡吞吐到大 batch 后会平台化——瓶颈是 KV 显存还是 decode kernel 饱和？",
+      "稳定服务 30 分钟才 OOM，怎么定位是不是 KV 碎片化回归？",
+      "PunicaKernel 跑多 LoRA 时，单请求适配器怎么路由进 attention？",
+      "system prompt 一抖动 prefix cache 命中率就掉，怎么量化和监控？",
+      "automatic prefix caching 的 radix tree 每次请求怎么走，查询开销多少？",
+      "生产里 GPU memory utilization 默认 0.9，怎么和碎片预留、CUDA workspace 对齐？",
+      "KV cache 溢出到 CPU swap 是什么后果？vLLM 默认为什么不开 CPU offload？",
+      "多 LoRA serving 怎么改变调度公平性？相对 base model 每 token 的额外开销多少？",
+      "prefill / decode 拆成两组 GPU（disaggregated）在长上下文为什么赢？网络代价多大？"
     ]
   },
   "tensorrt-llm": {
-    "blurb": "NVIDIA 官方的 LLM 推理优化库：基于 TensorRT 编译图把 attention、GEMM、量化算子融成 fused kernel，在 H100/B200 上榨干硬件极限。",
+    "blurb": "NVIDIA 官方的 LLM 推理栈：基于 TensorRT 编译图把 attention + GEMM + 量化预融成针对硬件的 engine，对 Hopper 的 TMA / WGMMA、FP8 E4M3、Blackwell 的 NVFP4 都是一等支持。in-flight batching 对标 vLLM 的 continuous batching，但 engine 编译牺牲部署灵活性换 H100/B200 上 ~10-30% 的额外吞吐——固定模型 + 全 NVIDIA 硬件场景的首选。",
     "concepts": [
       "In-flight Batching",
       "FP8/FP4 量化",
@@ -540,11 +1005,26 @@
       "in-flight batching 跟 vLLM continuous batching 的实现差异？",
       "FP8 量化在 attention / KV Cache / GEMM 各环节的精度取舍？",
       "Hopper 的 TMA / WGMMA 怎么被利用到 attention kernel？",
-      "为什么 NVIDIA 自己又搞 TensorRT-LLM 而不是优化 vLLM？"
+      "为什么 NVIDIA 自己又搞 TensorRT-LLM 而不是优化 vLLM？",
+      "走一遍 Llama-70B 的 engine build：编译时到底特化了什么（shape、dtype、plugin）？",
+      "plugin 系统怎么绕开 TensorRT IR 的限制，实现 GQA / MLA 这类自定义 attention？",
+      "FP8 E4M3 vs E5M2 在 KV cache 和 activation 上各有什么定位？校准链路怎么走？",
+      "Blackwell 上 NVFP4 microscaling 跟 INT8 SmoothQuant 在量化配方上有什么差别？",
+      "speculative decoding 接 Medusa head 跟 EAGLE 怎么集成进 engine？",
+      "即使有 optimization profile，dynamic shape 还是难——它跟 chunked prefill 怎么互动？",
+      "C++ runtime（executor API）怎么对接 Triton Inference Server？跟 Python LLM API 各自定位？",
+      "什么场景下编译 engine 比 vLLM 快 2x？小 batch、长上下文为什么差距消失？",
+      "eager Llama 跟 FP8 engine 数值不一致怎么排查？逐层 activation 比对策略？",
+      "engine 内部的 tensor parallel 怎么排 NCCL collective？跟 Megatron 训练的 pattern 有什么不同？",
+      "checkpoint 一变就要重 build engine——CI 流水线里这成本怎么算？",
+      "32k 长上下文请求和 100 个短聊天混跑，in-flight batching 怎么避免 HoL blocking？",
+      "为什么 FP4 weight + FP8 activation 成了实战甜点？dequant kernel 代价多少？",
+      "warmup 后 engine 输出乱码——校准 / smooth-quant 哪些旋钮先排查？",
+      "TRT-LLM 的 MultiBlockMode 长上下文 attention 怎么跟 paged KV cache 配合？"
     ]
   },
   "nanogpt": {
-    "blurb": "Karpathy 写的最小化 GPT 训练实现，~300 行 PyTorch 跑通从 tokenization 到训练 loop 的全流程。读完一遍胜过读十篇综述。",
+    "blurb": "Karpathy 写的最小化 GPT 训练实现：~300 行 PyTorch 跑通从 tokenization 到训练 loop 的全流程（8×A100 上约 4 天复现 GPT-2 124M）。读完一遍胜过读十篇综述。modded-nanoGPT speedrun（Jordan et al 2024）通过 Muon optimizer + 架构改动把同一目标压到 5 分钟以内，让它成为新点子的研究 playground。",
     "concepts": [
       "Causal Self-attention",
       "AdamW",
@@ -557,11 +1037,26 @@
       "weight tying 在显存和效果上各带来什么？",
       "学习率 warmup + cosine decay 的工程理由是什么？",
       "从 nanoGPT 扩到千亿参数，哪些组件首先撑不住？",
-      "bf16、torch.compile 各自在训练稳定性 / 速度上贡献多少？"
+      "bf16、torch.compile 各自在训练稳定性 / 速度上贡献多少？",
+      "走一遍 nanoGPT 里 causal mask 的构造——为什么用 triu register buffer 而不是每步重算？",
+      "Gradient accumulation + DDP：nanoGPT 在哪里对 loss scale、对 grad sync？常见 bug 在哪？",
+      "为什么 nanoGPT 用 0.02 std 初始化 linear，残差路径用 scaled-init？大规模上 Megatron-style init 多做了什么？",
+      "迁到多节点时具体哪些会崩（NCCL、init_process_group、OOM 模式）？",
+      "对比 nanoGPT 朴素 AdamW step 与 fused Apex optimizer——朴素版本在哪些位置浪费显存？",
+      "modded-nanoGPT speedrun 里的 Muon optimizer 跟 AdamW 有什么区别？为什么在这个规模上收敛更快？",
+      "speedrun 从 Llama 借了哪些架构差异（no bias、RoPE、RMSNorm），哪个最关键？",
+      "切到 torch.compile + bf16 后 data loading 为什么变成瓶颈？标准修法是什么？",
+      "怎么把 FlashAttention-2 加进 nanoGPT 并验证数值等价？",
+      "把读 nanoGPT vs 读 HF Transformers 当学习路径——各自建立的心智模型有什么互补？",
+      "nanoGPT 怎么对 embedding / unembedding 单独设 lr？大规模上为什么这件事重要？",
+      "什么时候 nanoGPT 里那个简单 GPT-2 BPE tokenizer 会变成预训练瓶颈？",
+      "想给 nanoGPT 加 MoE，最小可行 diff 是什么？optimizer / DDP 层会先在哪里崩？",
+      "实操：创业公司应该复用 Karpathy 的 loop 还是直接跳到 torchtitan / Megatron？阈值在哪？",
+      "开放问题：speedrun 现象（5 分钟 GPT-2）是说预训练过度正则化，还是 Muon / 架构跳跃是真实信号？"
     ]
   },
   "megatron": {
-    "blurb": "NVIDIA 的大模型训练框架，首个把 tensor parallel、pipeline parallel、sequence parallel 三种并行系统化结合的开源实现。Llama / GPT-3 级别的训练栈基本都借鉴自 Megatron。",
+    "blurb": "NVIDIA 的大模型训练参考栈：首个把 tensor parallel（QKV/MLP 列/行切）、pipeline parallel（1F1B 与 interleaved schedule）、sequence parallel 系统化结合的开源实现。TP 一层一次 all-reduce，SP 把 TP 没切到的 LayerNorm/Dropout activation 显存补回来。70B 以上的训练（Llama、GPT-3、Nemotron）几乎都直接借鉴 Megatron-Core。",
     "concepts": [
       "Tensor Parallel",
       "Pipeline Parallel",
@@ -574,11 +1069,26 @@
       "1F1B pipeline schedule 怎么减小 bubble？跟 interleaved schedule 取舍？",
       "sequence parallel 怎么补 TP 没切到的 LayerNorm / Dropout 显存？",
       "为什么 TP size 通常不超过 8？跟 NVLink 拓扑什么关系？",
-      "Megatron + ZeRO 怎么组合？各自负责哪部分并行？"
+      "Megatron + ZeRO 怎么组合？各自负责哪部分并行？",
+      "TP=8 单层 all-reduce 通信量怎么推？为什么 fwd+bwd 是 2 * b * s * h 字节？",
+      "interleaved 1F1B（virtual pipeline stage）什么时候真划算？activation 显存代价多少？",
+      "selective activation recomputation 选哪些算子重算？为什么 attention 是首选目标？",
+      "context parallel（CP / Ring Attention）怎么把训练规模突破 TP=8 上限，跑 1M token？",
+      "为什么 Megatron 偏爱 Apex 的 fused Adam？省下的 kernel launch 开销有多少？",
+      "TP+SP 单层数据流：哪些 all-gather 替代了 all-reduce？",
+      "Megatron 怎么把 NCCL P2P（pipeline）和 all-reduce（TP）交错而不死锁？",
+      "DP+TP+PP 三维 mesh：1024 张 H100 训 405B 模型，怎么挑因式分解？",
+      "为什么大厂训练逐步从 DeepSpeed ZeRO-3 迁回 Megatron + FSDP 混合？",
+      "第 N 步 loss spike——Megatron 的分布式 checkpoint 怎么让 rollback 可行？",
+      "Megatron 里 MoE：expert parallel 怎么和 TP 共存？all-to-all 代价多少？",
+      "sequence parallel 跟普通 TP 在 gradient accumulation 数学上有什么差别？",
+      "为什么这个规模 bf16 + master fp32 几乎是必须？纯 fp16 哪里崩？",
+      "Megatron-Core 的 distributed optimizer 跟 ZeRO-1 差在哪？什么时候等价？",
+      "异构 GPU 集群（A100 + H100）跑 Megatron 为什么静态并行不合适？"
     ]
   },
   "deepspeed": {
-    "blurb": "微软的分布式训练框架：核心是 ZeRO 系列优化器状态 / 梯度 / 参数分片，加上 offload、3D parallelism、推理优化。让单机多卡也能训百亿参数模型。",
+    "blurb": "微软的分布式训练框架：ZeRO-1/2/3 把优化器状态 / 梯度 / 参数沿 DP 维分片，不改模型代码就能省最多 8x 单卡显存。再叠 CPU/NVMe offload（ZeRO-Infinity）、3D 并行、ZeRO++ 的层级量化通信，让百亿参数训练落到普通硬件。训练侧 FSDP 已经追上来，推理侧 vLLM / TRT-LLM 已主导，DeepSpeed 的核心阵地仍是 ZeRO。",
     "concepts": [
       "ZeRO-1/2/3",
       "CPU/NVMe Offload",
@@ -591,11 +1101,26 @@
       "offload 到 CPU/NVMe 的瓶颈是 PCIe 还是软件栈？",
       "ZeRO++ 的 hierarchical partitioning 怎么解决跨节点通信？",
       "DeepSpeed-Inference 跟 vLLM / TensorRT-LLM 路线分歧？",
-      "为什么大厂训练逐渐从 DeepSpeed 迁回 Megatron + FSDP？"
+      "为什么大厂训练逐渐从 DeepSpeed 迁回 Megatron + FSDP？",
+      "走一遍 ZeRO-3 单步：all-gather + reduce-scatter 怎么排？通信跟计算怎么 overlap？",
+      "ZeRO++ 的量化权重通信：INT4 all-gather 对收敛影响多大？",
+      "CPU offload 什么时候反而拖累？模型大小 / 卡数到哪个交叉点要关掉？",
+      "NVMe offload 的 async I/O 怎么不卡训练循环？SSD 寿命怎么算？",
+      "ZeRO-Infinity 号称单 DGX-2 训万亿参数，实际迭代时间和可用性怎么样？",
+      "为什么 ZeRO-3 在异构 batch size 下偶尔死锁？引擎里怎么同步？",
+      "DeepSpeed 的 pipeline parallel 跟 Megatron 1F1B 实现差别？",
+      "DeepSpeed MoE：expert parallel 怎么叠在 ZeRO 上？all-to-all 集合通信落在哪？",
+      "ZeRO-3 阶段才出梯度爆炸——是 bf16 reduce 精度还是 grad-clip 顺序？",
+      "DeepSpeed Ulysses 序列并行跟 Megatron CP / Ring Attention 怎么比？",
+      "bf16 master weight 下优化器状态 offload 出问题——fp32 重建代价多少？",
+      "HF Accelerate 怎么把 DeepSpeed config 抽象成统一 API？哪里抽象漏洞最多？",
+      "ZeRO-1 / ZeRO-2 / ZeRO-3 在什么显存预算下各自最合适？",
+      "ZeRO-3 + gradient checkpointing 才出 NCCL 超时——怎么排查？",
+      "为什么 2026 年 FP8 + ZeRO 还罕见？残余 fp32 通信问题在哪？"
     ]
   },
   "cutlass": {
-    "blurb": "NVIDIA 开源的 CUDA C++ 模板库，提供高性能 GEMM/卷积的可组合原语。从 warp-level MMA 到 tile scheduler 全栈暴露，是写自定义 kernel 绕过 cuBLAS 黑盒的主流选择。",
+    "blurb": "NVIDIA 开源的 CUDA C++ 模板库：把 GEMM/卷积的 threadblock tile → warp tile → MMA 指令完整暴露，再叠 epilogue fusion、async copy、warp-specialized 流水线。3.x 引入的 CuTe Layout 代数取代了脆弱的 iterator 大杂烩，让 Hopper TMA + WGMMA 编程变得可控。FlashAttention、vLLM 自定义 kernel、TRT-LLM 都建在它之上——是绕开 cuBLAS 黑盒的主流选择。",
     "concepts": [
       "Tile / Warp MMA",
       "Epilogue Fusion",
@@ -608,11 +1133,26 @@
       "CuTe 的 Layout 代数解决了什么传统 CUTLASS 的痛点？",
       "Hopper 上要用 TMA + warp-specialized pipeline 而不是经典 ping-pong 的原因？",
       "epilogue fusion 相比单独写 kernel 的性能差距来自哪？",
-      "跟手写 cuBLAS / Triton 的工程取舍？"
+      "跟手写 cuBLAS / Triton 的工程取舍？",
+      "Hopper GEMM 的 warp specialization：producer warp 发 TMA、consumer warp 跑 WGMMA，怎么同步？",
+      "shared memory 为什么必须 swizzle？CuTe Layout 怎么编码 bank-conflict-free pattern？",
+      "H100 上 FP8 GEMM 的 tile shape 怎么挑？跟 FP16 为什么不一样？",
+      "CUTLASS 的 persistent kernel + stream-K 分解什么时候赢过 data-parallel split？",
+      "epilogue fusion：GEMM + bias + GELU + quant 怎么链在一个 kernel 里又不爆寄存器？",
+      "CuTe 的 Tensor 抽象跟 Triton 的 block-pointer 差在哪？各自牺牲了什么？",
+      "async copy（cp.async）怎么排 overlap MMA？pipeline depth 的取舍？",
+      "FlashAttention v3 为什么自己 fork 一条 MMA 而不直接用 CUTLASS GEMM？",
+      "Tensor Core fragment 是黑盒——MMA layout bug 怎么不靠打印调？",
+      "grouped GEMM（多 shape batched）什么时候打败串行 GEMM + cudaMalloc 抖动？",
+      "CUTLASS 在 Blackwell 的 CTA pair / 2-CTA cluster MMA 怎么处理？新 layout 故事是什么？",
+      "kernel 输出对但比 cuBLAS 慢 30%——从哪入手（occupancy、smem、pipe stage）？",
+      "怎么用 CUTLASS 写一个 int4 weight + fp16 activation 的 GEMM 给 QLoRA 推理？",
+      "为什么大 tile 下 register 压力是隐形杀手？CUTLASS 的 tile-iterator 设计怎么缓解？",
+      "怎么让一份 CUTLASS kernel 在 A100 + H100 + B200 都不分叉？"
     ]
   },
   "flashattn": {
-    "blurb": "Tri Dao 团队的 IO-aware attention kernel：通过 tiling + online softmax 把 attention 从 O(N²) 显存读写降到 O(N)。LLM 训练 / 推理事实标准。",
+    "blurb": "Tri Dao 团队的 IO-aware attention kernel：把 Q/K/V tile 到 SRAM 再加 online softmax（running max + running sum），把 HBM 读写从 O(N²) 降到 O(N)，attention 从 memory-bound 变 compute-bound。FA2 把并行轴从 batch/head 搬到 seq；FA3 加上 Hopper TMA + WGMMA + FP8，单次 attention 跑出 H100 理论算力的 75%。PyTorch SDPA、vLLM、TRT-LLM 内部默认走它。",
     "concepts": [
       "Online Softmax",
       "Tiling",
@@ -625,11 +1165,26 @@
       "v2 把并行维度从 batch/head 改到 seq 解决了什么？",
       "v3 在 Hopper 上如何利用 TMA 和 warp-specialized 流水线？",
       "为什么 backward 选择 recompute 而不是存中间 softmax？",
-      "跟 xformers memory-efficient attention 的本质差异？"
+      "跟 xformers memory-efficient attention 的本质差异？",
+      "vanilla 跟 FlashAttention 的 HBM I/O 复杂度怎么推？常数项为什么是 Br * Bc / SRAM-size？",
+      "走一遍 running-max trick：每个新 tile 来时 rescale 怎么保严格等价？",
+      "backward 比 forward 慢 ~2.5x，多出来的开销在哪？",
+      "FA 怎么跟 vLLM 的 paged KV cache 对接？block-table 索引哪里改了？",
+      "FA3 FP8 为什么必须 per-head scaling？跟 attention sink / outlier token 怎么互动？",
+      "causal mask 怎么融进 tile 循环而不引入 branch 开销？",
+      "varlen 接口背后实际在做什么？为什么对 batched 推理重要？",
+      "FlexAttention 怎么把 FA 模板泛化？编译时间 vs 运行时性能怎么取舍？",
+      "为什么 head_dim 太小（<64）和太大（>256）FA 都不占优？",
+      "Ring Attention 把 FA 跨 GPU 扩展——K/V 旋转怎么跟计算 overlap？",
+      "长上下文 attention 出 NaN——是 fp16 max 溢出还是 softmax 分母下溢？",
+      "GQA / MQA 跟 MHA 在 FA kernel layout 上有什么差别？",
+      "FA backward 在某些 shape 要 3 个 kernel（dQ、dK+dV）？atomic add 代价多少？",
+      "kernel 升级后慢 2x 怎么排——autotune cache、寄存器溢出还是 wgmma stall？",
+      "什么场景纯 cuDNN attention 反而打败 FA3？什么时候差距又翻回来？"
     ]
   },
   "triton": {
-    "blurb": "OpenAI 推出的 Python DSL + 编译器：以 block-level 张量为一等公民，让算法工程师不写 CUDA 也能产出接近手调的 GPU kernel。PyTorch 2 inductor 的核心后端。",
+    "blurb": "OpenAI 的 Python 内嵌 DSL + MLIR 编译器：block-level 张量是一等公民，你写 threadblock 粒度，编译器接管线程映射、shared memory 分配、swizzle、软件流水。@triton.autotune 扫 BLOCK_M/N/K、num_warps、num_stages，多数 kernel 能拿到 CUTLASS 80-90% 的性能而代码量少 10x。PyTorch 2 inductor 的核心后端——torch.compile 的融合 region 大部分 lower 到 Triton。",
     "concepts": [
       "Block Programming",
       "Auto Schedule",
@@ -642,11 +1197,26 @@
       "编译器怎么自动做 shared memory 分配和 swizzle？",
       "为什么 Triton 在 Hopper 上落后于 CUTLASS，瓶颈在哪？",
       "autotune 的搜索空间怎么剪枝？",
-      "torch.compile 用 Triton 做 codegen 的取舍？"
+      "torch.compile 用 Triton 做 codegen 的取舍？",
+      "走一遍 Triton matmul：tl.load 配 block pointer 在 Hopper 上怎么 lower 到 TMA？",
+      "num_stages > 2 反而退化——寄存器压力和 pipe occupancy 出了什么问题？",
+      "Triton 经过 MLIR 哪些 dialect（Triton IR → TritonGPU IR → LLVM IR）？跟 CUTLASS 路径在哪分叉？",
+      "@triton.jit 第一次调用的编译开销多少？跨进程怎么 cache？",
+      "为什么 Triton 在 H100 FP8 仍落后 CUTLASS 15-30%？是流水线表达力还是 epilogue fusion？",
+      "TorchInductor 怎么决定哪段子图融成一个 Triton kernel、哪些拆成多个？",
+      "Triton autotune 选了一个在另一个 shape 上正确但慢的 config——怎么加保护？",
+      "怎么用 Triton 写一个 fused RMSNorm + RoPE kernel？相比 eager 加速多少？",
+      "为什么 Triton 在 K 维（attention 的 seq）做 reduction 比 CUTLASS 难？",
+      "kernel 在 eager-test 没问题，在 torch.compile 下输出错——dispatch / dtype promotion 哪里出 bug？",
+      "Triton 的 persistent kernel + tl.assume / tl.range 怎么用？为什么对 decode kernel 关键？",
+      "Triton 在 AMD MI300 经 rocm 后端跑——相对 CUDA 还有哪些限制？",
+      "Triton 想接 MLIR 的 TMA / warp-specialization dialect 来追平 Hopper 差距，路径是什么？",
+      "Triton 上 shared memory bank conflict 比 CUTLASS 难调，调试工具栈怎么搭？",
+      "什么时候要从 Triton 掉到原生 CUTLASS？性能、支持、可调性的阈值在哪？"
     ]
   },
   "nccl": {
-    "blurb": "NVIDIA 的 GPU 集合通信库：实现 ring/tree/double binary tree 等拓扑感知的 AllReduce / AllGather。直接调度 NVLink、PCIe、IB——分布式训练通信的事实底层。",
+    "blurb": "NVIDIA 的 GPU 集合通信库：实现 ring、tree、double-binary-tree 拓扑感知 AllReduce / AllGather / ReduceScatter，按消息大小和探测到的 NVLink/PCIe/IB 拓扑自动选算法。Ring 在大消息下带宽最优（每 rank 2*(N-1)/N 数据量），tree 在小消息延迟更低。所有分布式训练（DDP、FSDP、Megatron、DeepSpeed）的最底层；千卡级别 SHARP 把 reduction 卸到 IB 交换机。",
     "concepts": [
       "Ring AllReduce",
       "Tree AllReduce",
@@ -659,11 +1229,26 @@
       "NCCL 如何探测拓扑并自动选 channel 数？",
       "为什么大规模训练要用 SHARP / in-network reduction？",
       "和 MPI、Gloo 的设计哲学根本差异？",
-      "GPUDirect RDMA 跳过 CPU 的具体路径？"
+      "GPUDirect RDMA 跳过 CPU 的具体路径？",
+      "ring allreduce 单 rank 通信量 2*(N-1)/N * S 字节怎么推？为什么是带宽最优？",
+      "double-binary-tree 怎么在大规模下压低延迟又不丢带宽效率？",
+      "走一遍 NCCL 的 channel：为什么把单个 collective 拆到多个 SM / NIC 上？",
+      "Hopper 的 NVLS（NVLink SHARP）怎么把 reduction 折进 switch？加速多少？",
+      "异构集群下 NCCL_ALGO=Tree 偶尔挂死——拓扑假设哪一条破了？",
+      "NCCL 跟 CUDA stream 怎么共存？连续两个 collective 的发射顺序保证什么？",
+      "NCCL_BUFFSIZE 在大规模下为什么是关键调参？跟 IB QP credit 怎么互动？",
+      "AllReduce 卡死在第 10000 步——是 batch 不均 + drop_last=False 不一致？",
+      "GPUDirect RDMA 真跳 bounce buffer 怎么实现？IOMMU / PCIe ATS 依赖在哪？",
+      "8 卡 NVLink 上 NCCL P2P 反而比预期慢——是 NVSwitch domain 被切了？",
+      "FSDP / ZeRO 用 ReduceScatter + AllGather 替代 AllReduce，为什么通信总量等价？",
+      "一个 rank 慢（straggler）NCCL 是检测还是直接 stall？",
+      "NCCL_DEBUG=INFO 输出怎么映射到实际硬件路径（NVLink lane、IB port）？",
+      "DGX H100 为什么用 NVSwitch + ConnectX-7 而不是纯 NVLink 跨节点？成本模型是什么？",
+      "1024 卡规模下 IB 链路偶发抖动导致 NCCL 超时，怎么定位坏端口？"
     ]
   },
   "spark": {
-    "blurb": "通用分布式计算引擎：基于 RDD 抽象与 DAG 调度；Catalyst 优化器 + Tungsten 执行引擎使其成为离线批处理与 ETL 的事实标准。",
+    "blurb": "通用分布式计算引擎：Zaharia et al NSDI 2012 提出 RDD 作为容错的内存抽象，把 MR 升级成 DAG。今天 Spark 站在 Catalyst 优化器 + Tungsten codegen + AQE 运行时自适应之上，是离线批处理、ETL、Spark ML 训练数据准备的事实标准。Photon（原生 C++）和 Comet 正在蚕食 JVM 内核，但 lineage + DataFrame DSL 让 Spark 仍然是大多数 PB 级 ML 管道的入口。",
     "concepts": [
       "RDD",
       "Catalyst",
@@ -676,11 +1261,26 @@
       "Catalyst 优化器有哪几个 phase？逻辑/物理计划怎么转换？",
       "Shuffle 为什么是性能瓶颈？sort-based vs hash-based 怎么选？",
       "AQE 解决了哪些静态优化的痛点？",
-      "为什么 Spark 选 JVM 而不像 DuckDB 那样走 native？"
+      "为什么 Spark 选 JVM 而不像 DuckDB 那样走 native？",
+      "AQE 的动态分区合并怎么解决 shuffle 后的小文件问题？",
+      "为什么倾斜 join 是 Spark ML 训练数据的头号生产事故？AQE skew join 怎么修？",
+      "Tungsten 的 whole-stage codegen 怎么在运行时真的生成 Java 字节码？",
+      "broadcast join vs shuffle join 的取舍——表多大时 broadcast 撑不住？",
+      "为什么 dynamic allocation 必须依赖 external shuffle service？代价是什么？",
+      "Spark Connect 怎么改变 ML notebook 的部署故事？",
+      "为什么 PySpark UDF 性能落后 JVM UDF？Pandas/Arrow UDF 怎么追平？",
+      "Photon（Databricks）或 Comet（Apache）怎么在保留 Catalyst 的前提下替换 JVM 物理算子？",
+      "Spark 的 RDD checkpoint 跟 cache 区别在哪？什么时候两个都需要？",
+      "Spark Structured Streaming vs Flink 在线特征管道上怎么取舍？",
+      "Spark ML 的 pipeline API 在 2026 怎么跟 feature store（Feast、Tecton）集成？",
+      "为什么 Delta Lake 是 Databricks-Spark 优先的而 Iceberg 走引擎中立？",
+      "怎么调试一个 GC 时间多过计算时间的 Spark stage——堆 dump、off-heap 还是 AQE？",
+      "shuffle write 为什么经常先落本地盘再走网络？RDMA shuffle 能去掉吗？",
+      "要把 100TB 训练数据喂进多机训练任务，你会用 Spark、Ray Data 还是 Daft 做预处理？为什么？"
     ]
   },
   "flink": {
-    "blurb": "面向流批一体的有状态计算引擎：以 event-time、watermark、exactly-once 状态语义为核心。流式 ETL 与实时数仓的工业标杆。",
+    "blurb": "面向流批一体的有状态计算引擎：以 event-time、watermark、async barrier snapshotting（Carbone et al 2015）为核心实现 exactly-once 状态。流式 ETL、实时数仓、在线特征工程的工业标杆——阿里、Netflix、Pinterest 的 feature store 都跑在 Flink 上。Flink SQL + Apache Paimon 把它直接推进 lakehouse。",
     "concepts": [
       "Event Time",
       "Watermark",
@@ -693,11 +1293,26 @@
       "watermark 怎么处理乱序事件？late data 怎么办？",
       "RocksDB state backend 跟 heap state backend 的取舍？",
       "Flink 跟 Spark Structured Streaming 的本质差异？",
-      "为什么 Flink 把 batch 当成 streaming 的特例？"
+      "为什么 Flink 把 batch 当成 streaming 的特例？",
+      "Flink 的两阶段提交 sink 怎么跟 Kafka 一起做端到端 exactly-once？",
+      "为什么 Flink backpressure 是症状而不是原因？怎么追到真正瓶颈？",
+      "RocksDB 上的增量 checkpoint 怎么扩展到在线 feature store 的 TB 级状态？",
+      "重压力下 unaligned checkpoint vs barrier 对齐的取舍？",
+      "为什么 watermark idle source 检测对喂 ML 的稀疏 Kafka 分区很重要？",
+      "怎么在做大聚合的 Flink TaskManager 上分配 RocksDB block cache vs JVM heap？",
+      "为什么阿里 / Netflix 把 Flink 跑成主在线 feature store 后端？",
+      "Flink 的 changelog mode（CDC）怎么跟 Iceberg / Paimon 集成做流式 lakehouse？",
+      "蓝绿模型上线时 Flink savepoint vs checkpoint 怎么取舍？",
+      "为什么 Flink DataStream API 活下来但 Scala API 被废弃？",
+      "Flink CEP 怎么匹配反欺诈 / 在线异常推理负载？",
+      "为什么 keyBy 热点是真实的生产问题？LocalKeyBy 是怎么缓解的？",
+      "Flink 的自适应调度器怎么改变 Kubernetes 上的任务恢复？",
+      "为什么流式 join（interval join、temporal join）在窗口配错时状态会爆炸？",
+      "要在生产里算 5 秒滚动平均的模型预测误差，你会用 Flink、Spark Streaming 还是 Materialize？为什么？"
     ]
   },
   "kafka": {
-    "blurb": "分布式持久化日志系统：以 partition + replication 提供高吞吐顺序写。事件驱动架构、流式管道、CDC 的核心总线。",
+    "blurb": "分布式持久化日志系统：以 partition + replication 提供高吞吐顺序写，log-as-a-database 抽象。事件驱动架构、流式管道、CDC、在线推理日志的核心总线。KRaft 在 4.0 完全替代 ZooKeeper；分层存储和 Kafka 4.x exactly-once v2 重置了 ML 事件流的成本 / 一致性故事。",
     "concepts": [
       "Log Abstraction",
       "ISR",
@@ -710,11 +1325,26 @@
       "ISR 机制怎么平衡可用性与一致性？acks=all 真的安全吗？",
       "KRaft 取代 ZooKeeper 解决了什么架构痛点？",
       "consumer rebalance 为什么慢？cooperative rebalance 怎么改进？",
-      "Kafka 跟 Pulsar 在存算分离上的设计差异？"
+      "Kafka 跟 Pulsar 在存算分离上的设计差异？",
+      "Kafka 的幂等 producer + 事务 API 怎么对流式 ML 管道做到 exactly-once？",
+      "为什么 consumer lag（按分区）对在线推理事件摄入比吞吐更重要？",
+      "分层存储（offload 到 S3）怎么改变 Kafka 在长保留训练数据缓冲场景的经济性？",
+      "log compaction vs 时间保留 在 feature changelog topic 上怎么取舍？",
+      "为什么 min.insync.replicas=2 + acks=all 在某些网络分区下仍然丢数据？",
+      "Kafka Connect vs Flink CDC 把 CDC 灌进 feature store 上怎么比？",
+      "KRaft 的元数据日志怎么扩展到百万分区？跟 ZooKeeper 旧上限怎么比？",
+      "为什么分区数是 Kafka 最难调的参数之一？上界由什么决定？",
+      "Kafka、Redpanda、WarpStream 在 embedding 流主干上怎么取舍？",
+      "Kafka 的 zero-copy sendfile 路径怎么跟 Linux page cache 压力交互？",
+      "为什么 consumer 侧反压被分区分配掩盖？怎么检测？",
+      "Kafka Streams 的 state store（RocksDB）跟 Flink 在做有状态富化时怎么比？",
+      "为什么 schema evolution（Confluent Schema Registry / Protobuf）是 ML topic 的硬要求？",
+      "怎么给 1 万个模型各自不同速率发预测日志的场景设计 topic 布局？",
+      "推理平台需要每秒落 100 万条预测日志做监控，你会用 Kafka、Pulsar 还是 Kinesis？为什么？"
     ]
   },
   "iceberg": {
-    "blurb": "开放表格式标准：在对象存储上提供 ACID 事务、schema evolution、time travel 与隐藏分区。湖仓一体的核心 metadata 层。",
+    "blurb": "开放表格式标准（Netflix 2018 起，2020 成为 Apache 顶级项目）：在对象存储上用 snapshot / manifest list / manifest 树提供 ACID 事务、schema evolution、time travel 与隐藏分区。湖仓一体的核心 metadata 层——Spark、Flink、Trino、DuckDB、Snowflake、BigQuery 都能读。今天 Iceberg + Parquet + S3 是 ML 训练数据的默认 lakehouse 栈。",
     "concepts": [
       "Manifest",
       "Snapshot",
@@ -727,11 +1357,26 @@
       "CoW 跟 MoR 在更新场景的取舍？",
       "hidden partitioning 比 Hive 分区好在哪？",
       "Iceberg vs Delta Lake vs Hudi 的核心架构差异？",
-      "S3 上怎么做到原子提交？catalog 扮演什么角色？"
+      "S3 上怎么做到原子提交？catalog 扮演什么角色？",
+      "为什么小文件 / 小 manifest 是 Iceberg 在流式摄入下的隐形杀手？compaction 怎么修？",
+      "Iceberg V2 spec 怎么编码 position delete + equality delete？哪些引擎支持哪种？",
+      "为什么 REST catalog（Iceberg 1.x）在云原生部署上正在替换 Hive Metastore？",
+      "Iceberg time travel 怎么真的用来做 ML 模型可复现——给训练 pin 一个 snapshot ID？",
+      "Iceberg 按列 ID 做 schema evolution（add / drop / rename）跟 Delta Lake 按名字方案的取舍？",
+      "partition evolution（不重写就改 partition spec）底层怎么工作？",
+      "为什么 PyIceberg / Iceberg-Rust 重要——JVM 之外的引擎侧对等？",
+      "branch / tag（write-audit-publish）怎么支撑 ML 训练前的数据校验闸？",
+      "为什么 catalog 本身是 ACID 协调者？跟 Delta Lake 的 _delta_log 怎么比？",
+      "Iceberg 怎么跟 S3 / GCS / R2 的对象存储强一致保证交互？",
+      "为什么 puffin 文件（sketch、index）是 Iceberg roadmap 对向量 / embedding 数据选择性扫描的回应？",
+      "Iceberg 的行级 lineage 怎么帮助调试 ML 训练数据漂移？",
+      "Iceberg 作为 feature store 后端 vs Tecton 这种专用 store 的取舍？",
+      "为什么 Snowflake 的 Polaris + Databricks 的 Unity Catalog 都收敛到 Iceberg 是行业级信号？",
+      "2026 年要给 50PB ML 训练湖选一个表格式，你会选 Iceberg、Delta、Hudi 还是 Paimon？为什么？"
     ]
   },
   "duckdb": {
-    "blurb": "进程内嵌入式 OLAP 数据库：向量化执行 + 列存，为单机分析与本地数据科学场景重塑了\"分析型 SQLite\"的工程范式。",
+    "blurb": "进程内嵌入式 OLAP 数据库（CWI Amsterdam，Raasveldt & Mühleisen）：向量化执行 + 列存 + morsel-driven 并行，为单机分析、ML notebook 与 lakehouse 查询加速重塑了\"分析型 SQLite\"的工程范式。2024 年 1.0；今天它驱动 MotherDuck、dbt 本地开发、Hugging Face 数据集查询，是 pandas 量级数据科学的默认快路径。",
     "concepts": [
       "向量化执行",
       "列存",
@@ -744,11 +1389,26 @@
       "为什么 DuckDB 选择嵌入式架构而不是 client-server？",
       "morsel-driven parallelism 怎么实现 NUMA-aware 调度？",
       "Parquet/Arrow 上的零拷贝怎么做到的？",
-      "单机 OLAP 跟分布式 OLAP 的边界在哪？"
+      "单机 OLAP 跟分布式 OLAP 的边界在哪？",
+      "为什么 DuckDB 选择自己的 MVCC-on-disk 格式而不是直接标准化到 Parquet？",
+      "DuckDB 的向量化 hash join 怎么让 cache line 保持热？morsel size 的甜点在哪？",
+      "DuckDB vs Polars 在 100GB Parquet 目录上做特征工程管道的取舍？",
+      "为什么 DuckDB 的 httpfs 扩展直接读 S3 Parquet 在小作业上是 Athena 的真实竞争对手？",
+      "DuckDB 怎么集成 Iceberg / Delta 做读侧加速？哪里不够？",
+      "为什么浏览器里的 DuckDB-Wasm 对 ML 数据探索 UI 有意义？",
+      "新的 DuckDB 持久化存储格式怎么处理 MVCC + 大量更新而不用 LSM compaction？",
+      "DuckDB vs ClickHouse-local 在 ad-hoc 分析上怎么取舍？",
+      "扩展（vss 做向量搜索、spatial、json）怎么把 DuckDB 推到纯表格之外？",
+      "为什么 DuckDB 在能塞进单机的 100GB 以下作业上吊打 Spark？",
+      "MotherDuck 的 hybrid（本地 + 云）查询模型怎么真的分片执行？",
+      "为什么 dbt 的本地开发回环里挑 DuckDB 当引擎？",
+      "DuckDB 的并行 hash 聚合怎么避开拖死 MapReduce 风格 reducer 的全局锁？",
+      "在 Jupyter notebook 里做 ML 特征预处理时 DuckDB vs Pandas+PyArrow 怎么取舍？",
+      "要在单台大机上查 200GB 的 embedding Parquet 数据集，你会选 DuckDB、Polars 还是 chDB？为什么？"
     ]
   },
   "clickhouse": {
-    "blurb": "面向海量数据的列式 OLAP 数据库：MergeTree 引擎、向量化执行、LSM-like 合并实现亚秒级聚合。实时分析与可观测性场景的工业首选。",
+    "blurb": "面向海量数据的列式 OLAP 数据库（Yandex 2016）：MergeTree 引擎、向量化执行、稀疏主键索引、LSM-like part 合并，在 PB 级表上提供亚秒级聚合。实时分析、可观测性（Datadog、Cloudflare）、在线推理监控的工业首选。JOIN 与高并发点查仍然是相对完整 lakehouse 引擎的短板。",
     "concepts": [
       "MergeTree",
       "向量化执行",
@@ -761,11 +1421,26 @@
       "稀疏主键索引为什么够用？跟 B+ 树的取舍？",
       "为什么 ClickHouse 不擅长高并发 point query？",
       "ReplicatedMergeTree 怎么做副本同步？ZooKeeper 是瓶颈吗？",
-      "ClickHouse 跟 Druid / Pinot 在实时摄入上的设计差异？"
+      "ClickHouse 跟 Druid / Pinot 在实时摄入上的设计差异？",
+      "ClickHouse 的 AggregatingMergeTree / SummingMergeTree 怎么预计算 roll-up？牺牲了什么一致性？",
+      "为什么 part 碎片化是头号生产痛点？parts_to_throw_insert 跟合并线程数怎么调？",
+      "ClickHouse 的 projection 跟物化视图在查询路由上怎么比？",
+      "在 10TB 推理日志表上做亚秒 OLAP，ClickHouse vs Druid 怎么取舍？",
+      "ClickHouse Cloud 的存算分离（S3）怎么改变 MergeTree 的假设？",
+      "为什么 ClickHouse 的 JOIN 排序需要手动？planner 相比 Trino / DuckDB 缺了什么？",
+      "ClickHouse-Keeper（Raft）怎么取代 ZooKeeper？换来什么一致性？",
+      "SAMPLE BY 列上的采样怎么真的用来在预测日志上做快速近似聚合？",
+      "为什么 MaterializedPostgreSQL 引擎对 CDC 进 ClickHouse 后端的 feature 仪表盘有吸引力？",
+      "ClickHouse 向量搜索 vs Qdrant / Milvus 在 embedding 相似度上的取舍？",
+      "chDB / clickhouse-local 怎么直接跟 DuckDB 在单机分析上竞争？",
+      "为什么 async_insert 对高速率的在线推理日志重要？",
+      "ClickHouse 的 TTL 怎么在存储层级（热 SSD → 冷 S3）之间搬数据省成本？",
+      "为什么查询并发节流（max_concurrent_queries）会卡住 dashboard fan-out？怎么调？",
+      "要每分钟落 1000 万条模型预测事件并在上面做亚秒级仪表盘，你会选 ClickHouse、Druid 还是 Pinot？为什么？"
     ]
   },
   "etcd": {
-    "blurb": "基于 Raft 的分布式 KV 存储：Kubernetes 控制面的事实标准；提供线性一致读、watch 和 lease。",
+    "blurb": "CoreOS 出品的 Raft 分布式 KV：Kubernetes 控制面的事实数据存储——每个 Pod、ConfigMap、CRD 都在里面。提供 ReadIndex 线性一致读、MVCC、watch 流和 lease，正好是 KubeFlow、Ray on K8s、Argo 这些 ML 平台用来协调任务、抢 GPU lease、管理动态成员的核心原语。",
     "concepts": [
       "Raft",
       "MVCC",
@@ -777,11 +1452,27 @@
       "etcd 的 linearizable read 怎么用 ReadIndex 优化掉 log 写入？",
       "watch 在 compaction 之后怎么保证 client 不丢事件？",
       "为什么 etcd 用 boltdb/bbolt 而不是 LSM？",
-      "K8s 把 etcd 打爆的常见模式有哪些，怎么缓解？"
+      "K8s 把 etcd 打爆的常见模式有哪些，怎么缓解？",
+      "走一遍 MVCC 布局：revision / generation / tombstone 在 compaction 时怎么互动？",
+      "为什么 etcd value 默认上限约 1.5MB？ML 平台往里塞模型元数据 blob 时会怎么挂？",
+      "Lease + keepalive 的契约是什么？K8s 怎么用它驱动 controller 的 leader election？",
+      "对比 etcd / ZooKeeper / Consul 在一致性模型、watch 语义、运维体验上的差异——各自该选谁？",
+      "为一个 5000 节点、跑多租户 ML 训练任务的 K8s 集群，怎么给 etcd 调容量？",
+      "Raft heartbeat 跟 election timeout 的相互作用，对一个跨 AZ 部署的 ML 控制面 etcd 意味着什么？",
+      "Defrag / compaction / snapshot 怎么交互？繁忙 ML 集群的标准维护窗口怎么排？",
+      "为什么 etcd 不适合做 feature store 后端，但极其适合做指向 feature store 的控制面？",
+      "ML controller 做无界 list-all-pods watch 时会出什么事？怎么修（resourceVersion / 分页 / watch bookmark）？",
+      "ML 批任务提交风暴让 etcd 写延迟从 5ms 飙到 500ms，你怎么排查？",
+      "etcd 里 split-brain 风险是什么？Pre-vote + CheckQuorum 怎么消除它？",
+      "怎么用 etcd lease 在多租户训练集群里实现公平的 GPU 分配器？",
+      "etcd 为什么推荐 3 / 5 个投票成员而不是水平扩展？这对 ML 平台 blast radius 意味着什么？",
+      "对比 etcd watch 跟 Kafka consumer offset，哪种更适合做 ML pipeline 的事件总线？",
+      "怎么备份恢复一个 etcd 集群而不让 K8s API 出现一段 stale-read 窗口？",
+      "etcd v2 → v3 的迁移路径是什么？老 ML operator 升级时哪些数据模型假设会挂？"
     ]
   },
   "tikv": {
-    "blurb": "分布式事务 KV 存储，TiDB 的存储层：基于 Raft 多副本 + Region 分片 + Percolator 模型实现跨 Region 的分布式事务。",
+    "blurb": "分布式事务 KV 存储，TiDB 的存储层、CNCF 毕业项目：基于 RocksDB 的 Region 分片 + Multi-Raft 复制 + Percolator 风格 2PC 实现跨 Region 分布式事务，PD 的 TSO 提供全局序。越来越多被用作 feature store、在线元数据 catalog 等需要分布式事务又不想牺牲水平扩展的工作负载后端。",
     "concepts": [
       "Multi-Raft",
       "Region 分裂",
@@ -793,11 +1484,27 @@
       "Multi-Raft 的 Region 分裂 / 合并怎么不破坏一致性？",
       "Percolator 2PC 跟 Spanner TrueTime 的路线取舍？",
       "PD 的 TSO 单点会不会成为瓶颈？怎么扩展？",
-      "热点 Region 的负载均衡是怎么做的？"
+      "热点 Region 的负载均衡是怎么做的？",
+      "走一遍 Percolator 的 prewrite / commit + primary-row-as-coordinator 把戏，为什么这样能省掉一个独立 coordinator？",
+      "TiKV 的 async commit 怎么省掉一阶段？给 latch / lock manager 增加了什么新约束？",
+      "TiKV 的 1PC 是什么？什么条件下安全？实测能省多少延迟？",
+      "GC worker 怎么安全回收旧 MVCC 版本而不破坏长 snapshot read？",
+      "为什么选 RocksDB 而不是自研引擎？写密集 ML feature 负载下哪些 compaction 问题最咬人？",
+      "对比 TiKV / etcd / FoundationDB 作为 feature store 后端的优缺点，断点在哪？",
+      "怎么在 TiKV 上设计实时在线 feature store，全球部署下点查 p99 < 10ms？",
+      "用 TiKV 做模型注册中心后端时，怎么用事务把 promote / rollback 跨多行做成原子？",
+      "为在线推理服务的 3-AZ 部署，Region 副本放置策略长什么样？",
+      "PD 怎么发现热点 Region？怎么在不影响流量的前提下分裂或迁移它？",
+      "跨 Region 事务的延迟下限是什么？跟 Spanner 的 commit wait 有什么不同？",
+      "每天往 TiKV 灌几十亿条 feature 行时，怎么观测和缓解写放大？",
+      "Region 在 commit 中途分裂时，进行中的 2PC 事务会怎样？TiKV 怎么解决？",
+      "怎么在线演进一个 TiDB-backed ML 元数据服务的 schema 而不停机？",
+      "为什么 TSO 更多是个逻辑瓶颈而非物理瓶颈？Local TSO 怎么改变跨地域部署故事？",
+      "回填期间一个 follower 落后会出什么事？Raft snapshotting 对 feature freshness 是帮还是坑？"
     ]
   },
   "cockroach": {
-    "blurb": "Spanner 启发的开源分布式 SQL 数据库：Range 分片 + Raft 复制 + HLC 时钟实现 serializable 跨区事务。",
+    "blurb": "Spanner 启发的开源分布式 SQL：Range 分片 + Raft 复制 + 带 uncertainty interval 的 HLC 时钟，在没有原子钟的前提下交付 serializable 跨区事务。能扛住单节点和整区故障，加上 PostgreSQL 协议兼容，让它成为多区域 ML 元数据、模型注册中心、事务型 lakehouse catalog 的常见选择。",
     "concepts": [
       "Range 分片",
       "Raft",
@@ -809,11 +1516,27 @@
       "没有 TrueTime 怎么用 HLC + uncertainty interval 模拟外部一致性？",
       "Range split / rebalance 跟 lease transfer 的协调？",
       "Serializable 隔离下的 read refresh 机制怎么避免 abort 风暴？",
-      "对比 Spanner / TiDB，CRDB 的工程取舍？"
+      "对比 Spanner / TiDB，CRDB 的工程取舍？",
+      "走一遍 CRDB 的 transaction record + intent resolution 生命周期——orphaned intent 是怎么来的？",
+      "Parallel Commits 怎么从 commit 路径上省掉一次往返？什么 invariant 让它安全？",
+      "CRDB 为什么默认 serializable 而不是 snapshot isolation？哪些工作负载会付出代价？",
+      "Closed timestamp 机制怎么支撑有界过期的 follower read？典型 lag 是多少？",
+      "怎么用 multi-region 表（REGIONAL BY ROW vs GLOBAL）服务一个全球低延迟读的 ML feature catalog？",
+      "HLC max offset 被超过会怎样？为什么节点要被 fence？运维上怎么防？",
+      "CRDB 由 range leaseholder 主导的读 vs Spanner 的 TrueTime snapshot——哪种 p99 更便宜？",
+      "CRDB 怎么处理热点 range（顺序 PK 插入）？标准的 hash-bucketing 缓解方案怎么写？",
+      "在 CRDB 上做模型注册中心：怎么把 promote-to-prod 表达成跨区单笔 serializable 事务？",
+      "CRDB 的在线 schema change：走一遍 F1-style schema-state 协议——为什么是非阻塞的？",
+      "CRDB 的 CDC 跟 Debezium-on-Postgres 在为下游 ML feature 流送更新上的对比？",
+      "三区部署的 CRDB 在某区被分区数小时时会有哪些 failure mode？",
+      "怎么把 CRDB（事务元数据）和 OLAP 系统（feature serving）混用而不双写？",
+      "CRDB 推荐每区至少 3 节点，对一个 ML 平台的成本足迹意味着什么？",
+      "把历史 feature 批量导入 CRDB：IMPORT 路径 vs 流式 insert，吞吐崖在哪？",
+      "p99 事务延迟尖峰跟 rebalance 活动相关时，你怎么排查 CRDB 集群？"
     ]
   },
   "zookeeper": {
-    "blurb": "经典分布式协调服务：基于 ZAB 协议提供顺序一致性的小文件命名空间。Hadoop / Kafka / HBase 时代的 coordination 基础设施。",
+    "blurb": "经典分布式协调服务：ZAB（ZooKeeper Atomic Broadcast）协议给出单 leader + 顺序一致性的小文件命名空间，watch 与 ephemeral znode 是构建锁 / 选主 / 成员管理的原语。Hadoop / Kafka / HBase 时代的协调脊柱，至今在你需要一个久经沙场、有强意见的元数据存储而不是通用 KV 时仍是首选。",
     "concepts": [
       "ZAB",
       "Znode",
@@ -823,13 +1546,29 @@
     ],
     "questions": [
       "ZAB 跟 Paxos / Raft 的本质差别？",
-      "为什么 ZK 是顺序一致而不是线性一致？",
-      "watch 的 one-shot 设计踩过哪些坑？",
-      "session expiration 跟 ephemeral node 怎么协同避免脑裂？"
+      "为什么 ZK 是顺序一致而不是线性一致？sync() 什么时候必须显式调用？",
+      "watch 的 one-shot、edge-triggered 设计踩过哪些坑？",
+      "session expiration 跟 ephemeral node 怎么协同避免脑裂？",
+      "走一遍 ZAB recovery：新 leader 怎么对齐已 commit 与已 propose 的事务？",
+      "为什么 ZK 必须奇数投票节点？半数以上分区被切走时，写可用性会怎样？",
+      "ZooKeeper vs etcd：两者实际给出的保证差在哪？Kubernetes 为什么选 etcd？",
+      "内存 data tree + 事务日志 + 周期 snapshot 是怎么用顺序写盘换持久性的？",
+      "为什么大 znode（>1 MB）有毒？它会把 leader 的 broadcast 流水线拖成什么样？",
+      "leader 上 GC 暂停超过 session timeout，具体会触发什么级联故障？",
+      "用 ephemeral sequential node 做公平分布式锁怎么写？惊群效应的坑在哪？",
+      "训练任务用 ZooKeeper 做 rendezvous 时，几百个 worker 一起监听为什么是真实的 watch storm 风险？",
+      "observer 角色怎么扩读吞吐？削弱了哪些一致性保证？",
+      "Curator 的 LeaderLatch / InterProcessMutex 等 recipe 实际帮你绕开了哪些 ZK 原始陷阱？",
+      "为什么 Kafka controller 即便 broker 已经多副本，仍然依赖 ZK / KRaft 管理元数据？",
+      "ZAB 全部写都要走 leader 的漏斗结构怎么限制吞吐？这对高扇出的配置中心意味着什么？",
+      "客户端时钟漂移让 session 心跳看起来过期，会出现什么故障模式？",
+      "怎么排查一波 connection loss 风暴——是网络、JVM GC、磁盘 fsync 还是选主抖动？",
+      "为什么 ZK 不适合存 ML 推理集群的逐请求状态，即使它“看起来像 KV”？",
+      "迁移视角：Hadoop 时代的栈从 ZK 换到 etcd / Consul，什么时候真的划算？哪些静默语义会变？"
     ]
   },
   "linux": {
-    "blurb": "现代基础设施的事实操作系统内核：覆盖进程调度、虚拟内存、VFS、网络协议栈、cgroup/namespace。容器、KVM、eBPF、io_uring 全部建立在其上。",
+    "blurb": "现代基础设施的事实操作系统内核：宏内核 + 模块支持，覆盖进程调度（CFS 到 EEVDF）、虚拟内存与 page cache、网络栈、VFS、cgroup v2 与 namespace、eBPF、io_uring、KVM。容器、GPU 驱动、RDMA 以及每家云的 hypervisor 全部建立在它之上。在 ML 集群里，Linux 也是 NUMA-aware 调度、hugepage、IRQ 亲和、cgroup 内存上限决定一个 7B 模型是平稳训练还是把 page cache 抖崩的地方。",
     "concepts": [
       "CFS / EEVDF",
       "VFS",
@@ -839,14 +1578,29 @@
     ],
     "questions": [
       "CFS 到 EEVDF 调度器的设计动机变化？",
-      "page cache 跟 direct IO 在数据库场景的取舍？",
+      "page cache 跟 direct IO 在数据库 / dataloader 场景的取舍？",
       "为什么 io_uring 比 epoll + thread pool 在高 IOPS 下更优？",
       "namespace + cgroup 怎么共同实现容器隔离？",
-      "eBPF 为什么能在内核里安全运行用户字节码？"
+      "eBPF 为什么能在内核里安全运行用户字节码？",
+      "走一遍 CFS 的 vruntime + 红黑树——EEVDF 的 eligibility / lag 概念修了什么？",
+      "cgroup v2 的统一层级相比 v1 拆分 controller 改进在哪？containerd 又重新学了什么？",
+      "PSI（pressure stall information）是什么？为什么是给 ML pod 自动扩缩容的正确信号？",
+      "为什么 IRQ 亲和性调优在 100 GbE 推理节点上能带来 30% 吞吐摆动？",
+      "OOM killer 怎么打分？怎么稳妥地把一个大训练进程从它的视野里挪走？",
+      "内核抢占（PREEMPT_RT、PREEMPT_DYNAMIC）给低延迟 RPC 带来什么？代价是什么？",
+      "为什么 page cache thrash 是 “shard 比内存大、反复重读” 的 dataloader 的隐形杀手？",
+      "hugepage（THP vs hugetlbfs）怎么和 embedding 表、CUDA pinned memory 互相影响？",
+      "脏页回写舞蹈（vm.dirty_ratio、writeback throttling）是什么？为什么会把 fsync 延迟尖刺出来？",
+      "NUMA balancing 怎么决定迁移页面？什么时候你会为 pinned ML 负载关掉它？",
+      "dataloader 扇出时的 scheduler 延迟长什么样？怎么测（schedstat、runqlat）？",
+      "GPU 驱动（nvidia.ko、amdgpu）跟内核内存计账与 OOM 逻辑怎么互动？",
+      "sched_ext / scx 类可插拔调度器对 ML 负载有什么吸引力？",
+      "Linux 网络栈 offload（XPS、RPS、RFS）跟 FreeBSD 的对比？ARFS 又解决了什么？",
+      "看到 kworker 在吃 CPU 时，怎么系统化地归因（perf、ftrace、bpftrace）？"
     ]
   },
   "nginx": {
-    "blurb": "高性能 HTTP / 反向代理服务器：master-worker + 事件驱动 + 非阻塞 IO，单机十万级并发的工业基准。",
+    "blurb": "高性能 HTTP / 反向代理服务器：master-worker 多进程 + 事件驱动非阻塞 IO + sendfile 零拷贝，单机十万级并发的工业基准。其 phase handler 流水线至今仍是 L7 代理最干净的心智模型；即便在 Envoy / Pingora 时代，nginx 仍是推理端点、模型仓库和静态资源的默认前门。",
     "concepts": [
       "事件驱动",
       "Master-Worker",
@@ -859,11 +1613,26 @@
       "phase handler 设计怎么平衡扩展性和性能？",
       "和 Envoy 在数据面架构上的根本差异？",
       "worker 之间的负载均衡（accept_mutex / SO_REUSEPORT）怎么演进？",
-      "tcp/http upstream keepalive 池的实现要点？"
+      "tcp/http upstream keepalive 池的实现要点？",
+      "走一遍请求的 11 个 phase——auth / rewrite / content / log 各落在哪？限流又在哪个 phase？",
+      "为什么 sendfile + tcp_nopush + tcp_nodelay 是静态文件的经典三件套？在 TLS 上又是怎么破功的？",
+      "在 10 万 RPS 推理网关下，怎么调 worker_connections、somaxconn 和 listen backlog？",
+      "keepalive_requests = 1000 vs 无上限对长连接 upstream 池的内存和 CPU 各有什么影响？",
+      "OpenResty / Lua 模块生态为什么是 nginx 在动态配置上熬过 Apache 的历史原因？",
+      "nginx 的 resolver 缓存跟 k8s service discovery 的短 TTL DNS 怎么互动？陷阱在哪？",
+      "前置一个流式 LLM 推理端点时会变什么——buffering=off、proxy_request_buffering、chunked transfer？",
+      "proxy_buffering 跟 SSE / WebSocket upgrade 在模型流式输出场景里怎么互相影响？",
+      "nginx vs HAProxy 是个老生常谈的辩论，各自实际赢在哪？",
+      "graceful reload（SIGHUP）对已有连接到底做了什么？fd 又会在哪漏？",
+      "在 64 核机器上要打满 pps，IRQ 亲和 + nginx worker pinning 该怎么推理？",
+      "为什么 access log 写盘是个意想不到的 tail latency 来源？buffer + log_format json 又给你什么？",
+      "nginx 的 slab 分配器（ngx_slab）跟 jemalloc / mimalloc 在模块内存上怎么比？",
+      "Cloudflare 的 Pingora 带来了 nginx 结构上很糟糕的什么——异步 Rust、逐请求状态机、热重载语义？",
+      "推理高峰时 upstream 502 风暴怎么系统化排查：nginx 错误日志、upstream 超时、conntrack，还是后端 GC？"
     ]
   },
   "cilium": {
-    "blurb": "基于 eBPF 的云原生网络 / 安全 / 可观测性数据面：直接在内核 hook 点实现 service mesh、network policy、L7 路由，绕开 iptables / kube-proxy 的性能瓶颈。",
+    "blurb": "基于 eBPF 的云原生网络 / 安全 / 可观测性数据面：直接在内核 hook 点（XDP / tc / sock_ops）实现 service 路由、NetworkPolicy、L7 过滤和加密，绕开 iptables 和 kube-proxy 的性能瓶颈。Identity-based policy 把安全和频繁变化的 pod IP 解耦，Hubble 在同一条数据路径上叠加 L3-L7 可观测——在每微秒延迟都关键的 ML serving 东西向流量里，正越来越成为默认 fabric。",
     "concepts": [
       "eBPF Datapath",
       "XDP",
@@ -876,11 +1645,26 @@
       "Cilium 的 identity-based policy 相比 IP-based 的优势？",
       "XDP 和 tc hook 的取舍，各自落在哪一层？",
       "sidecarless service mesh 相比 Istio sidecar 的工程取舍？",
-      "Hubble 怎么在数据面零侵入做 L7 可观测？"
+      "Hubble 怎么在数据面零侵入做 L7 可观测？",
+      "走一个包：pod -> veth -> tc ingress -> Cilium BPF -> overlay -> 远端节点——你会在哪一段失去能见度？",
+      "kube-proxy replacement 是怎么真做 DSR（直接服务器返回）的？为什么对推理扇出很关键？",
+      "iptables 为什么是规则数 O(N) 的？Cilium 的哈希表服务图为什么能在几千个 service 时仍然赢？",
+      "CiliumNetworkPolicy 比上游 NetworkPolicy 多给了什么（L7、FQDN、identity）？",
+      "WireGuard 透明加密怎么和 eBPF 集成？相比 IPsec 的代价是什么？",
+      "cluster-mesh 模型是怎么回事？identity 怎么跨集群保持一致？",
+      "XDP 原生 LB（Maglev hashing）相比传统 L4 LB 在 GPU 推理集群上赢在哪？",
+      "Cilium 怎么处理需要 RDMA / SR-IOV 的 GPU pod——是绕过还是共存？",
+      "策略空隙的常见坑——出口 DNS、临时端口、init 容器、sidecar？",
+      "怎么不抓狂地调试 Hubble 里的 'policy verdict: denied'？",
+      "为什么 BPF 的 tail-call 链（policy -> NAT -> encap）是 Cilium 能线性扩展的结构原因？",
+      "Cilium 的 host-firewall 模式怎么改变多租户 ML 节点的威胁模型？",
+      "Cilium 的 L7 HTTP policy 实际检查什么？又在哪里有意止步、不做完整代理？",
+      "rollout 中途 eBPF 程序签名变化时的升级故事是什么？为什么 policy 生成空窗很危险？",
+      "启用 Cilium 后推理 p99 突然抖起来，系统化排查路径：bpftool prog stats、conntrack、NAT 64k 上限、内核 softirq？"
     ]
   },
   "python": {
-    "blurb": "AI / Data 栈的默认控制层：训练脚本、DAG、推理服务的外壳都是它。CPython 的 GIL 与引用计数决定了热路径必须下沉到 C/C++ kernel，Python 只做 orchestration。",
+    "blurb": "AI / Data 栈的默认控制层：训练脚本、DAG、notebook、推理服务的外壳都是 Python；PyTorch、JAX、Ray、Airflow、HuggingFace 前端都活在这里。CPython 的 GIL 与引用计数决定了热路径必须下沉到 C/C++/CUDA kernel，Python 只做 orchestration。free-threaded CPython（PEP 703）和子解释器并行可能终于撕开这个天花板。",
     "concepts": [
       "GIL",
       "asyncio",
@@ -893,11 +1677,26 @@
       "PyTorch / NumPy 为什么在 C++ 层就把 GIL release 掉？",
       "asyncio 的事件循环跟 OS 线程调度是什么关系？",
       "PEP 703 free-threaded CPython 对引用计数做了哪些改造？",
-      "type hints 在 runtime 是否强制？"
+      "type hints 在 runtime 是否强制？",
+      "为什么 data loader 走多进程而不是多线程？fork vs spawn 在带 CUDA context 的进程里各自代价是什么？",
+      "pybind11 vs nanobind vs CFFI：把 C++ 张量库绑到 Python 时怎么选？",
+      "PyTorch 的张量后端 ATen 为什么是 C++ 而不是 Python？如果纯 Python 实现性能会差到什么程度？",
+      "CPython 的引用计数跟循环 GC 怎么交互？为什么这对持有 tensor 的 ML 回调是个坑？",
+      "Cython 比 numba、比手写 C extension 各自多给了什么？",
+      "__slots__、__array_interface__、buffer protocol 怎么实现跟 NumPy / Arrow 的零拷贝互操作？",
+      "为什么 pickle 不足以分发模型权重？safetensors 怎么解决安全和 mmap 的问题？",
+      "asyncio 怎么跟从 Python 视角本质同步的 CUDA stream 模型共存？",
+      "import torch 的代价多大？lazy-import 和 module 级 __getattr__ 在 serverless 冷启动里能节省多少？",
+      "为什么 Python 还能当 ML 万能胶水？换成 Julia、Mojo 或类型化 Python 会是什么样？",
+      "CPython 3.11+ 的 specializing adaptive interpreter 对热循环性能改善多少？对 ML 代码意义大吗？",
+      "子解释器（PEP 684）并行解锁了 GIL 禁掉的哪些场景？它在线程和进程之间占什么生态位？",
+      "C extension 的多线程模式（GIL 释放、Py_BEGIN_ALLOW_THREADS）是怎么工作的？extension 忘记释放会出现什么 bug？",
+      "为什么生产推理服务（TensorRT-LLM、vLLM 核心调度器）外面是 Python，里面要包一层 C++ runtime？",
+      "Python 打包（wheel、manylinux、CUDA ABI）的长尾问题在 ML 团队里反复踩到哪些？"
     ]
   },
   "cpp": {
-    "blurb": "基础设施之母语：RAII、模板、UB、性能。C++ 是几乎所有数据库、推理运行时、游戏引擎的实现语言；理解它的内存模型和 ABI 是工业 infra 的入门券。",
+    "blurb": "基础设施之母语：RAII、模板、UB、零开销抽象。C++ 是几乎所有数据库、推理运行时、kernel host、游戏引擎的实现语言——PyTorch 的 ATen、TensorFlow 核心、FAISS、RocksDB、vLLM 的调度器、TensorRT 都活在这里。理解它的内存模型、ABI 和模板元编程是工业 AI infra 的入门券。",
     "concepts": [
       "RAII",
       "智能指针",
@@ -910,11 +1709,26 @@
       "为什么 Google / LLVM 禁用异常？工程取舍是什么？",
       "memory_order_relaxed / acquire / release / seq_cst 区别？什么时候可以放心用 relaxed？",
       "C++20 coroutine 底层是什么？跟 stackful coroutine 取舍？",
-      "pimpl 解决了 ABI 稳定的哪些问题？代价是什么？"
+      "pimpl 解决了 ABI 稳定的哪些问题？代价是什么？",
+      "张量库（Eigen、xtensor、ATen）怎么用模板元编程做 expression template 和 shape-checked 算子？",
+      "FAISS 为什么用 C++ 写而不是 Python？十亿向量索引的延迟差距大概几个数量级？",
+      "CRTP 比虚函数派发多给了什么？它在 Inductor / cutlass 里以什么形式出现？",
+      "std::shared_ptr 的引用计数跟 PyTorch 的 intrusive_ptr 差在哪？为什么 PyTorch 要重新发明这个轮子？",
+      "C++ 内存模型怎么映射到 NVIDIA GPU（libcu++、cuda::std::atomic）？PTX 在上面又保证了什么？",
+      "为什么 LLM 推理引擎（vLLM、TensorRT-LLM、llama.cpp）热路径都坚持 C++，只往外暴露薄薄一层 Python 或 HTTP？",
+      "constexpr if 和 concepts 跟 SFINAE 时代相比，给 kernel fusion 库带来了哪些新写法？",
+      "C++ ABI 断裂（libstdc++ dual ABI、NVIDIA 的 libcu++）在 ML wheel 分发里制造了哪些麻烦？",
+      "Ray 的核心调度器为什么是 C++ + gRPC，而不是全 Python？什么样的延迟预算逼出这个选择？",
+      "怎么调试一个深 200 行的模板报错？clangd、-fconcepts-diagnostics-depth 这类工具实际帮多大？",
+      "C++20 module 在 PyTorch、TVM 这类 ML 代码库的构建时间上落地效果如何？",
+      "哪些工具（sanitizer、valgrind、libfuzzer）能逮住语言本身允许的 UB 类问题？",
+      "现在新写一个推理 runtime，C++ vs Rust 怎么取舍？什么时候迁移成本值得付？",
+      "Abseil / folly 在哪些地方扩展标准库以满足生产需求（C++17 之前的 string_view、flat_hash_map）？",
+      "现代 C++ 的开放抱怨——module 落地、构建时间、模板报错、stdlib 演进慢——分别真到什么程度？"
     ]
   },
   "rust": {
-    "blurb": "所有权 + 借用：把 use-after-free 这一类 bug 在编译期消掉。Rust 正在数据库、浏览器、操作系统等领域接替 C++ 的位置。",
+    "blurb": "所有权 + 借用：把 use-after-free 和 data race 这一类 bug 在编译期消掉。Rust 正在数据库（TiKV）、浏览器（Servo、Firefox 内部）、tokenizer（HF tokenizers）、Linux kernel 模块以及越来越多对零拷贝和并发正确性都敏感的 AI infra 路径上接替 C++。代价是陡峭的学习曲线和更慢的编译。",
     "concepts": [
       "Ownership",
       "Lifetimes",
@@ -927,11 +1741,26 @@
       "Send / Sync trait 分别说明什么？为什么 Rc<T> 不是 Sync 而 Arc<T> 是？",
       "Rust async 是 zero-cost 但又需要 executor，Pin 又解决了什么？",
       "Unsafe Rust 开了哪些特权？什么时候不得不用？",
-      "declarative macro 跟 procedural macro 各自适合什么场景？"
+      "declarative macro 跟 procedural macro 各自适合什么场景？",
+      "Hugging Face tokenizers 为什么用 Rust 重写？相比纯 Python 基线性能差距多少？",
+      "TiKV 怎么在 Rust 里叠 Raft + RocksDB？哪些地方仍然要 unsafe / FFI？",
+      "borrow checker 怎么让零拷贝数据路径（比如 Apache Arrow 的 arrow-rs）成为安全可表达的——这是 C++ 难做到的？",
+      "tokio vs async-std vs smol：调度器和 IO 模型上的取舍？",
+      "Rust 的 ownership 跟 GPU buffer 怎么交互？谁拥有 CUDA 指针？cust 这类 crate 怎么建模？",
+      "为什么 async Rust 仍然被吐槽（function color、Pin、.await 跨 lifetime）比 Go 或 Python asyncio 麻烦？",
+      "bytemuck / zerocopy 怎么实现安全的零拷贝序列化？为什么很多场景因此可以不写 unsafe？",
+      "#[no_std] 纪律给嵌入式 ML runtime（Tract、Burn）带来了什么纯 std crate 给不了的东西？",
+      "Polars 和 DataFusion 怎么用 Rust 跑赢 pandas？是语言赢，还是列式引擎设计赢？",
+      "linkage 到 LLVM 让 Rust 在 SIMD 重的代码上 codegen 质量接近 clang——这件事意味着什么？",
+      "Rust 编译时间至今仍然被诟病——增量编译、mold linker、cargo-nextest 实际解决了哪些痛点？",
+      "生态怎么处理 CUDA / GPU——cudarc、tch-rs、candle、burn：哪个最接近 production？",
+      "新写推理 runtime 时，Rust vs C++ 取舍：什么时候迁移代价值得付，什么时候反而拖慢？",
+      "orphan rule 怎么约束 trait 实现？newtype、extension trait 这类 workaround 各自适合什么？",
+      "考虑到 PyTorch / JAX / CUDA 都是 C++ 中心的，Rust 在 AI infra 里现实的渗透天花板在哪？"
     ]
   },
   "go": {
-    "blurb": "Goroutine + channel：云原生主导语言。K8s、Docker、etcd、Prometheus、CockroachDB 都是 Go 写的。卖点不是语言本身的创新，而是把 goroutine + 单一工具链 + 强约定组合得让中等团队稳定产出。",
+    "blurb": "Goroutine + channel：云原生主导语言。Kubernetes、Docker、etcd、Prometheus、CockroachDB，以及大部分 ML 平台控制面（KServe、Kubeflow operator、模型注册中心）都是 Go 写的。卖点不是语言本身的创新，而是把轻量并发、单一工具链、强约定组合得让中等团队稳定产出可靠的分布式服务。",
     "concepts": [
       "Goroutine / GMP",
       "Channel",
@@ -944,11 +1773,26 @@
       "channel 的底层 hchan 是什么？buffered vs unbuffered 唤醒语义？",
       "concurrent mark-and-sweep 的 write barrier 解决了什么？当前 STW 典型耗时多少？",
       "context.Context 的正确用法？cancel 信号怎么穿透到 syscall？",
-      "sync.Pool 解决了什么？在 GC 时的行为？"
+      "sync.Pool 解决了什么？在 GC 时的行为？",
+      "为什么 Kubernetes 的 API server / controller manager 用 Go 写？同样架构在 Java 或 Rust 下要付什么代价？",
+      "GMP scheduler 怎么 work steal？go tool trace、pprof 怎么定位尾延迟？",
+      "在 scheduler 重的 ML 平台控制面（百万 pod、频繁 reconcile）里，Go GC pause 真正的代价落在哪？",
+      "新写一个分布式 cache 或 scheduler，Go vs Rust 怎么取舍？什么时候 Go 的工程性盖过 Rust 的性能？",
+      "Go 为什么没有 generics 友好的数值库？gonum 离 NumPy 级还有什么 block？",
+      "cgo 调用开销 + 栈切换模型为什么在 ML 热路径调用 CUDA 时不实用？",
+      "errors.Is / errors.As 比原始 if err != nil 多解决了什么？",
+      "worker-per-request 的 HTTP handler 跟 async/await 模型在吞吐和尾延迟上比怎么样？",
+      "为什么高分配率下 Go 服务会撞 GC 尾延迟悬崖？GOGC / GOMEMLIMIT 怎么调？",
+      "runtime poller 怎么用 epoll / kqueue / IOCP？跟 Tokio 设计差在哪？",
+      "Go 的 memory model 在 sync/atomic 和 channel 上保证什么？跟 Java 比差在哪？",
+      "为什么 Go 二进制偏大（静态链接、runtime、reflect 表）？-ldflags=-s -w 和 upx 能压多少？",
+      "Go 的 context cancel 怎么跟正在跑的 gRPC stream 或后台 CUDA RPC 调用交互？",
+      "Go 在 AI infra 上的真实抱怨——generics 来得晚、数值故事弱、没 SIMD intrinsic、缺 union 类型——分别有多严重？",
+      "Go 在 ML 栈里跟 Python 怎么并存：通常做 orchestration 平面（KServe、Argo、Ray 的 Go 客户端）——还有哪些位置？"
     ]
   },
   "java": {
-    "blurb": "数据基础设施的工业母语：Kafka、Flink、Spark、HDFS、Cassandra、Elasticsearch 几乎全是 JVM 系。GC、JIT 与 off-heap 内存管理是写大数据系统时绕不开的真实问题。",
+    "blurb": "数据基础设施的工业母语：Kafka、Flink、Spark、HDFS、Cassandra、Elasticsearch 几乎全是 JVM 系。GC 停顿、JIT 预热与 off-heap 内存管理是写大数据系统时绕不开的真实问题，ZGC 亚毫秒停顿 + Project Loom 虚拟线程是近期改变数据服务设计方式的两个根本变化。今天 Java 仍是 lakehouse 栈（Trino、Iceberg-Java、Spark）的根基，尽管 Rust/C++ 引擎正在从底层蚕食。",
     "concepts": [
       "JVM / JIT",
       "GC (G1 / ZGC)",
@@ -961,11 +1805,26 @@
       "为什么 Flink / Spark 都要绕开 JVM heap 走 off-heap？",
       "JIT 的 C1 / C2 / 分层编译触发条件？",
       "Java 的 NIO 跟 Linux epoll 怎么对应？Netty 加了什么？",
-      "Project Loom 的虚拟线程对 reactive 编程冲击有多大？"
+      "Project Loom 的虚拟线程对 reactive 编程冲击有多大？",
+      "为什么一个长跑的 Spark job 会突然在 GC 上慢下来？怎么从 G1 日志确认？",
+      "ZGC 的 colored pointer 怎么做到并发 compaction 而不 stop-the-world？",
+      "Spark Tungsten 的 UnsafeRow 到底放在哪里？为什么要绕开 Java 对象头？",
+      "Netty 的 zero-copy（FileRegion / sendfile）怎么加速 Kafka broker？",
+      "JIT deoptimization 为什么是长跑 Flink 任务的真实生产隐患？",
+      "Project Panama / FFM API 怎么改变从 Java 调用原生 AVX kernel 的方式？",
+      "为什么 Java boxing 会拖死 Spark UDF？whole-stage codegen 怎么绕过？",
+      "Shenandoah、ZGC、G1 在 64GB heap 的 Kafka broker 上怎么取舍？",
+      "GraalVM native-image 怎么改变 serverless 数据任务的冷启动经济性？",
+      "为什么 Hadoop / HDFS 在生产里还死锁在更老的 Java LTS 版本？",
+      "class-data sharing（CDS）怎么改善 Spark driver 启动时间？",
+      "为什么 direct ByteBuffer 泄漏是 Kafka producer 最常见的 bug 之一？",
+      "训练管道用 Java 客户端拉取特征（Cassandra/HBase）时，GC 争用通常落在哪里？",
+      "怎么测量一个 Flink TaskManager 的 JVM safe-point 停顿 vs 分配 stall？",
+      "为什么 JNI 桥到原生 ML 库（XGBoost / ONNX）经常成为 JVM 侧 feature serving 的主要成本？"
     ]
   },
   "scala": {
-    "blurb": "Spark / Flink 核心代码的母语：跑在 JVM 上但带 ML 风格的类型系统，implicit / case class / 函数式 collection 让 DSL 与分布式算子比 Java 紧凑得多。",
+    "blurb": "Spark / Flink 核心代码的母语：跑在 JVM 上但带 ML 风格的类型系统，implicit / case class / 函数式 collection 让 DSL 与分布式算子比 Java 紧凑得多。Spark 的 DataFrame 与 Catalyst 重度依赖 Scala 隐式与宏把 DSL 编译成 JVM 字节码，Flink 内核同理。今天该语言在应用层已经收缩（特征工程被 Python / Rust 接管），但在计算引擎内部仍然吃重。",
     "concepts": [
       "implicit / given",
       "case class",
@@ -978,11 +1837,26 @@
       "为什么 Spark 的 DataFrame DSL 选择 Scala 而不是 Java？",
       "Scala 2 与 Scala 3 在隐式 / 元编程上的设计差异？",
       "Akka actor model 跟 Erlang OTP 的取舍？",
-      "Type class 模式在 Scala 怎么实现？对比 Haskell 有何阉割？"
+      "Type class 模式在 Scala 怎么实现？对比 Haskell 有何阉割？",
+      "Spark 的 Encoder 为什么依赖 Scala 反射 / TypeTag？为什么这是个二进制兼容的头疼问题？",
+      "Catalyst 怎么用 quasiquote / TreeNode 做 whole-stage codegen？",
+      "为什么 Scala 不可变集合在 Spark UDF 里是著名的分配热点？",
+      "Scala case class 跟 Java record 在 Spark schema 推断上的取舍？",
+      "为什么 Flink 内核停止增加 Scala API 转向 Java DataStream？",
+      "Cats Effect / ZIO 跟 Akka 在喂 ML 训练的流式管道上怎么比？",
+      "Scala 3 的 inline + match types 实际上在哪赢过 Scala 2 macro？",
+      "二进制兼容（TASTy / 2.12 vs 2.13）为什么是共享 Spark JAR 上的真实问题？",
+      "Scala 的型变（+T、-T）跟 Spark Dataset[T] 怎么交互？当 T 是 Hadoop Writable 时？",
+      "为什么 Akka HTTP 会出现在 feature-serving 路径上？反压怎么办？",
+      "Spark 的 RDD API（Scala）vs DataFrame API 在 ML 预处理上怎么取舍？",
+      "怎么调试一个 Scala for-comprehension 解糖成嵌套 flatMap 后让 shuffle 体积爆炸？",
+      "为什么 scala.collection.parallel 在大数据生产里几乎没人用？",
+      "Lightbend Akka 的协议变更对新做的流式 / 推理平台有什么影响？",
+      "什么时候在一个跑在 Spark 内的 ML 特征管道里你还会选 Scala 而不是 Python？"
     ]
   },
   "c": {
-    "blurb": "操作系统、数据库存储引擎、网络协议栈的事实标准：手动内存管理 + 几乎为零的运行时。理解 C 等于理解 Linux 的源码。",
+    "blurb": "操作系统、数据库存储引擎、网络协议栈、tokenizer / SIMD 库的事实标准：手动内存管理 + 几乎为零的运行时。Linux、Postgres、SQLite、Redis、llama.cpp 核心、CPython 内部大部分都是 C；理解 C 等于理解 AI infra 跑在上面的那层底座。",
     "concepts": [
       "指针 / 别名",
       "undefined behavior",
@@ -995,11 +1869,26 @@
       "C11 memory model 的 acquire / release 跟 x86 / ARM 硬件保证怎么对应？",
       "为什么 Linux kernel 至今坚持 C 而不是 C++？",
       "signed integer overflow 是 UB 这件事对编译器优化意味着什么？",
-      "restrict 关键字到底能给优化器带来多少收益？"
+      "restrict 关键字到底能给优化器带来多少收益？",
+      "为什么 llama.cpp 的热路径（ggml）选择用 C 写？跨平台推理上比 C++ 多给了什么？",
+      "C ABI 怎么变成通用 FFI 共通语（Python ctypes、Rust extern C、Go cgo）？",
+      "CPython 的 C API 怎么把 GIL 和引用计数暴露出来？为什么 stable ABI（PEP 384）落地这么痛苦？",
+      "volatile、_Atomic、memory fence 三者差在哪？为什么 ML 几乎用不到 volatile？",
+      "在 C 里写一个通用容器——函数指针、void*、宏、代码生成——分别在哪里崩？",
+      "C99 VLA 跟 alloca 差在哪？为什么大部分项目两个都禁？",
+      "为什么 kernel 自己维护一套类 libc 例程（kstrtoul、copy_from_user）而不直接 link glibc？",
+      "setjmp / longjmp 跟 C 代码库里类似 destructor 的清理模式怎么交互？",
+      "__attribute__((aligned(N))) 和 __builtin_assume_aligned 给自动向量化器多少帮助？",
+      "restrict 在 LTO 下怎么跨函数边界传递？",
+      "C 的 _Generic 为什么经常不够用？glib 这类项目为什么要在上面再叠完整的类型擦除对象系统？",
+      "主流 sanitizer（ASan、UBSan、MSan、TSan）在运行时抓 C UB 的能力和性能开销？",
+      "SQLite 全 C 怎么做到 100% 分支覆盖？测试方法论是什么？",
+      "今天新写一个数据库存储引擎，C vs Rust 怎么取舍？C 还有哪些事做得更好？",
+      "kernel C 跟 userspace C 区别（无 float、自定义 allocator、RCU、无异常）多大？真正的'kernel C'子集是什么？"
     ]
   },
   "cuda-cpp": {
-    "blurb": "GPU kernel 的主战场：在 C++ 上扩展 __global__ / __device__ 与 thread/block/grid 抽象。开发者要同时管 register、shared memory、warp 行为，性能调优本质上是写访存模式。",
+    "blurb": "GPU kernel 的主战场：CUDA C++ 在 C++ 上扩展 __global__ / __device__ 与 thread/block/grid 抽象，覆盖 SIMT 硬件。开发者要同时管 register、shared memory、warp 行为、tensor core fragment——性能调优本质上是写访存模式。几乎所有快的 LLM kernel（FlashAttention、cutlass GEMM、cuBLAS 内部）都诞生在这里。",
     "concepts": [
       "warp / SIMT",
       "shared memory",
@@ -1012,11 +1901,26 @@
       "shared memory bank conflict 怎么发生？怎么排布数据避免？",
       "tensor core 的 WMMA / MMA API 跟普通 CUDA core 的编程模型差在哪？",
       "为什么提高 occupancy 不一定提高吞吐？",
-      "CUDA Graph 相比传统 stream 的 launch overhead 优化在哪？"
+      "CUDA Graph 相比传统 stream 的 launch overhead 优化在哪？",
+      "怎么推断 register pressure？什么情况下编译器把 register 溢到 local memory？怎么读 --ptxas-options=-v？",
+      "__ldg / __ldcs / cache hint 各自做什么？什么时候真正影响指标？",
+      "cooperative groups 跟传统 warp-level primitive 在 kernel 拆分上差在哪？",
+      "FlashAttention 的 attention kernel 为什么要在 online softmax + K/V tile 双 buffer 上花这么多力气？",
+      "cutlass 的 CuTe layout 代数比手写 WMMA 在写 tensor core GEMM 上简化了什么？",
+      "CUDA C++ vs Triton：写一个 fused softmax kernel，各自的短板是什么？",
+      "Hopper 的 TMA（Tensor Memory Accelerator）怎么改变 shared memory 加载的写法？",
+      "cuda::pipeline 比手动编排 cp.async 多给了什么？",
+      "为什么 launch bounds（__launch_bounds__）在新架构上反而经常起负作用？",
+      "SM scheduler 怎么调度 warp？为什么两个理论等价的 kernel 在 occupancy-vs-latency 曲线上差距很大？",
+      "kernel 静默算错（compute-sanitizer、racecheck、cuda-gdb）怎么定位？",
+      "CUDA stream + event 怎么把 H2D/D2H 跟 compute 重叠？NCCL 在这条路径里挂在哪？",
+      "dynamic parallelism 从 CUDA 5.0 就有了，为什么生产里几乎没人用？",
+      "PTX / SASS 可读性在编译器版本切换造成性能退化时有多重要？",
+      "生产团队怎么获取 kernel：手写 CUDA C++、Triton 生成，还是直接用 cutlass header-only 模板？"
     ]
   },
   "ptx": {
-    "blurb": "NVIDIA GPU 的虚拟 ISA：位于 CUDA C++ 与真正 SASS 之间的中间层，提供跨架构的指令抽象。手写 fused kernel、调 cp.async / mma 指令、看反汇编时绕不开的一层。",
+    "blurb": "NVIDIA GPU 的虚拟 ISA：位于 CUDA C++ 与物理 SASS 之间的中间层，提供跨架构前向兼容的指令抽象。手写 fused kernel、调 cp.async / mma / wgmma 指令、看反汇编、追 register pressure 退化时绕不开的一层。FlashAttention、cutlass、Triton 在 C++ 编译器不肯配合时都直接 emit 或 inline PTX。",
     "concepts": [
       "虚拟 ISA",
       "SASS 对应",
@@ -1029,11 +1933,26 @@
       "cp.async 跟普通 ld.global 在 latency hiding 上的差异？",
       "为什么 FlashAttention / cutlass 要直接写 PTX inline asm？",
       "mma.sync 指令的 fragment 布局跟 tensor core 硬件如何对应？",
-      "ptxas 的优化等级 -O3 vs -O0 实际能差出多少？"
+      "ptxas 的优化等级 -O3 vs -O0 实际能差出多少？",
+      "JIT（驱动层 ptxas）跟 AOT 编译各扮演什么角色？什么时候 fatbin 同时打包 PTX 和 SASS？",
+      "wgmma（Hopper）跟 mma.sync（Ampere）差在哪？这对 kernel 结构要求有什么变化？",
+      "predicate register 怎么跟 warp divergence 交互？ptxas 怎么把一串 if 编译成 predicate？",
+      "cp.async.bulk（Hopper TMA 路径）比 cp.async 多做了什么？",
+      "怎么从 PTX dump 里看出 C++ 源码看不出来的多余访存？",
+      "PTX 跟 AMD GCN/RDNA 的汇编路线（没有虚拟 ISA、直接暴露 ISA）相比，取舍是什么？",
+      "为什么 PTX 是前向兼容的，SASS 不是？NVIDIA 跨 Volta/Ampere/Hopper/Blackwell 怎么处理这件事？",
+      ".reg / .shared / .global state space 各自代表什么？怎么映射到物理资源？",
+      "Triton 的 MLIR pipeline 怎么 lower 到 PTX？什么场景下还是输给手写 PTX？",
+      "barrier.sync、bar.warp.sync、__syncthreads 在 PTX 层怎么对应？",
+      "为什么 CUDA 12.x 这种编译器更新偶尔会让 kernel 退化？团队怎么 pin 住 kernel 二进制？",
+      "mma.sp（sparse mma）在 Ampere/Hopper 上能买到什么？为什么实际采用率仍然小？",
+      "在 asm volatile 里写 inline PTX 跟 C++ 编译器的 register 分配怎么交互？哪些 bug 会藏在这里？",
+      "哪些指令（atomic.cas、redux.sync、elect.sync）只能在 PTX 层干净写出，C++ 写不出来？",
+      "cuobjdump、nvdisasm 这类反汇编工具怎么帮助把性能退化追到具体 SASS 操作码？"
     ]
   },
   "assembly": {
-    "blurb": "x86 / ARM / RISC-V 机器指令层：在性能关键路径（memcpy、加密、SIMD kernel、JIT 出口）和调试 core dump、看 perf annotate 时必须读懂的最终形态。",
+    "blurb": "x86 / ARM / RISC-V 机器指令层：在性能关键路径（memcpy、加密、SIMD kernel、JIT 出口）和调试 core dump、读 perf annotate 时必须读懂的最终形态。在 AI infra 里，它出现在 CPU 端 tokenizer、音频 DSP、embedding lookup 以及 BLAS 微内核（OpenBLAS、MKL、BLIS）这些编译器输出不够用的地方。",
     "concepts": [
       "calling convention",
       "SIMD (AVX / NEON)",
@@ -1046,11 +1965,26 @@
       "AVX-512 频率降档的代价大概多少？什么时候不该用？",
       "看 perf annotate 时怎么把热点指令对回 C 源码？",
       "RISC-V vector extension 跟 x86 SIMD 的设计哲学差异？",
-      "为什么 syscall 要走特定寄存器约定？"
+      "为什么 syscall 要走特定寄存器约定？",
+      "BLIS / OpenBLAS 的 micro-kernel 怎么手写 AVX-512 / NEON 内层循环？编译器为什么追不上？",
+      "AMX（Intel 高级矩阵扩展）相比 AVX-512 在 CPU 端 INT8 推理上多了什么？",
+      "怎么用 perf top + perf annotate 定位带坏 cache 行为的热点 load？",
+      "x86 上 LOCK 前缀指令的作用？怎么映射成 ARM 上的 LL/SC？",
+      "SysV AMD64 calling convention 跟 Windows x64 差在哪？这对 FFI 意味着什么？",
+      "编译器在 vmovaps 跟 vmovups 之间怎么决策？张量分配器又给了什么对齐保证？",
+      "现代 Intel/AMD 上 branch mispredict、cache miss、SIMD pipeline stall 的代价模型大致怎样？",
+      "ARM SVE 跟 NEON 差在哪？变长设计为什么对编译器自动向量化是噩梦？",
+      "汇编层怎么处理 thread-local storage（x86 的 FS/GS、ARM 的 TPIDR）？",
+      "为什么 memcpy 在最新 CPU 上仍然受益于手写汇编（rep movsb、ERMS、FSRM）？",
+      "AVX-512 状态在 context switch 时跟 xsave / xrstor 怎么交互？",
+      "逆向分析二进制 kernel 的标准工具有哪些——objdump -d、radare2、Ghidra、llvm-mca？",
+      "llvm-mca 怎么建模 pipeline 吞吐？跟实测结果在哪些地方会偏？",
+      "为什么手写汇编越来越是维护负担？sleef / highway 这类项目怎么把 ISA 抽象掉？",
+      "今天的现实标准：高级 infra 工程师需要流畅读多少行 x86 / ARM 汇编？流畅写多少行？"
     ]
   },
   "pytorch": {
-    "blurb": "Meta 主导的深度学习框架：动态计算图 + autograd + ATen / c10 C++ 张量后端 + CUDA 内核。从 nanoGPT 到 Megatron / vLLM 整个 LLM 栈都跑在它上面。",
+    "blurb": "Meta 主导的深度学习框架：动态计算图 + autograd + ATen / c10 C++ 张量后端 + CUDA kernel，外面套一层 Pythonic API。PyTorch 2 加上 torch.compile（Dynamo 抓帧 → AOT autograd → TorchInductor → Triton codegen），把图模式性能带回 eager 工作流。从 nanoGPT、Megatron、vLLM 到 HF Transformers 整个 LLM 栈都跑在它上面，也是所有加速器（cuBLAS、cuDNN、ROCm、MPS、XLA via PJRT）的事实接入点。",
     "concepts": [
       "Autograd",
       "ATen / c10",
@@ -1063,11 +1997,26 @@
       "torch.compile + TorchInductor 怎么用 Triton 做 codegen？",
       "DDP 跟 FSDP 在通信调度和显存上的核心差异？",
       "TorchScript / FX / Dynamo 各自捕获计算图的方式？",
-      "为什么 PyTorch 在大规模训练逐渐用 cuDNN 直接 fallback 到 cuBLASLt？"
+      "为什么 PyTorch 在大规模训练逐渐用 cuDNN 直接 fallback 到 cuBLASLt？",
+      "走一遍 Dynamo 的 Python frame 抓取：动态控制流怎么处理而不 fallback？",
+      "什么是 graph break？哪些 break 会吃掉 torch.compile 的加速比？怎么排查？",
+      "AOT Autograd 怎么把 forward / backward 拆开编译？recompute 的旋钮在哪？",
+      "FSDP2（per-parameter sharding）跟 FSDP1（flat-param）在 comm-compute overlap 上变了什么？",
+      "FSDP 的 mixed precision（param dtype vs reduce dtype）怎么避开 bf16 grad 精度坑？",
+      "PyTorch CUDA caching allocator 为什么碎片？什么时候要上 expandable_segments？",
+      "走一遍 autograd 的 tape：saved-tensors-hooks 怎么实现 activation offload / recompute？",
+      "torch.distributed 的 ProcessGroupNCCL 跟原生 NCCL 差在哪？这层 wrapper 加了什么？",
+      "torch.compile 第一 batch warmup 10-60s——cache 命中靠什么？",
+      "torch.compile 才出现的静默 NaN——是 Inductor pattern-match bug 还是混精度回归？",
+      "PyTorch 的 tensor subclass 怎么让 DTensor / FP8 tensor 不 fork 主框架？",
+      "为什么新 C++ functional API 注册自定义 op 替代 torch.autograd.Function？",
+      "torch.export 跟 torch.compile 怎么区分？什么时候发哪一个？",
+      "DDP 在 find_unused_parameters=True 才出死锁，怎么排？",
+      "为什么 PyTorch 2.x 越来越像 JAX（functorch、vmap、grad-of-grad）？是收敛还是巧合？"
     ]
   },
   "jax": {
-    "blurb": "Google 的函数式数值计算库：纯函数 + JIT + vmap / pmap，几乎所有运算最后被编译成 XLA HLO 落到 GPU/TPU。Gemini / Flax / EasyLM 等大模型项目的事实底座。",
+    "blurb": "Google 的函数式数值计算库：纯函数 + jit / grad / vmap / pmap 可组合变换，几乎所有运算最后被编译成 XLA HLO 落到 GPU/TPU/CPU。shard_map（以及更早的 pjit / xmap）把 SPMD 切分显式化，所以 TPU 上的大规模训练（Gemini、Pathways、AlphaFold）几乎全在 JAX 上。代价是函数式纪律（不能原地修改、PyTree 无处不在）——也是几乎没有生产推理引擎以 JAX 为目标的原因。",
     "concepts": [
       "pure functions",
       "JIT / XLA",
@@ -1080,11 +2029,26 @@
       "vmap 与 pmap 在自动并行化上的层级关系？",
       "PyTree + tracing 跟 PyTorch 的 dynamo 谁更彻底？",
       "JAX 怎么在 TPU 上实现 SPMD？shard_map / xmap 演进背后是什么？",
-      "为什么大型推理引擎几乎不用 JAX？"
+      "为什么大型推理引擎几乎不用 JAX？",
+      "走一遍 tracing：jax.jit 怎么用 abstract Tracer 把 Python 函数变 HLO 图？",
+      "jax.numpy.dynamic_slice 的 shape polymorphism 仍会触发重编译风暴，怎么调？",
+      "grad 套 grad 是纯源变换还是又一层 trace？",
+      "pjit 的 GSPMD partitioner 怎么按 sharding spec 决定 all-gather vs all-reduce？",
+      "为什么后续 shard_map 取代 xmap？它把哪些手动控制还给了用户？",
+      "Flax 的 nnx（state-as-pytree）怎么把 JAX 的纯函数核心和 PyTorch 风格的可变性桥起来？",
+      "TPU v5p slice 上单次 jax.jit 重编译多贵？persistent compilation cache 怎么用？",
+      "JAX 怎么把 RNG key 显式化？这怎么让分布式采样确定性？",
+      "为什么 TPU 偏 JAX、H100 偏 PyTorch？是 XLA vs eager 还是编译器成熟度？",
+      "vmap 后的函数显存爆炸——是少写了 in_axes 还是隐式 broadcast？",
+      "Pallas（JAX 版 Triton）怎么打 TPU？跟 GPU 上的 Mosaic 什么关系？",
+      "JAX 的 jax.checkpoint 比 PyTorch 的更好推理——代价是什么？",
+      "JAX 在 GPU 上接 NCCL，在 TPU 上接 ICI——同一套 SPMD 抽象、不同 transport 怎么实现？",
+      "PyTorch 和 JAX 同模型实现数值不一致，怎么排？",
+      "JAX 的纯函数对 RL / 在线训练反而是坑——Anakin 这类项目怎么绕？"
     ]
   },
   "xla": {
-    "blurb": "Google 的 ML 编译器：把高层 HLO IR 进一步 lower 到 GPU/TPU/CPU 后端，做算子融合、layout 选择、分布式 SPMD partition。JAX / TF / PyTorch (PJRT) 共用的后端。",
+    "blurb": "Google 的 ML 编译器：把高层 HLO IR 进一步 lower 到 GPU/TPU/CPU 后端，做算子融合、layout 选择、buffer 分配、SPMD 分区。JAX / TF / PyTorch 通过 PJRT 共用的编译后端，是前端框架与 TPU 硅之间的通用语。OpenXLA 计划在把生态收敛到 StableHLO 这个可移植模型交换格式上。",
     "concepts": [
       "HLO",
       "operator fusion",
@@ -1096,11 +2060,27 @@
       "HLO 跟 MLIR 之间的关系？OpenXLA 后续怎么收敛到 StableHLO？",
       "GSPMD 自动 partition 在大模型 SPMD 训练里到底怎么用？",
       "XLA 在 Hopper / Blackwell 上跟 NVIDIA 自家栈（cuDNN / TensorRT）怎么共存？",
-      "PJRT runtime 抽象解决了哪些跨硬件的痛点？"
+      "PJRT runtime 抽象解决了哪些跨硬件的痛点？",
+      "XLA 的 fusion pass 怎么决定 producer-consumer 边界？什么情况下拒绝融合（比如 layout 不友好的 reduce）？",
+      "为什么 dynamic shape 支持一直是 XLA 相对 PyTorch eager 的弱项？",
+      "HLO 的 BufferAssignment 在做什么？跟 rematerialization 在显存吃紧的训练里怎么配合？",
+      "StableHLO 的版本稳定性跟内部 HLO 差在哪？这对序列化 SavedModel 意味着什么？",
+      "trace 一个 JAX 程序时，什么会触发 XLA 的 re-compile cache miss？怎么调试？",
+      "GSPMD 的 sharding 传播算法对未标注的算子怎么决策？跟用户写的 sharding_constraint 冲突时谁赢？",
+      "torch.compile（Inductor）vs JAX-XLA：在 H100 上的 LLM 训练当前各自赢在哪？",
+      "为什么大部分生产 LLM 推理引擎选择 cuDNN/TensorRT/Triton kernel，而不是 XLA 编译出来的 HLO？",
+      "XLA 怎么处理 collective（all-reduce / all-gather）——是在 HLO 层还是 runtime 层？跟 NCCL 怎么交互？",
+      "xla_dump_to 输出的 post-optimization HLO 怎么读？怎么定位 fusion 退化？",
+      "TPU 专用的 XLA（systolic array + HBM hierarchy）跟 GPU lowering pipeline 在哪些环节差很多？",
+      "XLA 的 layout assignment 用什么 cost model？为什么 NHWC vs NCHW 在 Ampere/Hopper 上仍然要区分？",
+      "XLA 怎么实现 scan / while 循环？为什么常常比 Python 端展开还慢？",
+      "PJRT 怎么把 device、runtime、compiler 解耦？新加速器接入需要实现哪些 plugin 契约？",
+      "为什么 Google 把 PyTorch/XLA 从 LazyTensor 切到 Dynamo + StableHLO？",
+      "万卡级 pod 上 XLA 的开放问题（sharding 传播开销、编译耗时、HLO 大小）有哪些？"
     ]
   },
   "mlir": {
-    "blurb": "LLVM 子项目：多层 IR + dialect + pattern rewrite 框架。Triton、TVM、torch-mlir、IREE、OpenXLA 都把它当作中间层标准，让算子 / 调度 / 硬件后端可以横向复用。",
+    "blurb": "LLVM 子项目：多层 IR + 一等公民的 dialect + pattern rewrite 框架 + 可复用的 PassManager。Triton、TVM Unity、torch-mlir、IREE、CIRCT、OpenXLA 都把它当作中间层标准，让算子定义 / 调度 / 硬件后端可以横向复用。它的赌注是 ML 编译需要多个共存的 IR，而不是一个万能 IR。",
     "concepts": [
       "dialect",
       "rewrite pattern",
@@ -1112,11 +2092,27 @@
       "MLIR 跟 LLVM IR 的核心差别？为什么 ML 编译需要多层 IR？",
       "linalg 跟 affine dialect 各自适合什么调度优化？",
       "为什么 Triton、TVM Unity、torch-mlir 都重新基于 MLIR 重构？",
-      "IREE 怎么用 MLIR 把模型直接编译到边缘硬件？"
+      "IREE 怎么用 MLIR 把模型直接编译到边缘硬件？",
+      "dialect conversion 框架（ConversionTarget、type converter）怎么处理从 tosa 一路 lower 到 llvm 的渐进式 lowering？",
+      "linalg.generic 跟 Halide 的 compute/schedule 比，哪些重叠哪些分叉？",
+      "affine.for 给多面体分析器的能力，scf.for 为什么给不了？",
+      "RewritePattern vs PDL 在表达力和编译期开销上的差异？",
+      "lower 一个 matmul 的典型路径：linalg.matmul -> vector -> gpu -> nvvm/rocdl，这条链上哪些环节最容易翻车？",
+      "为什么 StableHLO 被定义成一个 MLIR dialect，而不是独立 IR？",
+      "Triton 的编译器怎么复用 MLIR——它自己写哪些 dialect、消费哪些？",
+      "bufferization（one-shot-bufferize）怎么决定 allocation 落在哪？跟手写 memref 比取舍是什么？",
+      "attribute interface 跟 op interface 在让 dialect 跨硬件后端通用上扮演什么角色？",
+      "GPU dialect 怎么桥接 SPIR-V / NVVM / ROCDL？为什么每个后端要分别存在？",
+      "为什么很多基于 MLIR 的栈都被 dynamic shape 卡住？shape dialect 想解决什么？",
+      "pass 调度（嵌套 pipeline、op-walk vs region-walk）在百万 op 的 LLM 计算图上对编译耗时影响多大？",
+      "MLIR 的 pattern rewrite 跟 LLVM 的 InstCombine 比，多层 rewrite 解锁了什么新抽象？",
+      "工程实践上，MLIR 是稳定 ABI（StableHLO）还是编译器内部工具箱（大部分 dialect）？",
+      "CIRCT（用 MLIR 做硬件设计）跟 ML 栈复用同一套基础设施，这件事说明了 MLIR 的通用性到什么程度？",
+      "MLIR 当前的开放抱怨——dialect 碎片化、迭代慢、缺乏统一的调度故事——分别有多严重？"
     ]
   },
   "tvm": {
-    "blurb": "面向异构硬件的开源 ML 编译器：Relay / Relax 高层 IR + tensor IR + schedule + auto-tuning。是 ML 编译器领域的学术标杆，主要竞品是 XLA、TensorRT、IREE。",
+    "blurb": "面向异构硬件的开源 ML 编译器：Relay / Relax 高层图 IR + TensorIR 内核级调度 + AutoTVM / Ansor / MetaSchedule 自动调优。是 ML 编译器领域的学术标杆，主要竞品是 XLA、TensorRT、IREE。Unity 把图编译和算子编译合并成单一 multi-stage pipeline；BYOC 把厂商库（cuDNN、TensorRT）作为 fallback kernel 接入。",
     "concepts": [
       "Relay / Relax",
       "TensorIR",
@@ -1128,11 +2124,27 @@
       "TVM 的 schedule 跟 Halide 的同名概念差异？",
       "Ansor / MetaSchedule 自动调度的搜索空间怎么剪枝？",
       "BYOC 接 cuDNN / TensorRT 的工程模式？",
-      "Unity 之后 TVM 怎么演进 multi-stage compilation？"
+      "Unity 之后 TVM 怎么演进 multi-stage compilation？",
+      "TIR（TensorIR）的 block / iter_var / decompose_reduction 这类 primitive 跟 Halide stage 比强在哪？",
+      "为什么 Relay 被 Relax 取代？Relay 在 dynamic shape 和控制流上踩了哪些坑？",
+      "TVM 的 auto-tuning cost model（XGBoost、GFLOPs 预测）跟 Ansor 的 task-graph 搜索比怎么样？",
+      "TVM 的 RPC tracker 怎么支持 ARM / RISC-V SoC 上的 on-device tuning？",
+      "TVM vs XLA：TVM 在边缘 / 移动端推理什么时候赢？XLA 在 TPU/GPU 训练什么时候赢？",
+      "TVM 通过 BYOC 还是原生 codegen 接 NPU（Hexagon、Apple Neural Engine、各家 DSA）？",
+      "为什么 TVM 在学术上领先但在头部云厂里产品落地不如预期？",
+      "TVM 怎么处理量化（INT8、INT4）——在 Relay 层还是 TIR 内部？",
+      "MetaSchedule 跟 AutoTVM 在跨 stage 调度决策的搜索上差在哪？",
+      "te（tensor expression）层比直接写 TIR 多给了什么？",
+      "Unity 怎么把图层 pass 和算子层 pass 合并，从而做跨算子边界的端到端融合？",
+      "TVM 的 tuned kernel 数据库在 CI/CD 里有哪些缓存和复现性的坑？",
+      "为什么很多用户在 FlashAttention 这类 kernel 上仍然手写 CUDA / Triton，而不信任自动调出来的 TIR？",
+      "TVM 怎么跟 PyTorch 集成（torch.compile backend、torch.fx -> Relax）？",
+      "MLIR 跟 TVM Unity 的关系是竞争、互补还是收敛？",
+      "TVM 当前最大的开放问题：调优时间、动态 shape 还是厂商后端的反复换血？"
     ]
   },
   "hf-transformers": {
-    "blurb": "Hugging Face 的开源模型库：抹平了几乎所有 transformer 架构的 API、tokenizer、生成与训练循环。对 NLP / 多模态社区相当于 PyTorch 之上的事实标准上层。",
+    "blurb": "Hugging Face 的开源模型库（Hub 上 30 万+ 模型，GitHub 约 13 万 star）：抹平了几乎所有 transformer 架构的 API、tokenizer、生成与训练循环。对 NLP / 多模态社区相当于 PyTorch 之上的事实标准上层；safetensors 替代 pickle 成为标准权重格式，Tokenizers（Rust）是标准 tokenization 运行时。",
     "concepts": [
       "AutoModel",
       "tokenizers",
@@ -1145,11 +2157,26 @@
       "generate() 内部 sampling / beam / speculative 都是怎么组织的？",
       "Hugging Face Hub 的 safetensors 解决了哪些 pickle 的安全问题？",
       "Tokenizers 库为什么用 Rust 重写？性能差距在哪？",
-      "为什么大公司更倾向自研而不是直接用 Trainer？"
+      "为什么大公司更倾向自研而不是直接用 Trainer？",
+      "走一遍 modeling_*.py 的 'one file per architecture' 设计哲学。为什么宁可重复代码也不抽象？",
+      "AutoModel.from_pretrained 怎么处理 sharded checkpoint + safetensors lazy load + device_map='auto'？",
+      "70B fine-tune 时对比 Trainer / Accelerate / torchtitan——什么时候 Trainer 不够用？",
+      "PEFT 怎么集成进 Transformers？inject_adapter_in_model 在 module 层实际做了什么？",
+      "generate() 调用 cache_implementation='static' vs 'dynamic'——哪条进 torch.compile？为什么？",
+      "把 Mamba / RWKV（非 attention）集成进 Transformers 时哪些抽象被打破？",
+      "HF tokenizers 的 BPE 跟 sentencepiece 的 BPE 有什么区别？速度和 OOV 处理上各赢在哪？",
+      "为什么 chat template（tokenizer_config.json 里的 Jinja）反复成为生产 bug 源？",
+      "Transformers 怎么在单一 attention API 后面分发 FlashAttention-2 / SDPA？",
+      "HF 量化（bitsandbytes、AWQ、GPTQ via transformers）的 kernel 分发故事是什么？",
+      "Trainer 的 gradient_accumulation + DeepSpeed 集成——loss scaling 错误这种 silent bug 容易藏在哪？",
+      "Transformers 怎么支持多模态模型（LLaVA、Qwen-VL）？processor 抽象是什么？",
+      "HF 为什么废弃老 Trainer（TFTrainer、FlaxTrainer）？组织今天对多框架支持的态度是什么？",
+      "实操：自微调 Llama 用 HF text-generation-inference vs vLLM 服务——真实决策树是什么？",
+      "开放问题：随着推理引擎（vLLM、SGLang）成为 serving 默认，Transformers 是否会回缩到研究 / 训练角色？"
     ]
   },
   "ray": {
-    "blurb": "UC Berkeley 出来的分布式 Python 框架：actor + task model 让你像写单机一样写多机。Ray Train / Tune / Serve / RLlib 形成完整 AI 栈，vLLM、OpenAI 大量训练 / 推理基础设施跑在上面。",
+    "blurb": "UC Berkeley 出来的分布式 Python 框架：actor + task model 让你像写单机一样写多机，Plasma object store 用共享内存 + 零拷贝序列化避开 pickle 开销。Ray Train / Tune / Serve / RLlib 形成完整 AI 栈——vLLM 拿它做 tensor-parallel 编排，OpenAI 大量训练基础设施跑在上面，Anyscale 的 Ray Data 是 AI 流式预处理对标 Spark 的方案。",
     "concepts": [
       "Actor / Task",
       "Object Store",
@@ -1162,11 +2189,26 @@
       "object store 用 plasma + 共享内存怎么避免序列化开销？",
       "Ray Train + DeepSpeed / DDP 的协作方式？",
       "为什么 vLLM 选择 Ray 而不是 K8s 原生？",
-      "Ray cluster autoscaling 跟 K8s HPA 的取舍？"
+      "Ray cluster autoscaling 跟 K8s HPA 的取舍？",
+      "走一遍 Ray task 起一个：global control store（GCS）干什么？为什么是 SPOF？",
+      "Plasma 对 NumPy / Arrow buffer 怎么零拷贝？什么时候 fallback 到 pickle？",
+      "tensor-parallel 任务必须 NVLink 同机——placement group（STRICT_SPREAD vs PACK）为什么关键？",
+      "Ray 的 owner-based reference counting 跟集中式 GC 差别？给了什么容错？",
+      "AI 预处理 Ray Data 什么时候打败 Spark？异构 CPU+GPU 流水线的论点是什么？",
+      "RLlib 的 actor pool 并行 rollout：怎么处理 inference + training 同卡？",
+      "vLLM 的 Ray TP 把每个 worker 当独立 actor 起，再走 NCCL 同步——这怎么实现？",
+      "Ray Serve 的 deployment graph 怎么组合模型 / 业务逻辑？哪里不如 Triton？",
+      "actor 中途死了，max_restarts 跟 NCCL 状态怎么互动？",
+      "autoscaling 怎么跟 K8s 协作？KubeRay operator 模式 vs 裸 VM 上的 Ray？",
+      "为什么 GCS 在 actor 数 >10k 时是瓶颈？GCS HA 重设计变了什么？",
+      "Ray on Slurm 跟 Ray on K8s 在网络、调度、隔离上各有什么差别？",
+      "object store 溢盘后任务慢 10x——object_store_memory 怎么定？",
+      "Ray + DeepSpeed 怎么分工（Ray 编排、DS 跑 ZeRO）？哪里冲突？",
+      "Ray 什么时候是杀鸡用牛刀（单机训练）？什么时候又不够（跨区域 serving）？"
     ]
   },
   "llama": {
-    "blurb": "Meta 的开源 LLM 系列：Llama 2/3 把 RoPE、GQA、SwiGLU、RMSNorm 这套现代 decoder-only 模板做成事实标准。开源生态（QLoRA、vLLM、llama.cpp）几乎全部围绕它构建。",
+    "blurb": "Meta 的开源 LLM 系列：Llama 2/3 把 RoPE、GQA、SwiGLU、RMSNorm、no-bias 这套现代 decoder-only 模板做成事实标准；Llama 3 405B 在 15T tokens 上训练（~37 tokens/param，远超 Chinchilla）。开源生态（QLoRA、vLLM、llama.cpp、Ollama）几乎全部围绕它构建；Llama 4 把原生 MoE（Scout / Maverick）引入这条线。",
     "concepts": [
       "RoPE",
       "GQA",
@@ -1176,14 +2218,29 @@
     ],
     "questions": [
       "RoPE 相比绝对位置编码 / ALiBi 在长上下文外推上的优势？",
-      "GQA / MQA 相比 MHA 在推理 KV cache 上的省的是什么？",
+      "GQA / MQA 相比 MHA 在推理 KV cache 上省了什么？以 70B、8K 上下文走一遍显存账。",
       "Llama 2 → 3 在数据 / tokenizer / context length 上的关键变化？",
       "为什么社区围绕 Llama 而不是 Mistral 形成主流生态？",
-      "Llama 3 的 405B 参数选择背后的 scaling law 计算？"
+      "Llama 3 选 405B 在 15T tokens 上的 scaling-law 数学——为什么故意训过 Chinchilla-optimal？",
+      "为什么用 SwiGLU 而不是普通 GeLU？gating 在哪里真的有用（参数 vs 准确率 vs 吞吐）？",
+      "RMSNorm vs LayerNorm——精度 / 速度论证是什么？质量上有代价吗？",
+      "Llama 3 tokenizer 从 32K 跳到 128K vocab，对 perplexity、延迟、embedding 显存有什么下游影响？",
+      "YaRN / NTK-aware RoPE scaling 怎么把 Llama 上下文从 8K 后续扩到 128K？极端比例下什么先崩？",
+      "Q,K,V,O 为什么都不带 bias？大规模下 bias 没用的实证依据是什么？",
+      "Llama 3 在 16K H100s 上的训练栈——论文实际用的并行组合（DP/TP/PP/CP）是什么？",
+      "Llama 3 RLHF 用 DPO + rejection sampling 而不是 PPO，工程动机是什么？",
+      "对比 Llama 3 70B、Mistral-Large、Qwen2-72B 的架构选择——哪里发散？",
+      "Llama 4 转 MoE。recipe 变了什么？为什么是现在？",
+      "Llama 的 license（Llama 3 community license）对创业公司服务基础设施选择有什么影响？",
+      "Llama 是事实上的 fine-tune 基座。哪些预训练数据偏置经常会泄进下游 LoRA？",
+      "为什么 Llama 3 8B 相对其规模异常强？蒸馏？数据质量？过训练？",
+      "量化 Llama 变体（llama.cpp 的 Q4_K_M）在数学 / 代码 vs 自由生成上各保多少质量？",
+      "实操：客户聊天产品选 Llama-3-70B vs Llama-3.1-405B——成本 / 延迟的真实维度有哪些？",
+      "开放问题：Llama recipe 是否已经饱和，还是会有架构变化（Mamba hybrid、MoE、MLA）盖过它？"
     ]
   },
   "gan": {
-    "blurb": "Goodfellow 2014：生成器与判别器的 minimax 博弈把生成模型推到隐式分布建模时代。BigGAN / StyleGAN 时代主导高保真图像生成，直到被扩散模型部分取代。",
+    "blurb": "Goodfellow et al 2014：生成器 vs 判别器的 minimax 博弈把生成模型推到隐式分布建模时代。BigGAN / StyleGAN 在 2021 之前主导高保真图像生成，之后被扩散大幅取代；但 GAN 仍以 fast sampler（StyleGAN-T、GigaGAN）、VQ-GAN tokenizer 解码器以及扩散蒸馏 pipeline 中的判别器形式存活。",
     "concepts": [
       "minimax 博弈",
       "Mode Collapse",
@@ -1192,15 +2249,30 @@
       "Spectral Norm"
     ],
     "questions": [
-      "GAN 的 minimax 跟 RLHF 里的 reward / policy 博弈结构很像，可类比吗？",
+      "GAN 的 minimax 跟 RLHF 里的 reward / policy 博弈结构很像——这个类比能贯穿到底，还是只在表面上像？",
       "Mode collapse 的根本原因？WGAN / WGAN-GP 怎么缓解？",
-      "StyleGAN 的 latent 空间为什么如此可解耦？",
-      "为什么扩散模型在大数据下逐渐取代 GAN？训练稳定性是核心吗？",
-      "GAN 跟 EBM、normalizing flow 的关系？"
+      "StyleGAN 的 latent 空间为什么如此可解耦？跟 VAE posterior 结构什么关系？",
+      "为什么扩散模型在大数据下逐渐取代 GAN——是训练稳定性，还是数据覆盖？",
+      "GAN 跟 EBM、normalizing flow 的关系——什么场景下哪个表述更胜？",
+      "原始 GAN 在 support 不重叠时 JS divergence 为什么病态？Wasserstein 怎么修？",
+      "Spectral normalization 在数学上强制了什么？为什么能稳定 discriminator？",
+      "FID 为什么是有缺陷却仍然标准的指标？它跟人类评分在哪里分歧？",
+      "VQ-GAN 怎么把 GAN decoder 跟 VAE 离散瓶颈结合？为什么这是 image LLM 的标准 tokenizer？",
+      "GigaGAN 显示 GAN 是否真的能 scale 到 billion-param、billion-image 区间？",
+      "为什么 super-resolution 和一步图像蒸馏里 GAN 仍然胜过扩散？",
+      "Discriminator regularization 跟 generator 的 bias-variance trade-off 怎么交互？",
+      "GAN 训练跟 adversarial example robustness 的联系——同一个 minimax，目标不同？",
+      "Conditional GAN 在大规模下为什么需要 projection discriminator 而不是 concat conditioning？",
+      "如何 debug 一个 generator loss 在降但样本质量在变差的 GAN？",
+      "StyleGAN 的 truncation trick 对 latent prior 做了什么？为什么提升感官质量但降低多样性？",
+      "扩散模型最后 1 步 refine 能否换成 GAN？consistency distillation 实质是不是在做这件事？",
+      "GAN 为什么很难用 held-out likelihood 评估？正确替代是什么？",
+      "在文本-图像对上训练 GAN 漂向高频类别——是 mode collapse、数据集偏置还是 discriminator overfit？",
+      "Adversarial 框架是不是根本受限？2026 重做 GAN（DiT backbone、flow matching critic 等现代 trick）能否再竞争？"
     ]
   },
   "vae": {
-    "blurb": "Kingma & Welling 2013：把 autoencoder 拓展到概率框架，用 ELBO（重构 + KL）做变分推断。是扩散模型 score matching 的祖先；VQ-VAE 又奠定了现代多模态 token 化基础。",
+    "blurb": "Kingma & Welling 2013：把 autoencoder 拓展到概率框架，用 ELBO（重构 + KL）做变分推断，配合 reparameterization trick。是扩散模型 score matching 视角的直接祖先；VQ-VAE-2 及其后继成了 DALL·E、Parti 和绝大多数现代图像/音频/视频 LLM 背后的标准离散 tokenizer。",
     "concepts": [
       "ELBO",
       "Reparameterization",
@@ -1211,13 +2283,28 @@
     "questions": [
       "ELBO 推导里 KL 项跟重构项的权衡如何控制 latent 表达力？",
       "Reparameterization trick 解决了什么梯度问题？",
-      "Posterior collapse 在 VAE-LM 上为什么严重？怎么缓解？",
-      "VQ-VAE 怎么离散化连续 latent？跟 SimVLM / Parti 的 tokenizer 关系？",
-      "VAE 跟扩散模型在 score matching 视角下的统一？"
+      "Posterior collapse 在 VAE-LM 上为什么严重？free-bits / KL annealing / β-VAE 怎么缓解？",
+      "VQ-VAE 怎么离散化连续 latent？跟 SimVLM / Parti / MagViT tokenizer 的关系？",
+      "VAE 跟扩散模型在 score matching 视角下的统一——桥在哪？",
+      "VQ-VAE 的 straight-through estimator 既不可或缺又出奇地稳定，为什么？没有 commitment loss 会怎样？",
+      "Stable Diffusion 那个 KL-regularized autoencoder 跟普通 VAE 差别在哪？为什么 8× 下采样对算力意义重大？",
+      "β > 1 对 disentanglement 主张做了什么（β-VAE）？为什么这些主张被质疑？",
+      "VAE 样本糊而 GAN 样本锐——likelihood vs adversarial 框架告诉你什么？",
+      "如何为 1M 个视频片段的视频 LLM 设计离散 tokenizer——VQ-VAE vs FSQ vs LFQ vs MagViT2？",
+      "VQ-VAE 的 codebook collapse 失败模式？codebook reset / FSQ 怎么避免？",
+      "Hierarchical VAE（NVAE、VDVAE）为什么把跟扩散的差距追平大半？为什么我们却用得不多？",
+      "VAE prior 选择（standard normal vs autoregressive vs flow）如何改变下游样本质量？",
+      "高分辨率图像里像素空间 reconstruction loss 为什么是糟糕目标？perceptual loss 修了什么？",
+      "为多模态 LLM tokenize 音频时，EnCodec / SoundStream 从 VQ-VAE 借了什么？",
+      "VAE 的 amortized inference 跟现代扩散的 noise-conditioned encoder 是什么关系？",
+      "Posterior collapse 跟强自回归 decoder 的相互作用很差——信息论角度怎么解释？",
+      "FSQ tokenizer 能否在前沿多模态规模上完全替代 VQ-VAE？",
+      "如何独立于下游 LM 来 benchmark 一个 tokenizer 的好坏？",
+      "VAE 的 likelihood 是诚实的密度模型，还是 ELBO bound 太松、本质只是个正则？"
     ]
   },
   "clip": {
-    "blurb": "OpenAI 2021：用图文对的对比学习把视觉 encoder 跟文本 encoder 拉到同一个嵌入空间。打开了 zero-shot 视觉分类、扩散模型条件控制、多模态检索的整套范式。",
+    "blurb": "OpenAI 2021：用 4 亿图文对的对比学习把视觉 encoder 跟文本 encoder 拉到同一嵌入空间。打开了 zero-shot 视觉分类，成为 Stable Diffusion v1/v2 默认的文本条件器，并孕育了整个 VLM 时代——后继 OpenCLIP、SigLIP、EVA-CLIP、DFN 仍是大多数多模态检索、RAG 和生成系统的锚点。",
     "concepts": [
       "对比学习",
       "InfoNCE",
@@ -1227,14 +2314,29 @@
     ],
     "questions": [
       "InfoNCE 为什么比 triplet loss 更容易 scale？",
-      "CLIP 的 zero-shot prompt 设计为什么影响那么大？",
-      "Stable Diffusion 用 CLIP text encoder 做条件输入是怎么对齐的？",
-      "OpenCLIP / SigLIP 在 InfoNCE 数学上做了什么改进？",
-      "CLIP 的 vision encoder 跟纯监督 ViT 学到的特征差异？"
+      "CLIP 的 zero-shot prompt 设计（\"a photo of a [class]\"）为什么影响那么大？这告诉你它的表示是什么样的？",
+      "Stable Diffusion v1 用 CLIP text encoder 做条件输入是怎么对齐的？为什么 SD3 改用 T5 + CLIP-L + CLIP-G？",
+      "OpenCLIP / SigLIP 在 InfoNCE 数学上做了什么改进？sigmoid loss 为什么允许小得多的 batch size？",
+      "CLIP 的 vision encoder 跟纯监督 ViT 学到的特征差异？下游任务上各赢在哪？",
+      "Temperature τ 为什么关键？调错时检索质量会怎么变？",
+      "CLIP 的 batch size 实际充当 negative pool——gather-across-GPU、momentum queue 等 trick 怎么把算力跟 negative 数量解耦？",
+      "CLIP 在细粒度任务（计数、空间推理、OCR）上失败——是数据、loss 还是 encoder 的问题？",
+      "DFN（data filtering network）如何说明数据筛选比 loss / 架构对 CLIP-style 模型更重要？",
+      "用 CLIP embedding 做图像 RAG 时，会在上面接什么 reranker？为什么？",
+      "Linear-probe vs zero-shot 的 gap 告诉你 CLIP 是\"会编码\"还是\"会对齐\"？",
+      "CLIP embedding 在 cross-modal 检索好用但 dense retrieval 差——几何上的故事是什么？",
+      "如何对比预训练一个 code-text encoder 用于 code search？相比 CLIP 配方要改什么？",
+      "Modality gap（图像和文本 embedding 落在不同 cone 上）意味着什么？SigLIP / cone alignment 怎么修？",
+      "为什么冻结 CLIP 只训 projector（LLaVA、BLIP-2）效果如此好？哪里会崩？",
+      "CLIP 选 ViT-L/14 vs ResNet-50 作 backbone，对接到扩散条件器后下游 FID 如何变？",
+      "在数十亿 QPS 下 serving CLIP encoder 的延迟/质量旋钮——量化、蒸馏还是 hash-compressed index？",
+      "CLIP 在 negation（\"a photo without a dog\"）上灾难性失败——这告诉对比目标什么？",
+      "EVA-CLIP / DINOv2 hybrid pretraining 相比纯 CLIP 改进了什么？对未来视觉 encoder 提示什么？",
+      "CLIP-style 对齐是否 plateau？还是离下一次跃迁只差一个 tokenizer / loss 的修改？"
     ]
   },
   "mamba": {
-    "blurb": "Gu & Dao 2023：选择性状态空间模型 + 硬件友好 scan 算法。给 Transformer 提供了序列复杂度从 O(N²) 降到 O(N) 的可行替代，催生 Hybrid SSM / Attention 架构。",
+    "blurb": "Gu & Dao 2023：选择性状态空间模型 + 硬件感知的并行 scan kernel。把序列复杂度从 O(N²) 降到 O(N) 并匹配中小规模 Transformer 质量，催生 Jamba、Zamba、Samba 等 hybrid 架构。在前沿规模仍是少数派，但是迄今最有可能挑战 attention 的架构——也是长上下文系统设计的一个 forcing function。",
     "concepts": [
       "SSM",
       "Selective scan",
@@ -1243,15 +2345,30 @@
       "Hybrid arch"
     ],
     "questions": [
-      "selective SSM 相比 S4 增加了什么？为什么这是 Mamba 性能突破点？",
-      "selective scan kernel 的硬件友好实现要点（SRAM, blocked scan）？",
-      "Mamba 在长上下文 / 推理上相比 Transformer 的真实优势在哪？",
-      "为什么主流大模型还在选 Transformer 而不是 SSM？",
-      "Hybrid Mamba + Attention（Jamba / Zamba）能否成为下一代默认架构？"
+      "Selective SSM 相比 S4 增加了什么？为什么这是 Mamba 性能突破点？",
+      "Selective scan kernel 的硬件友好实现要点（SRAM tiling、blocked scan、recompute）？",
+      "Mamba 在长上下文 / 推理上相比 Transformer 的真实优势在哪——是 FLOPs、memory，还是两者？",
+      "为什么 2026 主流大模型仍在选 Transformer 而不是 SSM？",
+      "Hybrid Mamba + Attention（Jamba / Zamba / Samba）能否成为下一代默认架构？",
+      "状态空间视角相比同一 recurrence 的 RNN 视角多带来了什么？HiPPO 真的是 load-bearing，还是只是初始化？",
+      "Mamba 在 copy / retrieval 任务上输给 Transformer——每 N 个 Mamba 层夹一个 attention 层为什么能修？",
+      "Mamba-2 的 structured matrix 视角（SSD）如何把 attention 跟 SSM 统一为同一种 matrix mixer？",
+      "Mamba 推理对应的 KV cache 是什么？为什么不论上下文多长都是常数 per token？",
+      "FlashAttention 的 bandwidth-bound 论证为什么不能直接迁移到 selective scan？类似的瓶颈在哪？",
+      "如何为 Mamba 模型做 speculative decoding——recurrent state 让它更简单还是更复杂？",
+      "在同一 FLOP 预算下，Mamba 训练 loss 曲线相比 Transformer 长什么样？哪里相交？",
+      "Mamba 的 context extension（RoPE 风格）怎么做？有没有 YaRN 等价物？",
+      "长上下文吞吐是 Mamba 在生产 serving 上最大的卖点——1M token 时美元/token 是多少量级？",
+      "在 20 万行代码库上，Mamba code LLM 跟 Transformer 比效果如何？瓶颈在哪？",
+      "Mamba 跟 linear attention / RetNet / RWKV 是同一族还是真不一样？",
+      "Mamba 的实证 scaling law 在前沿规模略差于 Transformer——这是 fundamental 还是 under-tuning？",
+      "MoE 跟 Mamba 怎么组合——没有 quadratic mixing 的情况下 expert routing per token 还有意义吗？",
+      "在流式推理（实时翻译等）服务里部署 Mamba，相比 Transformer KV cache 出现什么优势？",
+      "Mamba 的胜利是不是依赖特定硬件（H100 SRAM 大小）？换到 Blackwell / TPUv6 上会怎么变？"
     ]
   },
   "speculative-decoding": {
-    "blurb": "Leviathan 2022：用一个小 draft 模型先猜 K 个 token，目标大模型并行 verify。在不损失输出分布的前提下把吞吐提高 2-3×，是现代 LLM 推理优化的标配。",
+    "blurb": "Leviathan & Chen 2022：用一个小 draft 模型先猜 K 个 token，目标大模型并行 verify，配合 rejection sampling 严格保留目标分布。在 memory-bound 的 decode 阶段把吞吐提高 2-3× 而输出分布不变。Tree-based 变体（SpecInfer、EAGLE-2/3、Medusa）进一步提升接受率，是 vLLM、TRT-LLM、SGLang 的标配。",
     "concepts": [
       "Draft Model",
       "Verification",
@@ -1260,15 +2377,30 @@
       "Medusa"
     ],
     "questions": [
-      "speculative sampling 的 acceptance 概率推导为什么严格保留原分布？",
-      "树状 / 多分支 speculation（SpecInfer / EAGLE / Medusa）对接受率的提升？",
-      "draft model 怎么选？要跟 target 同 family 吗？",
+      "speculative sampling 的 acceptance 概率推导为什么严格保留目标分布？",
+      "树状 / 多分支 speculation（SpecInfer / EAGLE / Medusa）相比 linear speculation 接受率提升多少？",
+      "draft model 怎么选？要跟 target 同 family 吗？tokenizer 不一致怎么办？",
       "speculation 在 batched serving 下跟 continuous batching 怎么调度？",
-      "在 long context 时 speculation 收益曲线为什么变差？"
+      "在 long context 时 speculation 收益曲线为什么变差？",
+      "逐 token 走一遍 rejection sampling。残差分布 (p − αq)+ 为什么严格正确？",
+      "对比 Medusa 的并行 decoding heads 与单独 draft model——延迟 vs 准确率上各赢在何时？",
+      "EAGLE / EAGLE-2 用 feature-level speculation。预测下一个 hidden state 为什么比预测下一个 token 更好？",
+      "接受率随 K（lookahead 长度）怎么变？为什么有最优值而不是 'K 越大越好'？",
+      "speculative decoding 是 memory-bound 的胜利：高 batch size 下 draft overhead 什么时候反而拖慢？",
+      "speculation 怎么跟量化推理配合（W4A16 target + fp16 draft）？",
+      "怎么衡量 'effective speedup' ——是 tokens/sec 还是 batched 负载下的 wall-time-to-completion？",
+      "Lookahead decoding（Jacobi 迭代）vs speculative：能组合还是替代关系？",
+      "为什么 MoE target 跟小 dense draft 配不好？DeepSeek 的 MTP 怎么修？",
+      "什么时候 self-speculative decoding（同模型 skip-layer drafting）比独立 draft 更优？",
+      "speculation 跟 KV cache 复用、prefix caching 怎么交互？",
+      "Failure mode：draft 过于自信 / 分布错位——在请求层面怎么表现？",
+      "怎么在工具调用 / 结构化输出工作负载上做 speculation？grammar-constrained decoding 会不会破坏？",
+      "实操：在 vLLM 部署 EAGLE-2——tree depth、branching、draft batch 这些旋钮哪些真的重要？",
+      "开放问题：什么时候训练时就内置 speculation heads（MTP）的 target 模型会完全替代 bolted-on speculation？"
     ]
   },
   "continuous-batching": {
-    "blurb": "Orca 2022 提出的 iteration-level scheduling：把不同序列拼到同一个 batch 里逐步前进，再配合 KV Cache + PagedAttention 把 LLM serving 的吞吐和延迟同时拉到工业可用。",
+    "blurb": "Orca 2022 提出的 iteration-level scheduling：把不同序列拼到同一个 batch 里逐步前进，再配合 KV Cache + PagedAttention（vLLM 相比 HF generate 提高 ~24× 吞吐）把 LLM serving 的吞吐和延迟同时拉到工业可用。已是 vLLM、TGI、TensorRT-LLM、SGLang 的默认；前沿已经转向 disaggregated prefill/decode（DistServe、Mooncake）和 chunked prefill。",
     "concepts": [
       "Iteration-level batching",
       "KV Cache",
@@ -1280,12 +2412,27 @@
       "为什么 static batching 在 LLM serving 完全不可行？",
       "PagedAttention 用页表抽象 KV cache 解决了什么外部碎片问题？",
       "prefill 跟 decode 阶段在算子和带宽特征上的差异？",
-      "chunked prefill 跟 disaggregated serving (DistServe) 怎么进一步优化？",
-      "speculative decoding 跟 continuous batching 在调度上有冲突吗？"
+      "chunked prefill 跟 disaggregated serving（DistServe、Mooncake）怎么进一步优化？",
+      "speculative decoding 跟 continuous batching 在调度上有冲突吗？",
+      "走一遍 vLLM scheduler 的一次迭代——新请求怎么 admit、怎么 preempt、怎么 swap？",
+      "长 prefill 阻塞 decode batch 时吞吐 vs TTFT 怎么取舍？chunked prefill 怎么解？",
+      "PagedAttention block size 选 16 个 token 是为什么？4 或 64 会怎样？",
+      "Prefix caching 怎么叠在 PagedAttention 之上？hash-key 策略是什么？",
+      "对比 vLLM、SGLang、TRT-LLM 的 scheduler 设计——哪个为哪种 workload 优化？",
+      "continuous batching 跟结构化输出 / grammar-constrained decoding 怎么交互？",
+      "Disaggregated prefill/decode：KV cache 在哪里转移？怎么藏带宽成本？",
+      "工作负载混合 50% RAG（长 prefill）+ 50% chat（长 decode）——单池还是分池？",
+      "为什么 decode 是 memory-bandwidth bound 而 prefill 是 compute-bound？这对硬件选型意味着什么？",
+      "speculative decoding + continuous batching：scheduler 怎么追踪每请求变长的推进？",
+      "Failure mode：突发负载下 KV cache OOM——vLLM 用什么 eviction / preemption 策略？",
+      "continuous batching 怎么跟 LoRA multiplexing（multi-LoRA inference）配合？",
+      "MoE serving 时变了什么——PagedAttention 需要在页表里追踪 per-expert routing 吗？",
+      "实操：70B Llama 8K 上下文，权重 / KV cache / 激活 显存预算的合理比例是多少？",
+      "开放问题：上下文增长到 1M+ token 时 page-table 抽象会不会崩，需要做层级化（DRAM/NVMe）KV 吗？"
     ]
   },
   "reinforcement-learning": {
-    "blurb": "马尔可夫决策过程 + 策略 / 价值学习：从 TD learning 到 Policy Gradient 到 PPO。AlphaGo、ChatGPT RLHF、机器人控制几乎所有自主决策系统都建立在这套数学之上。",
+    "blurb": "马尔可夫决策过程 + 策略 / 价值学习：从 TD learning 到 Policy Gradient 到 PPO。AlphaGo、AlphaZero、机器人控制以及现在 LLM post-training 的 RLHF / RLAIF / GRPO 都建立在这套数学之上——并且 reasoning model（o1、R1、o3）已经把 RL 推为下一阶段能力增长的核心训练范式。",
     "concepts": [
       "MDP",
       "Bellman 方程",
@@ -1296,13 +2443,28 @@
     "questions": [
       "Policy gradient 跟监督学习在样本效率上差几个数量级？为什么？",
       "PPO 的 clip 在 trust-region 视角下相当于怎样的近似？",
-      "RLHF 里 reward model + PPO 跟 offline RL（DPO）的取舍？",
+      "RLHF 里 reward model + PPO 跟 offline RL（DPO / IPO / KTO）的取舍？",
       "AlphaZero 自博弈跟 LLM RLHF 的相似与差异？",
-      "为什么 LLM RLHF 现在普遍只跑很短的 PPO？"
+      "为什么 LLM RLHF 现在普遍只跑很短的 PPO？",
+      "GRPO（DeepSeek）如何丢掉 value model？为什么这个算力胜出对 reasoning 训练至关重要？",
+      "RLHF 里的 reward hacking 是什么？哪些缓解手段（KL 到 ref model、reward model ensembling）真的 work？",
+      "为什么 reward model 自身才是 RLHF 的脆弱环节？Constitutional AI / RLAIF 怎么 scale 这一环？",
+      "走一遍 Q-network 的 Bellman 回填——为什么没有 target network / replay 时 off-policy bootstrapping 不稳？",
+      "PPO 的 advantage estimation（GAE λ）怎么 trade bias for variance？这对噪声 LLM reward 意味着什么？",
+      "为什么 process supervision（PRM）在数学 reasoning 上压过 outcome supervision（ORM）？",
+      "Test-time RL（o1 风格）跟 training-time RL 区别在哪——是真 RL 还是只是在 chain-of-thought 上做 MCTS 风格搜索？",
+      "对一个跑工具链上百万条轨迹的 LLM agent，exploration-exploitation 长什么样？",
+      "对 raw token logprob 做朴素 RL 会塌缩成 mode-degenerate——什么阻止它（KL、length norm、reward shaping）？",
+      "如何用生产 agent 日志搭一条 offline RL pipeline？distribution shift 怎么处理？",
+      "在 1 万 token 的 chain-of-thought 上做 credit assignment 真的难——什么 proxy（per-step PRM、MC rollout）能救？",
+      "Policy gradient 的 likelihood-ratio estimator 跟 importance sampling 是什么关系？哪里会爆？",
+      "Multi-turn / multi-agent RL 的 reward design 相比单轮 RLHF 要怎么改？",
+      "DPO 为什么变成廉价 alignment 的默认选择？什么场景下你还真的需要 PPO？",
+      "RL 是基础能力杠杆还是预训练 base 之上的 polish 层——o3 / R1 时代提示什么？"
     ]
   },
   "mapreduce": {
-    "blurb": "Dean & Ghemawat 2004：把大规模数据处理抽象成 map + shuffle + reduce 三阶段，自动容错与并行。直接催生了 Hadoop 时代和后来的 Spark / Flink，是现代分布式计算的祖先。",
+    "blurb": "Dean & Ghemawat OSDI 2004：把大规模数据处理抽象成 map + shuffle + reduce 三阶段，通过重跑 task 自动容错并保证数据本地性。直接催生了 Hadoop 时代和后来的 Spark / Flink，是现代分布式计算的祖先。这个模型在训练数据 ETL（大并行扫描 + group-by）里仍然存活，但磁盘物化的 shuffle 和缺乏 DAG 组合是 2026 年没人再写裸 MR 的理由。",
     "concepts": [
       "Map / Reduce",
       "Shuffle",
@@ -1315,11 +2477,26 @@
       "为什么 shuffle 是 MapReduce 的性能瓶颈？sort-based 设计动机？",
       "推测执行（speculative task）解决了哪种 straggler？",
       "MapReduce 的局限性是什么？为什么 DAG 引擎能取代？",
-      "今天还有哪些场景适合纯 MapReduce 而不是 Spark / Flink？"
+      "今天还有哪些场景适合纯 MapReduce 而不是 Spark / Flink？",
+      "为什么原始 MR 论文坚持把中间结果写到本地磁盘而不是流式传？",
+      "combiner 放置怎么改变 shuffle 体积？为什么不总是安全（结合律问题）？",
+      "数据本地性（rack-aware 调度）跟 S3 这种存算分离的云怎么交互？",
+      "为什么 MR 倾斜会拖死 ML 特征 join？Spark 的 salted-key 怎么修？",
+      "推测执行跟非幂等 map 函数（比如调外部 API）怎么交互？",
+      "1 万节点 MR 集群里 master 单点意味着什么？YARN 怎么改？",
+      "为什么迭代式 ML（k-means、梯度下降）很差地匹配裸 MR——每轮都重读 HDFS？",
+      "MR 的 shuffle 跟 Spark external shuffle service 在架构上怎么比？",
+      "为什么 Tez / Spark / Flink 在同一个 Hadoop 集群上赢了——DAG 压缩还是内存缓存？",
+      "Hadoop Streaming 在你想在 MR 里塞 Python / 原生 ML 库时定位是什么？",
+      "MR 里怎么表达 secondary sort 模式？为什么比 Spark 的 repartitionAndSortWithinPartitions 难看？",
+      "为什么 Bloom-join 在大事实表 / 小维表的 ML 训练 join 里仍是有用的 MR 优化？",
+      "MR 的 task 级重试跟 HDFS 副本怎么交互？整个机架挂了会怎样？",
+      "为什么 MR 在大厂的遗留训练数据抽取任务里还很常见——纯惯性还是真合适？",
+      "今天要落一个 MR 风格的 job，你会用 Spark、Flink batch 还是 Trino？为什么？"
     ]
   },
   "gfs": {
-    "blurb": "Ghemawat et al 2003：为大规模数据分析设计的容错分布式文件系统：append-heavy、chunk replication、master 元数据。HDFS、Colossus 是它的直接后裔，对象存储语义也借鉴了它。",
+    "blurb": "Ghemawat et al SOSP 2003：为大规模数据分析设计的容错分布式文件系统：append-heavy、64MB chunk + 3 副本、单 master 持有元数据。HDFS、Colossus 是它的直接后裔；S3 / GCS 对象存储借鉴了 chunk + metadata 拆分但用最终一致的扁平命名空间换掉了 master。现代 lakehouse 本质上是用 Iceberg/Delta catalog 在 S3 上重新发明 GFS 的元数据语义。",
     "concepts": [
       "Master / Chunkserver",
       "Chunk Replication",
@@ -1332,11 +2509,26 @@
       "为什么 GFS 是 append-optimized 而不是随机写优化？",
       "GFS 的一致性模型为什么是松散的？record append 怎么处理？",
       "S3 / 对象存储跟 GFS 在元数据 / 一致性 / 网络模型上的本质差异？",
-      "现代 lakehouse 上为什么还要在对象存储之上加事务层（Iceberg/Delta/Hudi）？"
+      "现代 lakehouse 上为什么还要在对象存储之上加事务层（Iceberg/Delta/Hudi）？",
+      "为什么是 64MB chunk？这个数字在 master 内存 vs 元数据 RPC 上怎么取舍？",
+      "primary lease 机制怎么给同一 chunk 内的并发写定序？",
+      "为什么 record append 是 at-least-once？Bigtable / Iceberg 怎么处理由此产生的重复？",
+      "HDFS 的 NameNode federation 怎么对应到 Colossus 的 sharded master 设计？",
+      "为什么 HDFS 的小文件问题本质上就是 GFS master 内存压力问题？",
+      "S3 强一致读后写（2020 之后）怎么改变 GFS 论文的设计空间？",
+      "对象存储 list-after-write 延迟为什么会毁掉幼稚的 Iceberg snapshot 提交？",
+      "GFS 的 rack-aware 副本怎么映射到现代云的可用区放置？",
+      "为什么训练数据摄入（TFRecord / Parquet 分片）仍然想要 GFS 风格的 append 语义？",
+      "Tectonic（Meta 的 GFS 后继）怎么用 ZippyDB 分片元数据？跟 Colossus 的 BigTable 风格怎么比？",
+      "为什么 GFS 的读时校验和在 PB 级 ML 数据集的静默盘损坏问题上仍然相关？",
+      "S3 multipart upload 怎么近似 GFS atomic record append？在哪里崩？",
+      "为什么 POSIX 语义对分析负载是主动有害的？GFS 抛弃它换来什么？",
+      "Iceberg manifest 树本质上怎么用元数据文件重新实现一个 GFS 风格的 master？",
+      "如果今天为 100PB 的 embedding lake 设计存储，你会选 HDFS、S3+Iceberg 还是 Tectonic 风格？为什么？"
     ]
   },
   "bigtable": {
-    "blurb": "Google 2006：基于 GFS 的列族稀疏 KV 表，行键有序、SSTable + memtable 写入路径。HBase、Cassandra、TiKV、ScyllaDB 都是它的精神后裔，LSM-tree 时代的奠基论文。",
+    "blurb": "Chang et al OSDI 2006：基于 GFS 的列族稀疏 KV 表，行键有序、SSTable + memtable LSM 写入路径，Chubby 管 tablet 位置。HBase、Cassandra、TiKV、ScyllaDB、RocksDB 都是它的精神后裔，是 LSM-tree 时代的奠基论文。在线 feature store（Bigtable 上的 Feast、Vertex AI matching engine）仍然依赖它的有序行扫描模型做低延迟特征查表。",
     "concepts": [
       "LSM-tree",
       "SSTable / memtable",
@@ -1349,11 +2541,26 @@
       "tablet split / merge 跟 TiKV region 的概念怎么对应？",
       "稀疏列族在宽表 / 时序数据场景的取舍？",
       "Bigtable 的一致性是行内强一致、跨行无保证，这种取舍今天还成立吗？",
-      "Spanner 跟 Bigtable 的演进关系？为什么需要外部一致性？"
+      "Spanner 跟 Bigtable 的演进关系？为什么需要外部一致性？",
+      "为什么 row key 设计（比如反转时间戳）是 Bigtable 性能最关键的单一杠杆？",
+      "Bigtable 的 compaction 策略（minor / merging / major）怎么在 write amp vs read amp 上取舍？",
+      "为什么 Bigtable 在单调键下会热点？Spanner 的 interleaving 怎么修？",
+      "Chubby 锁服务怎么跟 tablet 分配交互？Chubby 挂了会怎样？",
+      "为什么 SSTable 上的 Bloom filter 对稀疏列读这么关键？",
+      "Bigtable 怎么作为 feature store 喂 Google 的 ML 训练管道？",
+      "Bigtable vs Cassandra 的取舍——leaderless quorum vs 单 master tablet？",
+      "为什么 range scan 延迟对 embedding lookup 是个问题？行键前缀设计怎么帮？",
+      "Bigtable 怎么 GC 旧版本？为什么 GC 策略是 feature store 关心的？",
+      "为什么 HBase 的 region server 仍然是按 region 单线程？这是可修的设计吗？",
+      "Bigtable 副本（最终一致）跟 Spanner 的 Paxos group 怎么比？",
+      "为什么时序负载（监控指标、在线推理日志）这么自然地匹配 Bigtable？",
+      "ScyllaDB 的 shard-per-core 架构怎么在尾延迟上赢过 Bigtable？",
+      "怎么在 p99=2ms 上服务 10 亿行的在线特征查表——Bigtable、ScyllaDB 还是 Redis？",
+      "为什么大部分现代 embedding 存储仍然抄 Bigtable 的有序行 + 列族布局而不是发明新 schema？"
     ]
   },
   "dynamo": {
-    "blurb": "Amazon 2007：去中心化 KV，一致性哈希 + vector clock + 可调 NRW + sloppy quorum。CAP 框架下 AP 路线的代表，启发了 Cassandra / DynamoDB / Riak 整代 NoSQL。",
+    "blurb": "DeCandia 等 SOSP 2007：Amazon 的去中心化 KV，环上一致性哈希 + vector clock 解决兄弟版本 + 可调 N/R/W quorum + sloppy quorum 与 hinted handoff 提升写可用性。CAP 框架下 AP 路线的旗舰，启发了 Cassandra / DynamoDB / Riak / Voldemort 整代 NoSQL，至今仍是 ML 平台 embedding store、高写入率用户状态的参考设计。",
     "concepts": [
       "一致性哈希",
       "Vector Clock",
@@ -1366,11 +2573,26 @@
       "vector clock 在客户端可见，为什么后来被普遍替换为 LWW + HLC？",
       "sloppy quorum + hinted handoff 实际能保证什么样的一致性边界？",
       "DynamoDB 怎么在 Dynamo 论文之上加事务和强一致读？",
-      "对比 Cassandra / Riak / Voldemort，工业上为什么 Cassandra 胜出？"
+      "对比 Cassandra / Riak / Voldemort，工业上为什么 Cassandra 胜出？",
+      "走一遍 N=3, R=2, W=2 的写：哪些组合给出 monotonic read，哪些不？",
+      "为什么 sloppy quorum 严格上违反 quorum intersection？anti-entropy 怎么把它补回来？",
+      "用于 anti-entropy 的 Merkle 树：构建成本、运行频率、它检测不到什么？",
+      "Vector clock 是 O(replicas) 的，对扩到上千节点的集群意味着什么？",
+      "Hinted handoff：hint 保留多久？原 owner 永远不回来时的 failure mode 是什么？",
+      "Read repair / anti-entropy / hinted handoff 各自修复哪类 staleness？代价分别是什么？",
+      "怎么用 Dynamo 风格存储做 1000 亿向量的 embedding store 后端？你实际能给什么一致性保证？",
+      "基于物理时钟的 LWW 在 embedding store 里会怎么咬人？基于 HLC 的修法是什么？",
+      "对比 DynamoDB 强一致读跟 Cassandra LOCAL_QUORUM——运维上各自到底意味着什么？",
+      "Dynamo 系常把冲突解决推给应用，这对 feature store 设计会怎么演化？",
+      "一致性哈希环上的热点（比如某个爆款用户）：Cassandra / DynamoDB 的标准缓解手段是什么？",
+      "ML 推理 pipeline 写埋点时，最终一致性怎么跟幂等重试相互影响？",
+      "Dynamo 风格集群为什么偏好 gossip 成员管理而非 coordinator？failure detector 模型是什么？",
+      "怎么设计 Dynamo-backed 用户特征表，让跨区 ML serving p99 < 50ms？",
+      "为什么业界对纯 Dynamo 风格 AP 的热情部分让位给 serializable 系统去承接新型 ML 元数据负载？"
     ]
   },
   "cap-theorem": {
-    "blurb": "Brewer 猜想 + Gilbert-Lynch 证明：网络分区不可避免时，强一致与高可用只能二选一。现代分布式系统（Spanner / Cockroach / Dynamo / Cassandra）的设计取舍都从这里出发。",
+    "blurb": "Brewer 2000 PODC 猜想，Gilbert & Lynch 2002 给出证明：网络分区下，不可能同时拥有线性一致性和完全可用性。这是现代分布式数据库（Spanner / Cockroach / Dynamo / Cassandra）设计取舍的总框架，也是 ML 平台设计文档里 'consistency' 这个词在 CAP / ACID / BASE 之间频繁串味时最常踩的坑。",
     "concepts": [
       "一致性",
       "可用性",
@@ -1383,11 +2605,26 @@
       "PACELC 在无分区时的 latency-vs-consistency 取舍解决了 CAP 的哪些缺陷？",
       "Spanner 自称 CA，怎么在 CAP 框架内辩护？",
       "实际生产里我们说的 \"最终一致\" 通常是 BASE，离 CAP 的 A 多远？",
-      "为什么真正 P 只能容忍但不能消除？跟物理网络模型的关系？"
+      "为什么真正 P 只能容忍但不能消除？跟物理网络模型的关系？",
+      "走一遍 Gilbert-Lynch 的证明思路——网络模型里哪条假设让定理生效？",
+      "解释为什么实践中每场 CAP 辩论最后都会演化成 PACELC 辩论。",
+      "ML 团队说自己 feature store '最终一致' 时，他们应该公布的具体过期保证是什么？",
+      "用 CAP 评估单笔事务为什么是范畴错误？正确的分析单元是什么？",
+      "在选 AP embedding store vs CP 模型注册中心时，CAP 误用会怎么表现？各自容忍哪种 failure mode？",
+      "CAP 里的 availability 跟你 SRE 团队报的 SLO 风格 availability 区别在哪？",
+      "可调一致性（Cassandra LOCAL_QUORUM、EACH_QUORUM、ANY）：各自落在 CAP / PACELC 平面的哪里？",
+      "为什么分区检测本身就是个难题？这怎么复杂化 CAP 驱动的设计？",
+      "区域分区时只读副本继续服务在线推理流量，CAP 怎么解释？",
+      "怎么向 PM 解释为什么模型注册中心必须 CP，而请求日志可以 AP？",
+      "CAP 基本不谈 durability，是哪个概念在补这个空？",
+      "Harvest vs Yield（Fox & Brewer）：这种细化怎么帮你推理 ML pipeline 的部分结果？",
+      "基于 CRDT 的最终一致怎么改变协同 ML 标注工具的 AP 讨论？",
+      "PACELC 的 C / EL 区分对 LLM API 多区域 serving 的 SLA 有什么指导？",
+      "你在 ML 系统设计 review 里见过最常见的 'CAP 谬误' 是什么？怎么纠正？"
     ]
   },
   "consistent-hashing": {
-    "blurb": "Karger 1997：把节点和数据 key 映射到同一个圆环，节点变化只影响相邻区段。Memcached、Dynamo、Cassandra、Kafka partition、CDN routing 全靠它做最小化数据迁移。",
+    "blurb": "Karger 等 STOC 1997：把节点和数据 key 映射到同一个圆环，节点变化只重排约 K/N 个 key。memcached 分片、Dynamo / Cassandra、Kafka partition 放置、CDN routing 都靠它，现代 ML serving 栈里 embedding store 分片、有状态推理路由也越来越依赖。",
     "concepts": [
       "哈希环",
       "虚拟节点",
@@ -1400,11 +2637,26 @@
       "Jump Consistent Hash 跟传统环 hash 的实现 / 内存差异？",
       "Rendezvous (HRW) hash 在什么场景下比 ring hash 更合适？",
       "Cassandra 的 token range 怎么对应到 consistent hash？",
-      "consistent hash 跟分布式 hashtable（Chord/Kademlia）有什么关联？"
+      "consistent hash 跟分布式 hashtable（Chord/Kademlia）有什么关联？",
+      "走一遍 Karger 的原始构造：为什么期望负载是 O(K/N) 高概率？",
+      "Bounded loads 一致性哈希（Mirrokni 等）：cap factor 是什么？什么时候触发 rebalance？",
+      "Multi-probe consistent hashing 在内存与均衡度上怎么跟 vnode 对比？",
+      "怎么把万亿行 embedding store 分到 200 个节点上做带权一致性哈希？",
+      "一致性哈希里的热点 key（比如某个爆款 feature key）：标准缓解手段是什么？",
+      "一致性哈希怎么跟副本数互动？副本落在环上的哪里？为什么？",
+      "有状态 LLM 会话路由：为什么一致性哈希比 round-robin 更有用？它在哪里失效？",
+      "Maglev 哈希跟 ring hash 的差别？Google 为什么为 L4 LB 造了它？",
+      "Dynamo 集群从 100 节点扩到 200 节点时的数据迁移成本——从原理推一遍。",
+      "CDN 怎么用一致性哈希做缓存放置？同样思路在推理缓存局部性上长什么样？",
+      "Vnode 数量调优：太少 vs 太多——Cassandra-backed feature store 各自的 failure mode？",
+      "Rendezvous hash vs jump hash：哪个在异构节点容量下退化更优雅？",
+      "embedding 写流量不停时，怎么在线 reshard 一致性哈希环？",
+      "Kafka 的 partition 分配里一致性哈希扮演什么角色？为什么 Kafka 不用它做 partition-to-key 映射？",
+      "怎么观测和告警生产里的环不均衡？哪些指标真能抓到热分片？"
     ]
   },
   "lamport-clocks": {
-    "blurb": "Lamport 1978：在没有全局物理时钟的分布式系统里，用 happen-before 偏序定义事件顺序。后来扩展为 vector / hybrid logical clock，是 Spanner / Cockroach / 因果一致性系统的根基。",
+    "blurb": "Lamport 1978 CACM《Time, Clocks, and the Ordering of Events》：在没有全局物理时钟的异步分布式系统里，用 happen-before 偏序定义事件顺序。后来扩展为 vector clock（Fidge / Mattern）和 hybrid logical clock（Kulkarni 2014），是 Spanner、CockroachDB、因果一致性系统以及任何需要跨区可复现事件顺序的 ML pipeline 的时间根基。",
     "concepts": [
       "happen-before",
       "Vector Clock",
@@ -1417,11 +2669,26 @@
       "Vector Clock 跟 Version Vector 的差别？",
       "Hybrid Logical Clock 解决了什么纯逻辑时钟的痛点？",
       "因果一致性 / session consistency 在工程上比线性一致性便宜多少？",
-      "为什么 Spanner 选 TrueTime + 真实物理时钟而不是纯 HLC？"
+      "为什么 Spanner 选 TrueTime + 真实物理时钟而不是纯 HLC？",
+      "走一遍 happen-before 的定义——为什么是偏序而非全序？",
+      "Lamport 时间戳更新规则在收消息时怎么处理？把不等式推一遍。",
+      "Vector clock 比较：什么时候两个事件并发？代码里怎么检测？",
+      "HLC 的 invariant |HLC.l - PT| ≤ ε 给 CockroachDB 提供了纯逻辑时钟做不到的什么？",
+      "Vector clock 在数千副本下不实用，标准的逃生口是什么？",
+      "全球分布式 ML feature pipeline 的因果一致性：HLC 怎么帮你避免时间穿越读？",
+      "在线推荐场景的 session consistency 怎么对应到 read-your-writes？代价多少？",
+      "为什么单纯 wall-clock time 不足以给一笔 us-east 的写跟 eu-west 的读排序？",
+      "基于 HLC 的 snapshot isolation：read-uncertainty 窗口怎么界定？",
+      "怎么用 Lamport clock 给分布式 RL 训练做确定性 replay log？",
+      "Vector clock 修剪 / 压缩策略：什么时候安全？会丢失哪些因果信息？",
+      "NTP / PTP 给你什么？Spanner 的 TrueTime 在它之上加了什么？",
+      "基于 HLC 的系统怎么在异常导致 anomaly 之前检测到时钟偏差事件？",
+      "对比底层用 vector clock 的 CRDT vs OT 在协同 ML 标注应用里的取舍。",
+      "linearizability 跟 happen-before 的关系是什么？为什么前者严格更强？"
     ]
   },
   "two-phase-commit": {
-    "blurb": "经典分布式事务协议：协调者先 prepare 再 commit，保证原子性但承受 blocking 风险。Spanner、TiKV、CockroachDB 都基于 2PC 变种 + Paxos / Raft 复制实现可用的分布式事务。",
+    "blurb": "Jim Gray 1978 的经典分布式事务协议：协调者先 prepare 再 commit/abort，保证原子性但在 in-doubt 窗口内 coordinator 挂掉就 blocking。Spanner、TiKV 的 Percolator、CockroachDB 都把 2PC 变种和 Paxos / Raft 复制结合起来交付可用的分布式事务——是事务型 lakehouse 写入和原子模型注册中心 promote 的基础积木。",
     "concepts": [
       "prepare / commit",
       "Coordinator",
@@ -1434,11 +2701,26 @@
       "Spanner 的 2PC over Paxos 怎么避免 coordinator 单点？",
       "Percolator 模型用 client-side 2PC + Bigtable 做事务，性能瓶颈在哪？",
       "TiKV 的 async commit / 1PC 优化是怎么减一阶段的？",
-      "Saga 模式跟 2PC 在 microservice 场景下的取舍？"
+      "Saga 模式跟 2PC 在 microservice 场景下的取舍？",
+      "走一遍 in-doubt 状态：参与者究竟知道什么、不知道什么、必须等什么？",
+      "3PC 的非阻塞性质为什么只在带消息延迟上界的同步模型下才成立？",
+      "Percolator 怎么让 primary row 充当 coordinator？运维上能拿到什么？",
+      "在 2PC 之上做幂等重试为什么比看上去难？参与者需要什么状态机？",
+      "Spanner 的 2PC + commit-wait 组合 vs TiKV 的 async commit，谁的尾延迟更优？",
+      "Presumed-abort / presumed-commit 为什么是重要优化？各自什么时候安全？",
+      "怎么用 Kafka + Iceberg 之上的 2PC 实现事务型 lakehouse 的 exactly-once 流式写入？",
+      "2PC 的 blast radius 为什么随参与者数量增长？跨地域 ML 元数据上的标准缓解？",
+      "对比 2PC 跟共识复制状态机——什么时候你确实两个都需要？为什么？",
+      "ML pipeline（train → register → deploy）的 saga 补偿逻辑会隐藏哪些 failure mode、又会暴露哪些？",
+      "原子提交跟 feature 摄入 pipeline 的 exactly-once 语义怎么对应？",
+      "XA 里的 'heuristic resolution' 是什么？为什么是运维噩梦？",
+      "CockroachDB 的 Parallel Commits 怎么去掉显式 commit phase？什么 invariant 让它安全？",
+      "in-doubt 窗口里 coordinator log 丢失会出什么事？把 coordinator log 用 Paxos 复制怎么修？",
+      "设计多区域原子模型 promote 时，你在 2PC、共识 + 幂等 apply、saga 之间怎么选？依据什么？"
     ]
   },
   "ebpf": {
-    "blurb": "Linux 内核里的安全字节码 VM：在 syscall / tracing / 网络等 hook 点动态注入用户程序，verifier 静态保证安全。Cilium 数据面、bpftrace、katran、eBPF-based 可观测性都建立在它之上。",
+    "blurb": "Linux 内核里的安全 JIT 字节码 VM：在 syscall、tracing、网络等 hook 点动态注入用户程序，verifier 在加载前静态证明终止性、有界循环和访存安全。map 是内核态与用户态共享状态的核心，BTF + CO-RE 解决跨内核版本的可移植性噩梦。Cilium 数据面、bpftrace、katran、Pixie、Parca 以及大多数现代 eBPF-based 可观测性都建立在这之上——也正成为给 ML serving 的 GPU/CPU 争用做剖析的标准方式。",
     "concepts": [
       "BPF VM",
       "Verifier",
@@ -1448,14 +2730,29 @@
     ],
     "questions": [
       "verifier 怎么静态证明字节码会终止且访存安全？",
-      "BPF 的 maps 跟用户态共享内存为什么是核心？",
+      "BPF 的 maps 跟用户态共享内存为什么是核心抽象？",
       "XDP 跟 tc / netfilter 的位置和性能差距？",
       "BTF + CO-RE 解决了 eBPF 程序在不同内核版本的什么痛点？",
-      "为什么 Cilium 用 eBPF 比 iptables / kube-proxy 性能高得多？"
+      "为什么 Cilium 用 eBPF 比 iptables / kube-proxy 性能高得多？",
+      "走一遍 verifier 的寄存器状态跟踪——为什么会拒掉一些“看起来明显安全”的程序？",
+      "5.3+ 引入有界循环带来了什么变化？又会在哪里撞到指令计数上限？",
+      "kprobe vs fentry/fexit：BPF trampoline 给了什么？什么场景下没有 fentry？",
+      "uprobe 在热门 Python / libc 路径上为什么贵？什么时候 USDT 探针更合适？",
+      "怎么不掉头发地调试 verifier 抛出的 'unknown opcode' 或 'invalid mem access'？",
+      "tail call 是什么？33 次调用的限制怎么塑造程序结构（比如 Cilium 的策略链）？",
+      "AF_XDP socket 怎么绕开内核栈，又怎么仍然受益于 XDP redirect？",
+      "GPU / 加速器的 eBPF 剖析长什么样——nvbit、NVIDIA 的 eBPF 集成、PCIe 流量上的内核 hook？",
+      "为什么 per-CPU map 的设计对高吞吐计数器（100 GbE 网卡上的 per-flow 统计）很关键？",
+      "LSM BPF 怎么替代 AppArmor / SELinux 模块？威胁模型是什么？",
+      "CO-RE 实际编译成什么——基于 BTF 类型 ID 的重定位，加载时解析？",
+      "BPF_PROG_TYPE_SCHED_CLS 跟 SCHED_ACT 有什么区别？Cilium 各自用在哪里？",
+      "为什么 signed BPF + 默认禁用非特权 BPF 成了新生产基线？又会破坏什么？",
+      "怎么写一个 eBPF 程序，在不改应用的前提下，按训练 pod 测出 dataloader 的 page-cache miss 率？",
+      "eBPF 的硬限是什么——verifier 复杂度、map 大小、JIT 加固？什么时候它在告诉你“去写内核模块吧”？"
     ]
   },
   "arrow": {
-    "blurb": "跨语言列式内存格式 + 零拷贝传输标准：DuckDB / Spark / Polars / ClickHouse / pandas 2.0 都把它当作公共内存层。Flight 又把它扩展成跨进程 RPC 协议。",
+    "blurb": "跨语言列式内存格式 + 零拷贝传输标准：DuckDB / Spark / Polars / ClickHouse / pandas 2.0 都把它当作公共内存层。Validity bitmap + offset buffer + values buffer 三件套天生 SIMD 友好；Flight 把 Arrow 扩展成跨进程 gRPC 协议，ADBC 又把它做成 JDBC/ODBC 的替代——直接给客户端原生 batch。",
     "concepts": [
       "列式内存",
       "零拷贝",
@@ -1468,11 +2765,26 @@
       "Arrow Flight 比 ODBC/JDBC 在大数据场景快几倍？瓶颈在哪？",
       "ADBC 试图统一什么？跟 Flight SQL 的关系？",
       "DuckDB 怎么在 Arrow 上做零拷贝执行？",
-      "pandas 2.0 用 Arrow backend 解决了 NumPy 的哪些痛点？"
+      "pandas 2.0 用 Arrow backend 解决了 NumPy 的哪些痛点？",
+      "Arrow 的 validity bitmap + offset buffer 布局怎么做到 SIMD 友好？",
+      "用 Arrow IPC + mmap 把训练 shard 喂给 PyTorch，为什么比 pickle tensor 快？",
+      "Arrow dictionary-encoded 列在 hash join 时怎么避免实例化字符串？",
+      "用 Arrow 做 feature store 的传输格式时，剩下的拷贝成本花在哪？",
+      "Arrow Flight RPC 从 gRPC 那里继承了什么、又替换掉什么？为什么要造一个 DoGet/DoPut 而不是直接用 gRPC stream？",
+      "怎么用 Arrow Flight 把 100GB Parquet 表流给远端 trainer，两边都不 OOM？",
+      "Arrow IPC 文件 vs Feather v2 vs Parquet 做 embedding shard cache：冷读 TTFB 谁赢？",
+      "Polars / DataFusion 怎么在 Arrow record batch 上做谓词下推又不丢零拷贝？",
+      "Arrow compute kernel 在 TPC-H 风格 filter+agg 上比 Velox / DuckDB 还差在哪？",
+      "如果上游不强制 UTF-8 校验，把 Arrow 当公共内存格式会出什么问题？",
+      "Arrow C Data Interface 怎么让 Rust / Java / Python 共享 record batch 而不做序列化？",
+      "为什么 HuggingFace datasets / Ray Data 这些 AI 工具都把 Arrow 当通用语言？",
+      "Arrow 的可变长 list 类型 vs FixedSizeList 存定长 embedding 的取舍？",
+      "怎么排查 Arrow batch 因 Python 引用没释放导致的内存暴涨？",
+      "Arrow 什么时候不再合适：什么场景该上 FlatBuffers / Cap'n Proto 这种行式格式？"
     ]
   },
   "parquet": {
-    "blurb": "Twitter / Cloudera 起源的列式文件格式：行组 + 列块 + page，支持 dictionary / RLE / delta 编码。湖仓时代（Iceberg / Hudi / Delta Lake）的事实存储格式。",
+    "blurb": "Twitter / Cloudera 起源的列式文件格式：行组 + 列块 + page，支持 dictionary / RLE / delta / byte-stream-split 编码，加上 min/max/null-count 统计、Bloom filter、page index 做精细 skipping。湖仓时代（Iceberg / Hudi / Delta Lake）的事实存储格式，也是 Arrow 在磁盘上的孪生体。",
     "concepts": [
       "Row Group",
       "Column Chunk",
@@ -1485,11 +2797,26 @@
       "Dictionary + RLE 编码为什么对宽稀疏列特别有效？",
       "Predicate pushdown 在 Parquet 上能下推到哪一层？",
       "Parquet v2 → v3 在 logical type / Bloom filter / page index 上加了什么？",
-      "为什么湖仓格式都选 Parquet 而不是 Arrow IPC？"
+      "为什么湖仓格式都选 Parquet 而不是 Arrow IPC？",
+      "embedding 表每行 4 KB 时怎么定 row group 大小？为什么默认 128 MB 对点查很不友好？",
+      "Parquet schema 里列的顺序有什么实际影响？把 join key 放最前什么时候真的有用？",
+      "写前 sort 一下，能把 Parquet 的 min/max 统计从没用变成时间范围扫快 100 倍——为什么？",
+      "page index 这个扩展跟传统 row group 统计相比改变了哪一层 pushdown 能力？",
+      "什么情况下 dictionary encoding 会回退到 plain？回退后压缩率怎么崩？",
+      "S3 上 Parquet 用 SNAPPY / ZSTD / GZIP 怎么取舍？解压 CPU 什么时候卡住 Trino worker？",
+      "怎么把 ML 特征以 Parquet 存，让 Spark 训练和在线推理两边都读得高效？",
+      "为什么写多的 CDC 流不适合直接 Parquet？Hudi / Iceberg 是怎么糊上去的？",
+      "Parquet 的 schema 演化（加列 / 重命名 / 类型 widen）怎么做才不重写 PB 数据？",
+      "S3 上堆出无数小 Parquet 文件（<10 MB）会怎样？为什么 compaction 不是可选项？",
+      "Parquet 的嵌套类型（Struct / List / Map）怎么用来存分词后的文本，跟拍平成多列对比？",
+      "Bloom filter 为什么能帮到 min/max 帮不到的字符串等值查询？",
+      "delta-binary-packed 编码在单调递增 ID / 时间戳上怎么吊打 RLE？",
+      "用 Arrow 读 Parquet 时怎么避免把只用来过滤的列也物化出来？",
+      "Parquet 跟 Lance / Vortex 在向量 / 张量列上的差异？为什么会冒出 AI-native 格式？"
     ]
   },
   "hudi": {
-    "blurb": "Uber 起源的 lakehouse 表格式：原生支持 upsert / incremental query / record-level index。MoR / CoW 双表型适合不同写多读多场景，跟 Iceberg / Delta 同台竞争。",
+    "blurb": "Uber 起源的 lakehouse 表格式：原生支持 upsert / incremental query / record-level index。MoR（delta log 在读时合并）跟 CoW（整文件重写）双表型适合不同写多读多场景；timeline 文件用单调 instant 给 ACID 兜底，对手是 Iceberg snapshot / Delta log。",
     "concepts": [
       "Copy-on-Write",
       "Merge-on-Read",
@@ -1502,11 +2829,26 @@
       "Hudi 的 record-level index 比 Iceberg 的 manifest 索引快在哪？",
       "Hudi timeline 怎么实现 ACID 提交？跟 Iceberg snapshot 模型差异？",
       "增量 query (incremental pull) 在 CDC 管道里的工程价值？",
-      "Hudi vs Iceberg vs Delta：三者在大厂落地选型的真实差异？"
+      "Hudi vs Iceberg vs Delta：三者在大厂落地选型的真实差异？",
+      "Hudi 的 Bloom / HBase / Bucket / Record-level 索引到底怎么在写入前回答“这个 key 存在吗”？",
+      "MoR 一旦 compaction 跟不上就变成读侧税——inline vs async compaction 怎么调？",
+      "Hudi MoR 的小文件问题怎么破？clustering / file-sizing 起什么作用？",
+      "怎么用 Hudi 把 Kafka CDC 落到 feature store，给在线 ML 提供分钟级新鲜度？",
+      "Hudi DeltaStreamer vs Flink CDC vs Spark Structured Streaming 当 Hudi 表的写入端，怎么选？",
+      "Hudi 的 incremental pull 比下游 Spark 重扫 Parquet 分区便宜在哪？",
+      "同一负载下，Hudi MoR 的 MERGE INTO 跟 Delta Lake 的差距具体在哪？",
+      "Hudi 怎么处理 late-arriving 数据 / 乱序事件时间，又不破坏幂等？",
+      "precombine key 没设对，upsert 会出什么事故？",
+      "Hudi 的 metadata table（MDT）怎么减少 S3 LIST 成本？为什么 0.14+ 默认开了？",
+      "为什么 Hudi 长期跟 Spark 紧绑，而 Iceberg 是引擎中立的？历史原因是什么？",
+      "Hive ORC 表怎么迁到 Hudi MoR 又不做整库回灌？",
+      "Hudi 的 clustering 操作干嘛用？跟 compaction 区别在哪？",
+      "怎么排查一个 Hudi commit 卡在 inflight 拖死整个 timeline？",
+      "Hudi record-level index 什么时候反而成为负担（低选择度的批量写入）？"
     ]
   },
   "delta-lake": {
-    "blurb": "Databricks 出品的 lakehouse 表格式：基于 Parquet + JSON / checkpoint 事务日志实现 ACID、time travel、schema evolution。是 Spark 生态最自然的湖仓存储层。",
+    "blurb": "Databricks 出品的 lakehouse 表格式：Parquet 数据文件 + 顺序 JSON commit log + 周期 Parquet checkpoint，靠乐观并发实现 ACID，再叠加 time travel、schema evolution、Z-Order 多维聚簇、Liquid Clustering。Spark 生态最自然的湖仓存储层，UniForm 还能用同一份文件暴露 Iceberg / Hudi 元数据。",
     "concepts": [
       "Transaction Log",
       "Optimistic Concurrency",
@@ -1519,11 +2861,26 @@
       "Z-Order 跟 Hilbert curve 在多维数据 skipping 上的差异？",
       "Liquid Clustering 解决了 Z-Order 哪个痛点？",
       "Delta 在非 Spark 引擎（DuckDB / Trino）上读写为什么一直追不上 Iceberg？",
-      "Delta UniForm 想兼容 Iceberg 是真兼容还是宣传？"
+      "Delta UniForm 想兼容 Iceberg 是真兼容还是宣传？",
+      "Delta 的乐观并发怎么处理多 writer 抢同一文件？什么时候 abort、什么时候串行？",
+      "checkpoint 文件（默认每 10 个 commit）为什么对读延迟关键？让 log 涨到 10w 个 JSON 文件会怎样？",
+      "怎么用 Delta time travel 排查“昨天的 snapshot 训出来的模型跟今天的不一样”？",
+      "VACUUM 的成本模型是什么？为什么默认 7 天保留期不能轻易动（time travel 依赖）？",
+      "Liquid Clustering 的 ZCube 设计怎么避免 Z-ORDER OPTIMIZE 那种全量重写？",
+      "Delta 的 MERGE INTO 在宽表上为什么会爆出小文件？怎么调？",
+      "怎么把 feature 表存成 Delta，让 MLflow / 批训练 / 在线 serving 三边读到一致快照？",
+      "Delta + Spark Structured Streaming vs Hudi DeltaStreamer 当 CDC sink 怎么比？",
+      "deletion vector 相比重写 Parquet 加了什么？读侧代价是什么？",
+      "generated column + partition pruning 在 Delta 里怎么互动？什么情况会失效？",
+      "Delta 的事务日志放在 S3 上为什么是安全的（最终一致性下）？multi-cluster commit 协议要求什么？",
+      "GDPR 删除请求怎么便宜地处理而不重写 PB 级数据？",
+      "Delta 的 column mapping 模式跟 Iceberg 基于 column ID 的演化有什么区别？",
+      "AI feature store 选 Delta 还是 Iceberg？什么时候不选 Delta？",
+      "Delta Sharing 协议怎么在不暴露 S3 的情况下把表给外部读者？安全权衡是什么？"
     ]
   },
   "airflow": {
-    "blurb": "Airbnb 起源的批调度框架：DAG 即代码，Python operator + scheduler + executor 三件套。数据团队 ETL / ML pipeline 编排的工业事实标准；Prefect / Dagster 是后起对手。",
+    "blurb": "Airbnb 起源的批调度框架：DAG 即代码，Python operator + scheduler + executor + 元数据库（Postgres/MySQL）四件套。任务是持久化在 DB 里的状态机；Celery / K8s / Local executor 分发执行。数据团队 ETL / ML pipeline 编排的工业事实标准；Prefect / Dagster / Argo 是后起对手，资产 / 类型化数据抽象更强。",
     "concepts": [
       "DAG",
       "Operator",
@@ -1536,11 +2893,26 @@
       "Celery / Kubernetes / Local executor 的取舍？",
       "XCom 为什么不适合大数据传递？业内通常怎么绕？",
       "Airflow 跟 Dagster / Prefect 在数据资产抽象上的根本差异？",
-      "为什么 ML pipeline 现在更倾向 Argo / Kubeflow 而不是 Airflow？"
+      "为什么 ML pipeline 现在更倾向 Argo / Kubeflow 而不是 Airflow？",
+      "Airflow 2 的 HA scheduler 怎么并行 parsing 跟 scheduling？元数据库的天花板在哪？",
+      "动态任务 mapping + TaskFlow API 改变了 ML 特征作业怎么写？",
+      "用 Airflow vs Argo Workflows 编排日常 LLM 微调链路（数据准备 → 训练 → 评估 → 部署），怎么对比？",
+      "KubernetesPodOperator 解决了 Celery worker 解决不了的什么问题？什么时候反而是反模式（冷启动税）？",
+      "怎么排查一个 scheduler 心跳卡死、任务一直 queued 的 DAG？",
+      "每次 scheduler loop 都解析 5000 个 DAG 文件是真实生产问题——怎么缓解（DAG serialization、独立 dag-processor）？",
+      "Airflow 的 data-aware scheduling（Datasets）跟 Dagster software-defined assets 怎么比？",
+      "两个 task 之间传 10 GB 中间结果，正确姿势是 XCom、S3、还是自定义 XCom backend？",
+      "为什么 sensor 任务臭名昭著地把池子拖死？deferrable / async sensor 怎么救？",
+      "怎么回填某个分区又不重跑整个 DAG？",
+      "Airflow @daily cron vs 事件驱动触发器，做流式特征更新怎么取舍？",
+      "retry + 指数退避在非幂等 operator 里跟幂等性怎么互动？",
+      "把密钥放 Airflow Variable 在大规模下为什么会爆？Secrets Backend 怎么替？",
+      "怎么把 Airflow 接到 MLflow / Weights & Biases，又不让 DAG 知道每个 artifact？",
+      "Airflow 什么时候根本是错的工具：低延迟特征管道、实时推理编排等？"
     ]
   },
   "trino": {
-    "blurb": "Facebook Presto fork：MPP 内存执行引擎，能跨 Hive / Iceberg / Postgres / S3 一份 SQL 联邦查询。湖仓上 ad-hoc / BI 的工业首选，竞品有 Starburst / Spark SQL / DuckDB。",
+    "blurb": "Facebook Presto fork：MPP 内存执行引擎，靠可插拔 connector 框架跨 Hive / Iceberg / Postgres / Kafka / S3 一份 SQL 联邦查询。Pipeline execution + cost-based optimizer + exchange operator + 近期的 spill-to-disk / FTE 让它成湖仓 ad-hoc / BI 的工业首选；竞品 Starburst / Spark SQL / DuckDB / ClickHouse。",
     "concepts": [
       "MPP",
       "Connector",
@@ -1553,11 +2925,26 @@
       "connector 框架怎么把 Iceberg / Hive metastore 接进来？",
       "Trino 跟 Spark SQL 在 ad-hoc vs ETL 场景上的取舍？",
       "Aria / Velox 这些 native engine 怎么集成到 Trino？",
-      "为什么 ClickHouse / DuckDB 在 single-node OLAP 上能挑战 Trino？"
+      "为什么 ClickHouse / DuckDB 在 single-node OLAP 上能挑战 Trino？",
+      "Trino 的 exchange operator 怎么实现 shuffle？为什么比 Spark 那种落盘 shuffle 脆弱？",
+      "fault-tolerant execution（FTE / Tardigrade）买到了什么？延迟代价多大？",
+      "Trino CBO 什么时候失败（如 Iceberg 表缺统计信息）？怎么从 EXPLAIN ANALYZE 看出来？",
+      "怎么把 S3 上的 Iceberg 特征表 + Postgres 的维度表联邦起来给在线 ML 用？",
+      "动态过滤（dynamic filtering）对星型 join 有多关键？什么情况它不会触发？",
+      "Trino coordinator 怎么扩？为什么开了 HA 还是单点？",
+      "同一份 Parquet，Trino 用 Iceberg connector 跟 Hive connector 读，性能差在哪？",
+      "怎么让一个超大聚合 spill 到磁盘而不把 worker 拖崩？spill 还会在哪伤延迟？",
+      "Trino + Iceberg 做亚秒级 BI vs Druid / ClickHouse 同样负载，怎么取舍？",
+      "为什么超大查询要 spooled exchange / external shuffle？跟 Spark 比还差什么？",
+      "10 表 join 的 reorder 在 Trino vs Spark Catalyst 的 CBO 决策有什么差异？",
+      "怎么排查一个 worker 100% CPU 别人闲着的查询（数据倾斜）？",
+      "Trino 的 resource group manager 只能软隔离——怎么把 ad-hoc 用户跟 BI dashboard 真的隔开？",
+      "Trino 当 feature store 的 serving 层：缓存、物化视图，还是直接联邦查？",
+      "什么时候宁可上 Spark SQL（大状态、重试语义、ML UDF）？"
     ]
   },
   "kubernetes": {
-    "blurb": "Google Borg 的开源继承者：把容器编排抽象成 declarative API + control loop + etcd。云原生时代事实标准，所有 Service Mesh / GitOps / Operator 模式都建立在其 controller pattern 之上。",
+    "blurb": "Google Borg 的开源继承者：把容器编排抽象成 declarative API + control loop + etcd。控制面 = api-server + scheduler + controller-manager + etcd；节点面 = kubelet + CRI 运行时 + CNI / CSI 插件。云原生时代的事实标准——也越来越成为 GPU pod、device plugin、大批量训练 operator（Kubeflow、Volcano、Ray on K8s）的承载层，在那里 12 小时训练中途的 pod eviction 是一个真实的故障模式。",
     "concepts": [
       "Pod / Deployment",
       "Controller / Reconcile",
@@ -1570,11 +2957,26 @@
       "scheduler 的 predicate / priority 跟 Borg 的差异？",
       "etcd 在大规模集群（几万节点）下的瓶颈和缓解手段？",
       "kube-proxy / iptables 模式的性能极限，eBPF（Cilium）怎么取代？",
-      "Operator 模式跟 sidecarless service mesh 的演进趋势？"
+      "Operator 模式跟 sidecarless service mesh 的演进趋势？",
+      "走一遍 pod 创建：kubectl apply -> api-server -> etcd -> scheduler -> kubelet -> CRI -> CNI——每一步在哪里会挂？",
+      "CRI / CNI / CSI 几个插件点是怎么把 kubelet 跟运行时、网络、存储真正解耦的？",
+      "为什么 GPU 工作负载需要 device plugin + extended resource，而不是 CPU/内存的 request？",
+      "topology-aware scheduling 给 NUMA-pinned 训练 pod 带来了什么？哪里还不够完整？",
+      "scheduler framework（filter / score / reserve / permit / bind）怎么容纳分布式训练的 gang scheduling？",
+      "为什么 12 小时训练里 pod eviction 是真实风险？PriorityClass / PDB / toleration 怎么防御？",
+      "graceful node drain 实际做了什么？StatefulSet 跟 Deployment 在这上面又有什么不同？",
+      "HPA 怎么用自定义指标（GPU 利用率、队列深度）给推理扩缩？KEDA / Karpenter 又落在哪？",
+      "为什么 etcd 的 MVCC + lease + watch 模型在 controller 风暴 / CRD 抖动下成为瓶颈？",
+      "Job、CronJob、Indexed Job 在批量 ML 训练里的差别是什么？",
+      "admission webhook 和 ValidatingAdmissionPolicy（CEL）怎么把策略执行从 controller 路径上挪开？",
+      "api-server 上 “too many open watches” 的事故长什么样？怎么补救？",
+      "为什么单集群多租户 ML 这么难——namespace、quota、ResourceQuota、network policy、GPU 共享？",
+      "Kubeflow / Volcano / Ray-on-K8s 怎么为 AI 负载扩展调度器？又在哪互相打架？",
+      "推理 pod 被调度到错误 NUMA 节点导致延迟劣化时，系统化诊断路径——scheduler 日志、topology manager、CPU manager 静态策略？"
     ]
   },
   "docker": {
-    "blurb": "把 namespace + cgroup + overlayfs 包装成开发者友好的镜像 / 容器抽象。后来分裂出 OCI 规范、containerd / runc 标准化运行时，是云原生整个软件交付链条的入口。",
+    "blurb": "把 Linux namespace + cgroup + overlayfs / UnionFS 包装成开发者友好的镜像 / 容器抽象。后来干净地分裂出 OCI 镜像 / 运行时规范，containerd 作为 daemon、runc 作为底层运行时真正 clone() 进入新 namespace 集合。仍是云原生整个软件交付链条的入口——而镜像分层 + 仓库模型，正是今天每个 ML 训练镜像、CUDA base、推理服务被发布的方式。",
     "concepts": [
       "namespace",
       "cgroup",
@@ -1587,11 +2989,26 @@
       "namespace + cgroup 各负责什么？怎么协同实现隔离？",
       "OCI image format 解决了 Docker v1 image 的什么痛点？",
       "containerd / CRI-O / Docker shim 的关系？K8s 为什么弃用 dockershim？",
-      "rootless container / gVisor / Kata 在安全维度的取舍？"
+      "rootless container / gVisor / Kata 在安全维度的取舍？",
+      "走一遍 docker run：client -> dockerd -> containerd -> containerd-shim -> runc -> clone(CLONE_NEW*)——每一层加了什么？",
+      "overlayfs 的 lower / upper / merged 布局怎么真做 copy-on-write？又在哪里漏？",
+      "无节制的镜像层数怎么把 pull 和启动时延拖崩？squashing 或 eStargz 又怎么帮？",
+      "multi-stage Dockerfile 实际省下来的是什么？为什么巨大的 CUDA base 镜像还是 10 GB？",
+      "BuildKit 的内容寻址 cache + 远端 cache 怎么改写 ML 镜像的 CI/CD？",
+      "Docker vs Podman vs containerd CLI（nerdctl）：去掉 daemon 实际丢了什么？",
+      "GPU 容器支持（NVIDIA Container Toolkit、libnvidia-container）实际就是个自定义 OCI hook？故障模式是什么？",
+      "怎么避免镜像层 cache 膨胀——bind-mount cache、BuildKit --mount=type=cache、COPY / RUN 的顺序？",
+      "docker image squash 隐藏了你其实想知道的什么（层来源、license、漏洞扫描）？",
+      "为什么 :latest tag 在生产 ML serving 里有害？替代方案是什么（digest 钉版、不可变 tag）？",
+      "registry 的 manifest list（多架构）怎么处理跨架构推理里的 x86 + ARM + GPU 变体？",
+      "overlayfs 撞到 128 层内核上限时会怎样？为什么科学计算 Python 镜像最先中招？",
+      "seccomp + capabilities + AppArmor 一起怎么近似一个沙箱？Spectre 又在哪里仍然能穿过？",
+      "rootless Docker / Podman 为什么终于可用？subuid / subgid 映射又有什么代价？",
+      "docker pull 在 GPU 节点上莫名其妙变慢时，从哪里看——registry 限流、层去重、HTTP/2 多路复用，还是 overlayfs 的 fsync？"
     ]
   },
   "redis": {
-    "blurb": "Salvatore Sanfilippo 用 C 写的内存数据结构服务器：单线程 + IO 多路复用 + 多种数据结构 + AOF/RDB 持久化。缓存、分布式锁、消息队列、会话存储的事实标准。",
+    "blurb": "Salvatore Sanfilippo 用 C 写的内存数据结构服务器：单线程命令管道 + IO 多路复用 + 多种数据结构（hash / sorted set / stream / HLL）+ AOF / RDB 持久化 + RESP 协议。缓存、分布式锁、消息队列、会话存储的事实标准；Redis-VL 之后还在啃在线向量 / 特征 serving 这一块。",
     "concepts": [
       "单线程事件循环",
       "AOF / RDB",
@@ -1604,11 +3021,26 @@
       "AOF rewrite 跟 RDB snapshot 的耐久性 / 性能取舍？",
       "Redis Cluster 的 16384 slot 设计跟 consistent hash 比有什么取舍？",
       "Redis Streams 跟 Kafka 在轻量场景下的对比？",
-      "Redis 7 的 functions / RESP3 / multi-threaded IO 改了什么？"
+      "Redis 7 的 functions / RESP3 / multi-threaded IO 改了什么？",
+      "RESP 协议解析极简怎么把 pipelining 变成 10x 吞吐放大器？跟 HTTP/2 比的取舍？",
+      "为什么一条慢的 O(N) 命令（KEYS、对大 hash 的 HGETALL）能把整个事件循环打死？",
+      "Redis-VL / RediSearch HNSW 的 ANN 检索怎么实现？什么时候能跟 Milvus 这种专用向量库一战？",
+      "Redis 当在线 feature store 的正确姿势：每实体一个 hash、JSON、还是 RedisJSON？",
+      "Redis vs Memcached 做纯 LRU 缓存，各自还赢在哪？",
+      "Redis Cluster 的 gossip + slot 迁移，碰上 resharding 中节点故障会怎样？",
+      "单实例 Redis 的分布式锁（SET NX PX）在故障切换时为什么会失效？Redlock 想救什么、又被批评什么？",
+      "无法避免大 key 的情况下，怎么把 Redis 尾延迟 p99 摁住？",
+      "推理结果缓存的 eviction policy 决策树（allkeys-lru / volatile-lfu / noeviction）怎么走？",
+      "AOF everysec 在 fsync 卡顿时实际什么行为？最坏情况丢多少？",
+      "Redis Streams 的 consumer group 长得跟 Kafka 像，但耐久性故事很不一样——差异在哪？",
+      "Redis 7.4 的 hash 字段 TTL 替代了你以前要写的什么扫描 job？",
+      "怎么把写多的计数器分片到 Redis Cluster 又不出现热点 slot？",
+      "Redis Enterprise active-active CRDT vs 应用层冲突处理的取舍？",
+      "上线后 Redis 突然 99% CPU——怎么排（slowlog、MONITOR、latency doctor）？"
     ]
   },
   "postgres": {
-    "blurb": "工业级开源关系数据库：MVCC、可扩展类型系统、丰富索引、partial / expression index。从 OLTP 到 GIS、JSONB、向量检索（pgvector）几乎能扛所有数据负载。",
+    "blurb": "工业级开源关系数据库：基于行级 xmin/xmax 的 MVCC、WAL 兜耐久 + 复制、可扩展类型系统、丰富索引（B-tree / GIN / GiST / BRIN / pgvector HNSW）、partial / expression 索引、逻辑复制。从 OLTP 到 GIS、JSONB、时序（TimescaleDB）、向量检索几乎能扛所有数据负载。",
     "concepts": [
       "MVCC",
       "WAL",
@@ -1621,11 +3053,26 @@
       "WAL + logical replication 怎么实现跨版本主备？",
       "GIN / GIST / BRIN 各自适合什么数据分布？",
       "pgvector / IVFFlat 把 PG 推向向量数据库的可行性？",
-      "为什么 PG 是 Aurora / Cockroach / TimescaleDB 的事实选择基底？"
+      "为什么 PG 是 Aurora / Cockroach / TimescaleDB 的事实选择基底？",
+      "PG MVCC 要 vacuum 而 InnoDB 在线 purge undo log——成本上怎么权衡？",
+      "table bloat 是怎么形成的？怎么不停机修（pg_repack）？",
+      "1 TB 表 autovacuum 默认阈值永远不触发——怎么调？",
+      "1000w embedding 的 RAG 库选 pgvector HNSW vs IVFFlat：建索引成本、recall、新鲜度怎么对比？",
+      "为什么 PG 同时当 OLTP 真源 + 向量索引是一种强 AI 应用模式？>5000w 向量时哪里崩？",
+      "logical decoding（pgoutput）怎么驱动 CDC 进 Kafka / Debezium / feature store？",
+      "在热点行上把长查询包成事务会出什么事？xid wraparound 真的能宕机？",
+      "HOT update 怎么避免索引 churn？为什么写多负载下这事关键？",
+      "BRIN 在按时间排好的数据上能比 B-tree 小 100x 还差不多快——为什么？",
+      "PG 怎么用 GIN 索引 JSONB？为什么差一点就是文档库？",
+      "多租户 SaaS 的灾备方案：物理复制 vs 逻辑复制 vs pglogical 怎么选？",
+      "为什么 PG planner 有时统计信息全有也选 seq scan？怎么读 EXPLAIN (BUFFERS, ANALYZE)？",
+      "100KB 的 embedding 列正确放法：TOAST 内联、单独表、还是外部存？",
+      "连接池（pgbouncer）跟 prepared statement / 临时表怎么互动？什么场景 session pooling 反而比 transaction pooling 香？",
+      "生产 RAG 服务用 Postgres + pgvector vs 专用向量库（Qdrant / Weaviate）怎么取舍？"
     ]
   },
   "rocksdb": {
-    "blurb": "Facebook 从 LevelDB fork 出的高性能嵌入式 KV 存储：LSM-tree + WAL + column family + 丰富 compaction 策略。TiKV / CockroachDB / MyRocks / Flink 状态后端的底层。",
+    "blurb": "Facebook 从 LevelDB fork 出的高性能嵌入式 KV 存储：LSM-tree（memtable → SST levels）+ WAL + column family + 丰富 compaction 策略（Leveled / Universal / FIFO）+ block cache + 每个 SST 自带 Bloom filter。TiKV / CockroachDB / MyRocks / Flink state backend / Kafka Streams 的底层。",
     "concepts": [
       "LSM-tree",
       "Compaction (Leveled / Universal)",
@@ -1638,11 +3085,26 @@
       "RocksDB 在 NVMe + 大内存场景跟 PG / InnoDB 的取舍？",
       "为什么 TiKV / CockroachDB 都选 RocksDB 但 TiKV 后来要做 Pessimistic Lock？",
       "MyRocks 取代 InnoDB 在写多场景能省多少空间？",
-      "Flink 用 RocksDB 做 state backend 的常见 GC / compaction 调参经验？"
+      "Flink 用 RocksDB 做 state backend 的常见 GC / compaction 调参经验？",
+      "什么是 RocksDB write stall？compaction-debt + pending-bytes 触发器为什么会让前台写暂停？",
+      "每个 SST 上的 Bloom filter 怎么减读放大？什么场景失效（范围扫、前缀扫）？",
+      "tombstone scan（delete 在 L0 堆积）为什么是读延迟的隐形杀手？CompactOnDeletionCollector 怎么救？",
+      "RocksDB 的 universal compaction vs Cassandra 的 STCS：思路一样、默认值不一样？",
+      "column family 共用一份 WAL 但 memtable / SST 分开——为什么对原子 batch 关键？",
+      "RocksDB 当 Flink 流式特征 pipeline 的 state backend，state TTL + compaction filter 怎么配才不爆？",
+      "为什么 RocksDB 被在线推理服务当持久化状态用（按 user ID 的 embedding 缓存）？",
+      "block cache + page cache + OS cache 实际上是怎么叠的？direct-io vs buffered-io 决策怎么变？",
+      "数据集在涨而 level_compaction_dynamic_level_bytes 没开会出什么事？",
+      "10:1 写读比 vs 1:10 写读比，RocksDB 怎么调？",
+      "共享 NVMe 上为什么必须限 compaction IO？WriteController 跟 rate limiter 怎么互动？",
+      "merge operator 跟 put 区别是什么？计数器 / 集合状态什么时候适合用？",
+      "memtable + write buffer + level multiplier 怎么配才避开 L0→L1 那个悬崖？",
+      "有状态流处理的备份故事（checkpoint + 增量 SST 上传）怎么设计？",
+      "RocksDB 什么时候根本不该用：多二级索引、复杂事务、分析扫描？"
     ]
   },
   "grpc": {
-    "blurb": "Google 推出的高性能 RPC 框架：HTTP/2 多路复用 + Protobuf 二进制 + 流式调用。分布式系统 / 微服务的事实通信标准，跟 REST / Thrift / Cap'n Proto 长期共存。",
+    "blurb": "Google 推出的高性能 RPC 框架：HTTP/2 多路复用 + Protobuf 二进制 + 四种流式模式 + deadline / cancellation 透传 + interceptor 中间件。分布式系统 / 微服务的事实通信标准，最近 ML 推理服务（Triton、TorchServe、vLLM）也都暴露 gRPC；跟 REST / Thrift / Cap'n Proto 长期共存。",
     "concepts": [
       "HTTP/2",
       "Protobuf",
@@ -1655,11 +3117,26 @@
       "Protobuf wire format 比 JSON 小多少？反序列化开销在哪？",
       "gRPC streaming 的四种模式（unary / server / client / bidi）适合什么场景？",
       "grpc-go 跟 grpc-java 在性能 / 调度上的差距？",
-      "Cap'n Proto / FlatBuffers 怎么在 gRPC 之外做零拷贝？"
+      "Cap'n Proto / FlatBuffers 怎么在 gRPC 之外做零拷贝？",
+      "HTTP/2 为什么仍然有 TCP 层的 head-of-line blocking？HTTP/3 / gRPC-over-QUIC 怎么解？",
+      "内部微服务 mesh 选 gRPC vs REST/JSON vs JSON-RPC，各自还赢在哪？",
+      "怎么用 gRPC server-streaming 把 LLM 推理 token 一个个吐出来？为什么比 SSE 适合？",
+      "deadline 经过 5 跳透传实际长什么样？哪一跳团队最容易忘记接，最后变成级联故障？",
+      "gRPC 负载均衡为什么比 HTTP/1.1 难？client-side LB 跟 lookaside（xDS）各解决什么？",
+      "interceptor + metadata 怎么把分布式追踪 / 鉴权写进去而不污染业务代码？",
+      "一个客户端在一条 TCP 连接上开 1w stream，连接管理是什么样？MAX_CONCURRENT_STREAMS 在哪卡？",
+      "Protobuf schema 演化为什么实际比 JSON schema 演化好？field number 复用还是会咬人——什么时候？",
+      "Protobuf well-known type（Timestamp / Duration）vs 自定义表示，怎么取舍？",
+      "客户端偶尔 UNAVAILABLE 但服务端健康，怎么排（DNS、连接 draining、GOAWAY 帧）？",
+      "grpc-web 在浏览器为什么是漏抽象？什么时候必须放代理（Envoy gRPC-Web filter）？",
+      "gRPC vs Thrift 在代码生成质量、生态、语言覆盖上的差异？",
+      "什么时候单个超大 unary 请求比 chunked client-streaming 差？1 GB tensor RPC 实战为什么挂？",
+      "HTTP/2 的 flow control 窗口怎么影响流式吞吐？什么时候要调初始窗口？",
+      "gRPC 什么时候是错的选（浏览器优先、CDN 边缘缓存、S3 兼容大文件上传）？"
     ]
   },
   "envoy": {
-    "blurb": "Lyft 出品的 L4/L7 数据面代理：xDS 配置协议 + 丰富 filter chain + 强可观测性。Service Mesh（Istio / Consul / AWS App Mesh）的事实数据面，跟 nginx 的角色完全分化。",
+    "blurb": "Lyft 出品的 L4/L7 数据面代理：xDS 配置协议（CDS / EDS / LDS / RDS 由控制面流式下发）+ 丰富 filter chain（HTTP、TCP、WASM）+ 熔断 / outlier detection / 重试 + hot restart + 强可观测性。Service Mesh（Istio / Consul / AWS App Mesh / Gloo）的事实数据面，跟 nginx 的角色完全分化。",
     "concepts": [
       "xDS",
       "Filter Chain",
@@ -1672,7 +3149,22 @@
       "filter chain 跟 nginx phase handler 的设计差异？",
       "Envoy hot restart 怎么做到零中断？",
       "Service Mesh 用 Envoy sidecar vs Cilium ambient 的取舍？",
-      "Envoy 在大规模 mesh 下的内存 / 配置下发瓶颈？"
+      "Envoy 在大规模 mesh 下的内存 / 配置下发瓶颈？",
+      "xDS 的 state-of-the-world vs 增量（delta-xDS）协议，到 1w cluster 时控制面在哪先化？",
+      "Envoy vs nginx vs HAProxy vs Linkerd2-proxy 当 mesh 数据面：体积、功能、性能怎么比？",
+      "怎么用 Envoy 加权 cluster + 基于 header 的路由把模型新版本灰度（10% / 50% / 100%）？",
+      "Envoy 熔断器（max connections / requests / pending / retries）跟 outlier detection 怎么组合？什么时候级联失败安全、什么时候不安全？",
+      "Envoy 当一群推理服务的 gRPC ingress 的正确姿势：负载均衡、deadline、幂等调用的重试？",
+      "每 cluster 的 HTTP 连接池怎么影响多对多 mesh 的尾延迟？",
+      "Envoy 的 per-route 限流（外接 RLS）为什么比 nginx leaky bucket 适合多租户推理 API？",
+      "WASM filter 怎么让你不重编 Envoy 就能塞鉴权 / shadow traffic / PII 脱敏？",
+      "推理尾延迟敏感时，retry 跟 hedging（request hedging filter）怎么取舍？什么时候反而把负载放大？",
+      "Envoy 的 stats / Prometheus / OpenTelemetry 跟 nginx stub_status 比差在哪？",
+      "Envoy sidecar 终止 mTLS 比应用自己做便宜在哪？实际 CPU 代价是多少？",
+      "filter chain 顺序把 auth 放到 retry policy 之后会出什么事？",
+      "listener filter / network filter / HTTP filter 怎么分层（如 SNI 探测、TLS、HTTP 路由）？",
+      "怎么排 503 UH（无健康上游）vs 503 UF（上游连接失败）？",
+      "Envoy 什么时候是错的工具：极致低开销 L4（考虑 Katran / IPVS）、巨石单体入口、纯 CDN 边缘？"
     ]
   }
 }

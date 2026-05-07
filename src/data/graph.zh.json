@@ -3131,6 +3131,654 @@
     {
       "from": "two-phase-commit",
       "to": "tikv"
+    },
+    {
+      "from": "c",
+      "to": "rocksdb"
+    },
+    {
+      "from": "c",
+      "to": "zookeeper"
+    },
+    {
+      "from": "cpp",
+      "to": "kafka"
+    },
+    {
+      "from": "cpp",
+      "to": "deepspeed"
+    },
+    {
+      "from": "cpp",
+      "to": "cutlass"
+    },
+    {
+      "from": "go",
+      "to": "grpc"
+    },
+    {
+      "from": "java",
+      "to": "arrow"
+    },
+    {
+      "from": "python",
+      "to": "arrow"
+    },
+    {
+      "from": "python",
+      "to": "duckdb"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "tvm"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "jax"
+    },
+    {
+      "from": "ptx",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "ptx",
+      "to": "triton"
+    },
+    {
+      "from": "assembly",
+      "to": "redis"
+    },
+    {
+      "from": "assembly",
+      "to": "postgres"
+    },
+    {
+      "from": "assembly",
+      "to": "rocksdb"
+    },
+    {
+      "from": "assembly",
+      "to": "nginx"
+    },
+    {
+      "from": "assembly",
+      "to": "nccl"
+    },
+    {
+      "from": "assembly",
+      "to": "cuda-cpp"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "resnet"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "alexnet"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "bert"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "gpt"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "pytorch"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "jax"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "diffusion"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "clip"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "flashattn"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "cutlass"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "vae"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "gan"
+    },
+    {
+      "from": "calculus",
+      "to": "sgd"
+    },
+    {
+      "from": "calculus",
+      "to": "adam"
+    },
+    {
+      "from": "calculus",
+      "to": "transformer"
+    },
+    {
+      "from": "calculus",
+      "to": "resnet"
+    },
+    {
+      "from": "calculus",
+      "to": "convex-optimization"
+    },
+    {
+      "from": "calculus",
+      "to": "pytorch"
+    },
+    {
+      "from": "calculus",
+      "to": "jax"
+    },
+    {
+      "from": "probability",
+      "to": "bert"
+    },
+    {
+      "from": "probability",
+      "to": "gpt"
+    },
+    {
+      "from": "probability",
+      "to": "word2vec"
+    },
+    {
+      "from": "probability",
+      "to": "transformer"
+    },
+    {
+      "from": "probability",
+      "to": "speculative-decoding"
+    },
+    {
+      "from": "probability",
+      "to": "scaling-laws"
+    },
+    {
+      "from": "probability",
+      "to": "clip"
+    },
+    {
+      "from": "probability",
+      "to": "moe"
+    },
+    {
+      "from": "convex-optimization",
+      "to": "lora"
+    },
+    {
+      "from": "information-theory",
+      "to": "word2vec"
+    },
+    {
+      "from": "information-theory",
+      "to": "clip"
+    },
+    {
+      "from": "information-theory",
+      "to": "bert"
+    },
+    {
+      "from": "information-theory",
+      "to": "gpt"
+    },
+    {
+      "from": "information-theory",
+      "to": "scaling-laws"
+    },
+    {
+      "from": "information-theory",
+      "to": "lora"
+    },
+    {
+      "from": "transformer",
+      "to": "rlhf"
+    },
+    {
+      "from": "transformer",
+      "to": "speculative-decoding"
+    },
+    {
+      "from": "transformer",
+      "to": "continuous-batching"
+    },
+    {
+      "from": "transformer",
+      "to": "deepspeed"
+    },
+    {
+      "from": "transformer",
+      "to": "triton"
+    },
+    {
+      "from": "transformer",
+      "to": "cutlass"
+    },
+    {
+      "from": "transformer",
+      "to": "pytorch"
+    },
+    {
+      "from": "transformer",
+      "to": "jax"
+    },
+    {
+      "from": "gpt",
+      "to": "moe"
+    },
+    {
+      "from": "gpt",
+      "to": "lora"
+    },
+    {
+      "from": "gpt",
+      "to": "deepspeed"
+    },
+    {
+      "from": "gpt",
+      "to": "chinchilla"
+    },
+    {
+      "from": "gpt",
+      "to": "flashattn"
+    },
+    {
+      "from": "bert",
+      "to": "lora"
+    },
+    {
+      "from": "bert",
+      "to": "pytorch"
+    },
+    {
+      "from": "diffusion",
+      "to": "pytorch"
+    },
+    {
+      "from": "diffusion",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "clip",
+      "to": "diffusion"
+    },
+    {
+      "from": "clip",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "mamba",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "mamba",
+      "to": "pytorch"
+    },
+    {
+      "from": "moe",
+      "to": "llama"
+    },
+    {
+      "from": "moe",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "lora",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "lora",
+      "to": "llama"
+    },
+    {
+      "from": "lora",
+      "to": "pytorch"
+    },
+    {
+      "from": "rlhf",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "rlhf",
+      "to": "megatron"
+    },
+    {
+      "from": "zero",
+      "to": "pytorch"
+    },
+    {
+      "from": "alexnet",
+      "to": "resnet"
+    },
+    {
+      "from": "resnet",
+      "to": "clip"
+    },
+    {
+      "from": "triton",
+      "to": "vllm"
+    },
+    {
+      "from": "triton",
+      "to": "pytorch"
+    },
+    {
+      "from": "flashattn",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "flashattn",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "nccl",
+      "to": "vllm"
+    },
+    {
+      "from": "nccl",
+      "to": "pytorch"
+    },
+    {
+      "from": "nccl",
+      "to": "ray"
+    },
+    {
+      "from": "cutlass",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "xla",
+      "to": "pytorch"
+    },
+    {
+      "from": "tvm",
+      "to": "pytorch"
+    },
+    {
+      "from": "speculative-decoding",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "speculative-decoding",
+      "to": "llama"
+    },
+    {
+      "from": "continuous-batching",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "continuous-batching",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "backpropagation",
+      "to": "transformer"
+    },
+    {
+      "from": "backpropagation",
+      "to": "resnet"
+    },
+    {
+      "from": "sgd",
+      "to": "transformer"
+    },
+    {
+      "from": "sgd",
+      "to": "alexnet"
+    },
+    {
+      "from": "sgd",
+      "to": "resnet"
+    },
+    {
+      "from": "adam",
+      "to": "transformer"
+    },
+    {
+      "from": "adam",
+      "to": "bert"
+    },
+    {
+      "from": "adam",
+      "to": "gpt"
+    },
+    {
+      "from": "word2vec",
+      "to": "bert"
+    },
+    {
+      "from": "word2vec",
+      "to": "gpt"
+    },
+    {
+      "from": "dropout",
+      "to": "bert"
+    },
+    {
+      "from": "dropout",
+      "to": "gpt"
+    },
+    {
+      "from": "dropout",
+      "to": "resnet"
+    },
+    {
+      "from": "reinforcement-learning",
+      "to": "gpt"
+    },
+    {
+      "from": "scaling-laws",
+      "to": "llama"
+    },
+    {
+      "from": "chinchilla",
+      "to": "llama"
+    },
+    {
+      "from": "arrow",
+      "to": "trino"
+    },
+    {
+      "from": "arrow",
+      "to": "flink"
+    },
+    {
+      "from": "parquet",
+      "to": "clickhouse"
+    },
+    {
+      "from": "parquet",
+      "to": "arrow"
+    },
+    {
+      "from": "bigtable",
+      "to": "rocksdb"
+    },
+    {
+      "from": "bigtable",
+      "to": "clickhouse"
+    },
+    {
+      "from": "gfs",
+      "to": "spark"
+    },
+    {
+      "from": "dynamo",
+      "to": "redis"
+    },
+    {
+      "from": "consistent-hashing",
+      "to": "redis"
+    },
+    {
+      "from": "two-phase-commit",
+      "to": "kafka"
+    },
+    {
+      "from": "two-phase-commit",
+      "to": "postgres"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "kafka"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "etcd"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "tikv"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "redis"
+    },
+    {
+      "from": "lamport-clocks",
+      "to": "kafka"
+    },
+    {
+      "from": "lamport-clocks",
+      "to": "raft"
+    },
+    {
+      "from": "paxos",
+      "to": "etcd"
+    },
+    {
+      "from": "paxos",
+      "to": "tikv"
+    },
+    {
+      "from": "paxos",
+      "to": "cockroach"
+    },
+    {
+      "from": "spanner",
+      "to": "tikv"
+    },
+    {
+      "from": "operating-systems",
+      "to": "redis"
+    },
+    {
+      "from": "operating-systems",
+      "to": "postgres"
+    },
+    {
+      "from": "operating-systems",
+      "to": "rocksdb"
+    },
+    {
+      "from": "operating-systems",
+      "to": "ebpf"
+    },
+    {
+      "from": "linux",
+      "to": "redis"
+    },
+    {
+      "from": "linux",
+      "to": "postgres"
+    },
+    {
+      "from": "linux",
+      "to": "rocksdb"
+    },
+    {
+      "from": "linux",
+      "to": "nginx"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "docker"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "kubernetes"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "trino"
+    },
+    {
+      "from": "ebpf",
+      "to": "kubernetes"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "cuda-cpp"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "ptx"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "assembly"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "flashattn"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "cutlass"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "rocksdb"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "redis"
+    },
+    {
+      "from": "docker",
+      "to": "kubernetes"
+    },
+    {
+      "from": "grpc",
+      "to": "kubernetes"
+    },
+    {
+      "from": "grpc",
+      "to": "envoy"
+    },
+    {
+      "from": "ray",
+      "to": "pytorch"
+    },
+    {
+      "from": "hf-transformers",
+      "to": "vllm"
+    },
+    {
+      "from": "spectre",
+      "to": "linux"
+    },
+    {
+      "from": "spectre",
+      "to": "operating-systems"
+    },
+    {
+      "from": "rocksdb",
+      "to": "kafka"
     }
   ]
 }
