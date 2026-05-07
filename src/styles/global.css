@@ -279,8 +279,12 @@ hr {
   opacity: 0.5;
 }
 
-/* ── Language switcher (header) ────────────────────────────── */
+/* ── Language switcher (top-right corner) ──────────────────── */
 .graph-lang-btn {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  z-index: 20;
   height: 34px;
   min-width: 44px;
   padding: 0 12px;
@@ -307,6 +311,14 @@ hr {
   background: rgb(var(--color-bg-elev) / 0.92);
   color: rgb(var(--color-accent));
   border-color: rgb(var(--color-accent) / 0.45);
+}
+
+/* When the side panel slides open it covers the top-right corner; hide
+   the lang button so it doesn't peek through the panel's blurred edge. */
+.full-graph.has-panel .graph-lang-btn {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
 }
 
 /* ── Graph canvas wrapper (fills viewport behind overlays) ── */
@@ -702,9 +714,16 @@ img.panel-icon-brand {
   .graph-header {
     top: 12px;
     left: 14px;
-    right: 14px;
+    right: 64px;
     flex-wrap: wrap;
     gap: 8px;
+  }
+  .graph-lang-btn {
+    top: 12px;
+    right: 14px;
+    height: 36px;
+    min-width: 36px;
+    padding: 0 8px;
   }
   .graph-header .brand-name {
     font-size: 16px;

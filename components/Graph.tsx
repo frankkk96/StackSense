@@ -627,17 +627,17 @@ export default function Graph() {
             </ul>
           )}
         </div>
-
-        <button
-          type="button"
-          className="graph-lang-btn"
-          onClick={() => switchLocale(locale === 'en' ? 'zh' : 'en')}
-          aria-label={t.langSwitcherLabel}
-          title={t.langSwitcherLabel}
-        >
-          {t.langGlyph}
-        </button>
       </header>
+
+      <button
+        type="button"
+        className="graph-lang-btn"
+        onClick={() => switchLocale(locale === 'en' ? 'zh' : 'en')}
+        aria-label={t.langSwitcherLabel}
+        title={t.langSwitcherLabel}
+      >
+        {t.langGlyph}
+      </button>
 
       <div ref={containerRef} className="graph-canvas-wrap">
         {size.w > 0 && size.h > 0 && (
