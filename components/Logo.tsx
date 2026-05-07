@@ -1,0 +1,22 @@
+interface Props {
+  size?: number;
+  className?: string;
+}
+
+export default function Logo({ size = 18, className }: Props) {
+  const h = Math.round((size * 413) / 724);
+  return (
+    <svg
+      width={size}
+      height={h}
+      viewBox="0 0 724 413"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+    >
+      <path d="M 435 52 L 373 0 L 363 6 L 0 312 L 0 412 L 112 413 L 113 325 Z" />
+      <path d="M 549 151 L 488 101 L 227 314 L 227 413 L 338 413 L 338 327 Z" />
+      <path d="M 724 308 L 592 198 L 452 314 L 452 413 L 562 413 L 563 327 L 593 301 L 724 413 Z" />
+    </svg>
+  );
+}
