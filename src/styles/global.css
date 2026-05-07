@@ -279,12 +279,31 @@ hr {
   opacity: 0.5;
 }
 
-/* ── Language switcher (top-right corner) ──────────────────── */
-.graph-lang-btn {
+/* ── Top-right cluster (contact + language switcher) ───────── */
+.top-right-cluster {
   position: absolute;
   top: 22px;
   right: 28px;
   z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.contact-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.01em;
+  color: rgb(var(--color-text-main) / 0.55);
+  text-decoration: none;
+  transition: color 0.18s ease;
+}
+
+.contact-link:hover {
+  color: rgb(var(--color-accent));
+}
+
+.graph-lang-btn {
   height: 34px;
   min-width: 44px;
   padding: 0 12px;
@@ -314,8 +333,8 @@ hr {
 }
 
 /* When the side panel slides open it covers the top-right corner; hide
-   the lang button so it doesn't peek through the panel's blurred edge. */
-.full-graph.has-panel .graph-lang-btn {
+   the cluster so it doesn't peek through the panel's blurred edge. */
+.full-graph.has-panel .top-right-cluster {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s ease;
@@ -718,9 +737,15 @@ img.panel-icon-brand {
     flex-wrap: wrap;
     gap: 8px;
   }
-  .graph-lang-btn {
+  .top-right-cluster {
     top: 12px;
     right: 14px;
+    gap: 0;
+  }
+  .contact-link {
+    display: none;
+  }
+  .graph-lang-btn {
     height: 36px;
     min-width: 36px;
     padding: 0 8px;

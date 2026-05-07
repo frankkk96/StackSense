@@ -16,6 +16,7 @@ import type {
   NodeType,
 } from '../src/data/types';
 import { DEFAULT_LOCALE, LOCALES } from '../src/data/types';
+import { contactEmail } from '../src/data/site';
 import { STRINGS } from '../src/i18n/strings';
 import {
   ArrowUpRight,
@@ -629,15 +630,24 @@ export default function Graph() {
         </div>
       </header>
 
-      <button
-        type="button"
-        className="graph-lang-btn"
-        onClick={() => switchLocale(locale === 'en' ? 'zh' : 'en')}
-        aria-label={t.langSwitcherLabel}
-        title={t.langSwitcherLabel}
-      >
-        {t.langGlyph}
-      </button>
+      <div className="top-right-cluster">
+        <a
+          className="contact-link"
+          href={`mailto:${contactEmail}`}
+          title={contactEmail}
+        >
+          {contactEmail}
+        </a>
+        <button
+          type="button"
+          className="graph-lang-btn"
+          onClick={() => switchLocale(locale === 'en' ? 'zh' : 'en')}
+          aria-label={t.langSwitcherLabel}
+          title={t.langSwitcherLabel}
+        >
+          {t.langGlyph}
+        </button>
+      </div>
 
       <div ref={containerRef} className="graph-canvas-wrap">
         {size.w > 0 && size.h > 0 && (
