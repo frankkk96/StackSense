@@ -18,6 +18,7 @@ import {
   Box,
   Braces,
   Lightbulb,
+  Search,
   X as IconX,
 } from 'lucide-react';
 
@@ -116,6 +117,11 @@ export default function Graph() {
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<Selected>(null);
 
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [activeResult, setActiveResult] = useState(0);
+
   useEffect(() => {
     const update = () => {
       if (containerRef.current) {
@@ -140,6 +146,36 @@ export default function Graph() {
       m.get(e.to)!.add(e.from);
     });
     return m;
+  }, []);
+
+  // Search: case-insensitive substring match against label / id, capped.
+  const searchResults = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [] as GraphNode[];
+    return graphNodes
+      .filter(
+        (n) =>
+          n.label.toLowerCase().includes(q) || n.id.toLowerCase().includes(q)
+      )
+      .slice(0, 8);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setActiveResult(0);
+  }, [searchQuery]);
+
+  // ⌘K / Ctrl+K focuses the search input. Esc clears + blurs.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
   }, []);
 
   // No pinning — let the force simulation lay nodes out organically (Obsidian-style).
@@ -196,6 +232,20 @@ export default function Graph() {
         .iterations(2)
     );
   }, []);
+
+  const focusNode = useCallback(
+    (id: string) => {
+      const fg = graphData.nodes.find((n) => n.id === id);
+      if (fg && fg.x !== undefined && fg.y !== undefined) {
+        fgRef.current?.centerAt(fg.x, fg.y, 600);
+      }
+      setSelected({ nodeId: id });
+      setSearchOpen(false);
+      setSearchQuery('');
+      searchInputRef.current?.blur();
+    },
+    [graphData.nodes]
+  );
 
   const focusId = selected?.nodeId ?? hovered;
 
@@ -383,6 +433,77 @@ export default function Graph() {
           />
           <span className="brand-name">StackSense</span>
         </a>
+
+        <div
+          className={`graph-search${searchOpen && searchResults.length > 0 ? ' has-results' : ''}`}
+        >
+          <Search
+            size={14}
+            strokeWidth={1.8}
+            className="graph-search-icon"
+            aria-hidden="true"
+          />
+          <input
+            ref={searchInputRef}
+            type="text"
+            className="graph-search-input"
+            placeholder="搜索节点…"
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setSearchOpen(true);
+            }}
+            onFocus={() => setSearchOpen(true)}
+            onBlur={() => {
+              // Delay so onMouseDown on results can still fire.
+              window.setTimeout(() => setSearchOpen(false), 120);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                setActiveResult((i) =>
+                  Math.min(i + 1, Math.max(0, searchResults.length - 1))
+                );
+              } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                setActiveResult((i) => Math.max(0, i - 1));
+              } else if (e.key === 'Enter') {
+                e.preventDefault();
+                const hit = searchResults[activeResult];
+                if (hit) focusNode(hit.id);
+              } else if (e.key === 'Escape') {
+                if (searchQuery) setSearchQuery('');
+                else searchInputRef.current?.blur();
+              }
+            }}
+            aria-label="搜索节点"
+          />
+          <kbd className="graph-search-hint" aria-hidden="true">
+            ⌘K
+          </kbd>
+          {searchOpen && searchResults.length > 0 && (
+            <ul className="graph-search-results" role="listbox">
+              {searchResults.map((n, i) => (
+                <li
+                  key={n.id}
+                  role="option"
+                  aria-selected={i === activeResult}
+                  className={`graph-search-result${i === activeResult ? ' is-active' : ''}`}
+                  onMouseEnter={() => setActiveResult(i)}
+                  onMouseDown={(e) => {
+                    e.preventDefault();
+                    focusNode(n.id);
+                  }}
+                >
+                  <span className="graph-search-result-label">{n.label}</span>
+                  <span className="graph-search-result-type">
+                    {labelForType(n.type)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </header>
 
       <div ref={containerRef} className="graph-canvas-wrap">
