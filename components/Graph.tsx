@@ -463,8 +463,6 @@ interface PanelData {
   intro?: string;
   questions: string[];
   concepts: string[];
-  href?: string;
-  external?: boolean;
   resources?: NodeResource[];
 }
 
@@ -484,8 +482,6 @@ function derivePanel(
     intro: detail?.blurb ?? chapter?.intro,
     questions: detail?.questions ?? chapter?.questions ?? [],
     concepts: detail?.concepts ?? chapter?.concepts ?? [],
-    href: detail?.link ?? node.href,
-    external: node.external,
     resources: node.resources,
   };
 }
@@ -515,39 +511,7 @@ function SidePanel({
             <header className="side-panel-head">
               <PanelIcon type={panel.iconType} logoSlug={panel.logoSlug} />
               <div>
-                <div className="side-panel-title-row">
-                  <h2 className="side-panel-title">{panel.title}</h2>
-                  {panel.resources && panel.resources.length > 0 ? (
-                    <div className="side-panel-resources">
-                      {panel.resources.map((r) => (
-                        <a
-                          key={r.href}
-                          className="side-panel-link"
-                          href={r.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={r.label}
-                          title={r.label}
-                        >
-                          <ArrowUpRight size={14} strokeWidth={1.7} />
-                        </a>
-                      ))}
-                    </div>
-                  ) : (
-                    panel.href && (
-                      <a
-                        className="side-panel-link"
-                        href={panel.href}
-                        target={panel.external ? '_blank' : undefined}
-                        rel={panel.external ? 'noopener noreferrer' : undefined}
-                        aria-label="查看原始资源"
-                        title="查看原始资源"
-                      >
-                        <ArrowUpRight size={14} strokeWidth={1.7} />
-                      </a>
-                    )
-                  )}
-                </div>
+                <h2 className="side-panel-title">{panel.title}</h2>
                 <span className="side-panel-type">
                   {labelForType(panel.iconType)}
                 </span>
@@ -556,7 +520,7 @@ function SidePanel({
 
             {panel.intro && <p className="side-panel-intro">{panel.intro}</p>}
 
-            {panel.resources && panel.resources.length > 1 && (
+            {panel.resources && panel.resources.length > 0 && (
               <section className="side-panel-section">
                 <h3>资源</h3>
                 <ul className="side-panel-resource-list">
