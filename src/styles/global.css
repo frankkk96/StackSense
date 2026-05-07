@@ -508,13 +508,16 @@ hr {
   border: 1px solid rgb(var(--color-accent) / 0.18);
 }
 
-.panel-icon-brand {
-  /* Brand logo via simple-icons CDN: no background, just the SVG */
-  background: transparent;
-  border: 0;
-  border-radius: 0;
-  width: 32px;
-  height: 32px;
+img.panel-icon-brand {
+  /* Favicon from the project's official site. Colour varies wildly so we
+     keep a soft neutral pad + border for legibility on the dark panel.
+     `box-sizing: border-box` from the global `*` rule makes padding shrink
+     the visible glyph area to 28×28. */
+  padding: 5px;
+  background: rgb(var(--color-bg-elev) / 0.6);
+  border: 1px solid rgb(var(--color-border-main) / 0.14);
+  object-fit: contain;
+  display: block;
 }
 
 

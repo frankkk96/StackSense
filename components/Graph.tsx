@@ -688,7 +688,7 @@ interface RelatedNode {
 
 interface PanelData {
   iconType: NodeType;
-  logoSlug?: string | null;
+  homepage?: string;
   title: string;
   intro?: string;
   questions: string[];
@@ -729,7 +729,7 @@ function derivePanel(selected: Selected): PanelData | null {
   const detail = nodeDetails[node.id];
   return {
     iconType: node.type,
-    logoSlug: detail?.logoSlug ?? null,
+    homepage: node.homepage,
     title: node.label,
     intro: detail?.blurb,
     questions: detail?.questions ?? [],
@@ -766,7 +766,7 @@ function SidePanel({
         {panel && (
           <>
             <header className="side-panel-head">
-              <PanelIcon type={panel.iconType} logoSlug={panel.logoSlug} />
+              <PanelIcon type={panel.iconType} homepage={panel.homepage} />
               <div>
                 <h2 className="side-panel-title">{panel.title}</h2>
                 <span className="side-panel-type">
@@ -863,19 +863,34 @@ const TYPE_ICON: Record<NodeType, typeof Box> = {
   language: Braces,
 };
 
+function faviconUrl(homepage: string): string | null {
+  try {
+    const host = new URL(homepage).hostname;
+    return `https://www.google.com/s2/favicons?sz=64&domain=${host}`;
+  } catch {
+    return null;
+  }
+}
+
 function PanelIcon({
   type,
-  logoSlug,
+  homepage,
 }: {
   type: NodeType;
-  logoSlug?: string | null;
+  homepage?: string;
 }) {
   const [logoFailed, setLogoFailed] = useState(false);
+  const src = homepage ? faviconUrl(homepage) : null;
 
-  if (logoSlug && !logoFailed) {
+  // Reset failure state when homepage changes (e.g., user navigated to another node).
+  useEffect(() => {
+    setLogoFailed(false);
+  }, [homepage]);
+
+  if (src && !logoFailed) {
     return (
       <img
-        src={`https://cdn.simpleicons.org/${logoSlug}/F2F1EC`}
+        src={src}
         width={28}
         height={28}
         className="panel-icon panel-icon-brand"

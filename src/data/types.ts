@@ -26,6 +26,9 @@ export interface GraphNode {
   label: string;
   domain: Domain;
   tags: string[];
+  // Project / language node's official homepage. Drives the favicon shown
+  // in the side panel. Concepts (papers, abstract topics) leave it unset.
+  homepage?: string;
   resources?: NodeResource[];
 }
 
@@ -38,5 +41,4 @@ export interface NodeDetail {
   blurb: string;
   concepts: string[];
   questions: string[];
-  logoSlug?: string | null;
 }

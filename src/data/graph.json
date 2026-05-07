@@ -744,6 +744,7 @@
         "推理引擎",
         "LLM Serving"
       ],
+      "homepage": "https://vllm.ai",
       "resources": [
         {
           "kind": "project",
@@ -772,6 +773,7 @@
         "推理引擎",
         "LLM Serving"
       ],
+      "homepage": "https://developer.nvidia.com/tensorrt",
       "resources": [
         {
           "kind": "project",
@@ -836,6 +838,7 @@
         "ZeRO",
         "显存优化"
       ],
+      "homepage": "https://deepspeed.ai",
       "resources": [
         {
           "kind": "project",
@@ -854,6 +857,7 @@
         "CUDA",
         "GEMM"
       ],
+      "homepage": "https://developer.nvidia.com",
       "resources": [
         {
           "kind": "project",
@@ -900,6 +904,7 @@
         "DSL",
         "ML 编译器"
       ],
+      "homepage": "https://triton-lang.org",
       "resources": [
         {
           "kind": "project",
@@ -922,6 +927,7 @@
         "分布式训练",
         "集合通信"
       ],
+      "homepage": "https://developer.nvidia.com/nccl",
       "resources": [
         {
           "kind": "project",
@@ -940,6 +946,7 @@
         "批处理",
         "通用计算"
       ],
+      "homepage": "https://spark.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -963,6 +970,7 @@
         "流计算",
         "状态管理"
       ],
+      "homepage": "https://flink.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -981,6 +989,7 @@
         "消息队列",
         "日志"
       ],
+      "homepage": "https://kafka.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -999,6 +1008,7 @@
         "表格式",
         "湖仓"
       ],
+      "homepage": "https://iceberg.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -1017,6 +1027,7 @@
         "列存",
         "嵌入式"
       ],
+      "homepage": "https://duckdb.org",
       "resources": [
         {
           "kind": "project",
@@ -1035,6 +1046,7 @@
         "列存",
         "实时分析"
       ],
+      "homepage": "https://clickhouse.com",
       "resources": [
         {
           "kind": "project",
@@ -1053,6 +1065,7 @@
         "协调服务",
         "KV 存储"
       ],
+      "homepage": "https://etcd.io",
       "resources": [
         {
           "kind": "project",
@@ -1071,6 +1084,7 @@
         "分布式 KV",
         "分布式事务"
       ],
+      "homepage": "https://tikv.org",
       "resources": [
         {
           "kind": "project",
@@ -1089,6 +1103,7 @@
         "分布式数据库",
         "关系数据库"
       ],
+      "homepage": "https://www.cockroachlabs.com",
       "resources": [
         {
           "kind": "project",
@@ -1106,6 +1121,7 @@
         "分布式",
         "协调服务"
       ],
+      "homepage": "https://zookeeper.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -1123,6 +1139,7 @@
         "操作系统",
         "内核"
       ],
+      "homepage": "https://www.kernel.org",
       "resources": [
         {
           "kind": "project",
@@ -1146,6 +1163,7 @@
         "反向代理",
         "HTTP"
       ],
+      "homepage": "https://nginx.org",
       "resources": [
         {
           "kind": "project",
@@ -1164,6 +1182,7 @@
         "服务网格",
         "eBPF"
       ],
+      "homepage": "https://cilium.io",
       "resources": [
         {
           "kind": "project",
@@ -1181,6 +1200,7 @@
         "通用",
         "动态类型"
       ],
+      "homepage": "https://www.python.org",
       "resources": [
         {
           "kind": "docs",
@@ -1203,6 +1223,7 @@
         "系统",
         "编译型"
       ],
+      "homepage": "https://isocpp.org",
       "resources": [
         {
           "kind": "docs",
@@ -1231,6 +1252,7 @@
         "编译型",
         "内存安全"
       ],
+      "homepage": "https://www.rust-lang.org",
       "resources": [
         {
           "kind": "book",
@@ -1254,6 +1276,7 @@
         "GC",
         "云原生"
       ],
+      "homepage": "https://go.dev",
       "resources": [
         {
           "kind": "docs",
@@ -1277,6 +1300,7 @@
         "JVM",
         "GC"
       ],
+      "homepage": "https://openjdk.org",
       "resources": [
         {
           "kind": "docs",
@@ -1299,6 +1323,7 @@
         "JVM",
         "函数式"
       ],
+      "homepage": "https://www.scala-lang.org",
       "resources": [
         {
           "kind": "docs",
@@ -1338,6 +1363,7 @@
         "GPU",
         "并行编程"
       ],
+      "homepage": "https://developer.nvidia.com",
       "resources": [
         {
           "kind": "docs",
@@ -1360,6 +1386,7 @@
         "GPU",
         "ISA"
       ],
+      "homepage": "https://developer.nvidia.com",
       "resources": [
         {
           "kind": "docs",
@@ -1400,6 +1427,7 @@
         "训练框架",
         "深度学习"
       ],
+      "homepage": "https://pytorch.org",
       "resources": [
         {
           "kind": "project",
@@ -1428,6 +1456,7 @@
         "训练框架",
         "函数式"
       ],
+      "homepage": "https://jax.readthedocs.io",
       "resources": [
         {
           "kind": "project",
@@ -1450,6 +1479,7 @@
         "编译器",
         "ML 编译器"
       ],
+      "homepage": "https://openxla.org",
       "resources": [
         {
           "kind": "project",
@@ -1473,6 +1503,7 @@
         "ML 编译器",
         "IR"
       ],
+      "homepage": "https://mlir.llvm.org",
       "resources": [
         {
           "kind": "site",
@@ -1496,6 +1527,7 @@
         "ML 编译器",
         "推理"
       ],
+      "homepage": "https://tvm.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -1519,6 +1551,7 @@
         "模型库",
         "NLP"
       ],
+      "homepage": "https://huggingface.co",
       "resources": [
         {
           "kind": "project",
@@ -1542,6 +1575,7 @@
         "分布式调度",
         "分布式训练"
       ],
+      "homepage": "https://ray.io",
       "resources": [
         {
           "kind": "project",
@@ -1565,6 +1599,7 @@
         "LLM",
         "开源模型"
       ],
+      "homepage": "https://www.llama.com",
       "resources": [
         {
           "kind": "project",
@@ -1951,6 +1986,7 @@
         "列存",
         "内存格式"
       ],
+      "homepage": "https://arrow.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -1974,6 +2010,7 @@
         "列存",
         "文件格式"
       ],
+      "homepage": "https://parquet.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -1997,6 +2034,7 @@
         "表格式",
         "湖仓"
       ],
+      "homepage": "https://hudi.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -2015,6 +2053,7 @@
         "表格式",
         "湖仓"
       ],
+      "homepage": "https://delta.io",
       "resources": [
         {
           "kind": "project",
@@ -2038,6 +2077,7 @@
         "工作流",
         "编排"
       ],
+      "homepage": "https://airflow.apache.org",
       "resources": [
         {
           "kind": "project",
@@ -2056,6 +2096,7 @@
         "联邦查询",
         "MPP"
       ],
+      "homepage": "https://trino.io",
       "resources": [
         {
           "kind": "project",
@@ -2079,6 +2120,7 @@
         "容器编排",
         "云原生"
       ],
+      "homepage": "https://kubernetes.io",
       "resources": [
         {
           "kind": "project",
@@ -2101,6 +2143,7 @@
         "容器",
         "容器运行时"
       ],
+      "homepage": "https://www.docker.com",
       "resources": [
         {
           "kind": "project",
@@ -2124,6 +2167,7 @@
         "内存数据库",
         "KV 存储"
       ],
+      "homepage": "https://redis.io",
       "resources": [
         {
           "kind": "project",
@@ -2142,6 +2186,7 @@
         "关系数据库",
         "OLTP"
       ],
+      "homepage": "https://www.postgresql.org",
       "resources": [
         {
           "kind": "project",
@@ -2165,6 +2210,7 @@
         "LSM",
         "嵌入式"
       ],
+      "homepage": "https://rocksdb.org",
       "resources": [
         {
           "kind": "project",
@@ -2183,6 +2229,7 @@
         "RPC",
         "HTTP/2"
       ],
+      "homepage": "https://grpc.io",
       "resources": [
         {
           "kind": "project",
@@ -2206,6 +2253,7 @@
         "服务网格",
         "代理"
       ],
+      "homepage": "https://www.envoyproxy.io",
       "resources": [
         {
           "kind": "project",
