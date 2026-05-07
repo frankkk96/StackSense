@@ -11,7 +11,6 @@ import {
   type NodeResource,
 } from '../src/data/graph';
 import { nodeDetails } from '../src/data/details';
-import type { ChapterSummary } from '../lib/content';
 import Logo from './Logo';
 import {
   ArrowUpRight,
@@ -40,10 +39,6 @@ interface FGLink {
   source: string | FGNode;
   target: string | FGNode;
   kind: EdgeKind;
-}
-
-interface Props {
-  chapters: ChapterSummary[];
 }
 
 type Selected = { nodeId: string } | null;
@@ -103,7 +98,7 @@ function collideRadius(n: { type: NodeType; label: string }): number {
 }
 
 // ── Component ─────────────────────────────────────────────────
-export default function Graph({ chapters }: Props) {
+export default function Graph() {
   const fgRef = useRef<{
     d3Force: (name: string, force?: unknown) => unknown;
     zoomToFit: (durationMs?: number, padding?: number) => void;
@@ -129,12 +124,6 @@ export default function Graph({ chapters }: Props) {
     window.addEventListener('resize', update);
     return () => window.removeEventListener('resize', update);
   }, []);
-
-  const chapterMap = useMemo(() => {
-    const m = new Map<string, ChapterSummary>();
-    chapters.forEach((c) => m.set(c.slug, c));
-    return m;
-  }, [chapters]);
 
   // Build adjacency for hover-highlight (undirected; both upstream & downstream lit).
   const neighbors = useMemo(() => {
@@ -374,7 +363,7 @@ export default function Graph({ chapters }: Props) {
     return () => clearTimeout(t);
   }, [size.w, size.h]);
 
-  const panel = derivePanel(selected, chapterMap);
+  const panel = derivePanel(selected);
 
   return (
     <div className={`full-graph ${selected ? 'has-panel' : ''}`}>
@@ -466,22 +455,18 @@ interface PanelData {
   resources?: NodeResource[];
 }
 
-function derivePanel(
-  selected: Selected,
-  chapterMap: Map<string, ChapterSummary>
-): PanelData | null {
+function derivePanel(selected: Selected): PanelData | null {
   if (!selected) return null;
   const node = graphNodes.find((n) => n.id === selected.nodeId);
   if (!node) return null;
   const detail = nodeDetails[node.id];
-  const chapter = chapterMap.get(node.id);
   return {
     iconType: node.type,
     logoSlug: detail?.logoSlug ?? null,
     title: node.label,
-    intro: detail?.blurb ?? chapter?.intro,
-    questions: detail?.questions ?? chapter?.questions ?? [],
-    concepts: detail?.concepts ?? chapter?.concepts ?? [],
+    intro: detail?.blurb,
+    questions: detail?.questions ?? [],
+    concepts: detail?.concepts ?? [],
     resources: node.resources,
   };
 }

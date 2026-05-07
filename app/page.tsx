@@ -1,14 +1,11 @@
 import Graph from '../components/Graph';
-import { getAllSummaries } from '../lib/content';
 import { siteTitle } from '../src/data/site';
 
 export const metadata = {
   title: `StackSense · ${siteTitle}`,
-  description:
-    'AI / Data 系统的 6 层抽象 + 横切的编程语言：一张可探索的知识图谱。',
+  description: 'AI / Data 系统知识图谱：每个节点是一个具体的概念、项目或语言。',
 };
 
 export default function HomePage() {
-  const summaries = getAllSummaries();
-  return <Graph chapters={summaries} />;
+  return <Graph />;
 }

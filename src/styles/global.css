@@ -238,46 +238,6 @@ hr {
   color: rgb(var(--color-accent));
 }
 
-.side-panel-title-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 4px;
-}
-
-.side-panel-title-row .side-panel-title {
-  margin: 0;
-}
-
-.side-panel-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border: 1px solid rgb(var(--color-border-main) / 0.14);
-  border-radius: 999px;
-  background: rgb(var(--color-bg-main) / 0.6);
-  color: rgb(var(--color-text-main) / 0.7);
-  text-decoration: none;
-  flex-shrink: 0;
-  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease,
-    transform 0.18s ease;
-}
-
-.side-panel-link:hover {
-  background: rgb(var(--color-accent) / 0.16);
-  border-color: rgb(var(--color-accent) / 0.55);
-  color: rgb(var(--color-accent));
-  transform: translateY(-1px);
-}
-
-.side-panel-resources {
-  display: inline-flex;
-  gap: 4px;
-}
-
 .side-panel-resource-list {
   list-style: none;
   padding: 0;
@@ -352,15 +312,6 @@ hr {
   height: 32px;
 }
 
-.side-panel-kind {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.45;
-  margin-bottom: 4px;
-}
 
 .side-panel-title {
   font-size: 22px;
