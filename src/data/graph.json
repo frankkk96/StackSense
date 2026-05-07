@@ -4,7 +4,6 @@
       "id": "linear-algebra",
       "type": "concept",
       "label": "线性代数",
-      "href": "https://www.3blue1brown.com/topics/linear-algebra",
       "resources": [
         {
           "kind": "video",
@@ -32,7 +31,6 @@
       "id": "calculus",
       "type": "concept",
       "label": "微积分",
-      "href": "https://www.3blue1brown.com/topics/calculus",
       "resources": [
         {
           "kind": "video",
@@ -50,7 +48,6 @@
       "id": "probability",
       "type": "concept",
       "label": "概率论与统计",
-      "href": "https://projects.iq.harvard.edu/stat110",
       "resources": [
         {
           "kind": "course",
@@ -73,7 +70,6 @@
       "id": "convex-optimization",
       "type": "concept",
       "label": "凸优化",
-      "href": "https://web.stanford.edu/~boyd/cvxbook/",
       "resources": [
         {
           "kind": "book",
@@ -91,7 +87,6 @@
       "id": "information-theory",
       "type": "concept",
       "label": "信息论",
-      "href": "http://www.elementsofinformationtheory.com/",
       "resources": [
         {
           "kind": "book",
@@ -109,7 +104,6 @@
       "id": "backpropagation",
       "type": "concept",
       "label": "反向传播",
-      "href": "https://www.nature.com/articles/323533a0",
       "resources": [
         {
           "kind": "paper",
@@ -132,7 +126,6 @@
       "id": "sgd",
       "type": "concept",
       "label": "SGD / 随机梯度下降",
-      "href": "https://en.wikipedia.org/wiki/Stochastic_gradient_descent",
       "resources": [
         {
           "kind": "paper",
@@ -150,7 +143,6 @@
       "id": "adam",
       "type": "concept",
       "label": "Adam Optimizer",
-      "href": "https://arxiv.org/abs/1412.6980",
       "resources": [
         {
           "kind": "paper",
@@ -168,7 +160,6 @@
       "id": "batch-norm",
       "type": "concept",
       "label": "Batch Normalization",
-      "href": "https://arxiv.org/abs/1502.03167",
       "resources": [
         {
           "kind": "paper",
@@ -186,7 +177,6 @@
       "id": "dropout",
       "type": "concept",
       "label": "Dropout",
-      "href": "https://jmlr.org/papers/v15/srivastava14a.html",
       "resources": [
         {
           "kind": "paper",
@@ -199,7 +189,6 @@
       "id": "word2vec",
       "type": "concept",
       "label": "Word2Vec / 词嵌入",
-      "href": "https://arxiv.org/abs/1301.3781",
       "resources": [
         {
           "kind": "paper",
@@ -217,7 +206,6 @@
       "id": "alexnet",
       "type": "concept",
       "label": "AlexNet",
-      "href": "https://papers.nips.cc/paper/2012/hash/c399862d3b9d6b76c8436e924a68c45b-Abstract.html",
       "resources": [
         {
           "kind": "paper",
@@ -235,7 +223,6 @@
       "id": "resnet",
       "type": "concept",
       "label": "ResNet",
-      "href": "https://arxiv.org/abs/1512.03385",
       "resources": [
         {
           "kind": "paper",
@@ -253,7 +240,6 @@
       "id": "transformer",
       "type": "concept",
       "label": "Transformer",
-      "href": "https://arxiv.org/abs/1706.03762",
       "resources": [
         {
           "kind": "paper",
@@ -281,7 +267,6 @@
       "id": "bert",
       "type": "concept",
       "label": "BERT / 双向预训练",
-      "href": "https://arxiv.org/abs/1810.04805",
       "resources": [
         {
           "kind": "paper",
@@ -299,7 +284,6 @@
       "id": "gpt",
       "type": "concept",
       "label": "GPT / 自回归 LM",
-      "href": "https://arxiv.org/abs/2005.14165",
       "resources": [
         {
           "kind": "paper",
@@ -322,7 +306,6 @@
       "id": "diffusion",
       "type": "concept",
       "label": "扩散模型 / DDPM",
-      "href": "https://arxiv.org/abs/2006.11239",
       "resources": [
         {
           "kind": "paper",
@@ -345,7 +328,6 @@
       "id": "scaling-laws",
       "type": "concept",
       "label": "Scaling Laws (Kaplan)",
-      "href": "https://arxiv.org/abs/2001.08361",
       "resources": [
         {
           "kind": "paper",
@@ -358,7 +340,6 @@
       "id": "chinchilla",
       "type": "concept",
       "label": "Chinchilla (compute-optimal)",
-      "href": "https://arxiv.org/abs/2203.15556",
       "resources": [
         {
           "kind": "paper",
@@ -371,7 +352,6 @@
       "id": "lora",
       "type": "concept",
       "label": "LoRA / PEFT",
-      "href": "https://arxiv.org/abs/2106.09685",
       "resources": [
         {
           "kind": "paper",
@@ -389,7 +369,6 @@
       "id": "rlhf",
       "type": "concept",
       "label": "RLHF / 对齐",
-      "href": "https://arxiv.org/abs/2203.02155",
       "resources": [
         {
           "kind": "paper",
@@ -412,7 +391,6 @@
       "id": "moe",
       "type": "concept",
       "label": "Mixture of Experts",
-      "href": "https://arxiv.org/abs/2101.03961",
       "resources": [
         {
           "kind": "paper",
@@ -435,7 +413,6 @@
       "id": "zero",
       "type": "concept",
       "label": "ZeRO / 分片优化",
-      "href": "https://arxiv.org/abs/1910.02054",
       "resources": [
         {
           "kind": "paper",
@@ -453,7 +430,6 @@
       "id": "paxos",
       "type": "concept",
       "label": "Paxos",
-      "href": "https://lamport.azurewebsites.net/pubs/paxos-simple.pdf",
       "resources": [
         {
           "kind": "paper",
@@ -471,7 +447,6 @@
       "id": "raft",
       "type": "concept",
       "label": "Raft",
-      "href": "https://raft.github.io/raft.pdf",
       "resources": [
         {
           "kind": "paper",
@@ -494,7 +469,6 @@
       "id": "spanner",
       "type": "concept",
       "label": "Spanner / TrueTime",
-      "href": "https://research.google/pubs/spanner-googles-globally-distributed-database-2/",
       "resources": [
         {
           "kind": "paper",
@@ -507,7 +481,6 @@
       "id": "computer-architecture",
       "type": "concept",
       "label": "计算机体系结构",
-      "href": "https://csapp.cs.cmu.edu/",
       "resources": [
         {
           "kind": "book",
@@ -540,7 +513,6 @@
       "id": "operating-systems",
       "type": "concept",
       "label": "操作系统",
-      "href": "https://pdos.csail.mit.edu/6.S081/",
       "resources": [
         {
           "kind": "course",
@@ -563,7 +535,6 @@
       "id": "tcp-ip",
       "type": "concept",
       "label": "TCP/IP 与网络",
-      "href": "https://beej.us/guide/bgnet/",
       "resources": [
         {
           "kind": "site",
@@ -581,7 +552,6 @@
       "id": "spectre",
       "type": "concept",
       "label": "Spectre / 推测执行漏洞",
-      "href": "https://meltdownattack.com/",
       "resources": [
         {
           "kind": "site",
@@ -599,8 +569,6 @@
       "id": "vllm",
       "type": "project",
       "label": "vLLM",
-      "href": "https://github.com/vllm-project/vllm",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -623,8 +591,6 @@
       "id": "tensorrt-llm",
       "type": "project",
       "label": "TensorRT-LLM",
-      "href": "https://github.com/NVIDIA/TensorRT-LLM",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -637,8 +603,6 @@
       "id": "nanogpt",
       "type": "project",
       "label": "nanoGPT",
-      "href": "https://github.com/karpathy/nanoGPT",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -656,8 +620,6 @@
       "id": "megatron",
       "type": "project",
       "label": "Megatron-LM",
-      "href": "https://github.com/NVIDIA/Megatron-LM",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -675,8 +637,6 @@
       "id": "deepspeed",
       "type": "project",
       "label": "DeepSpeed",
-      "href": "https://github.com/microsoft/DeepSpeed",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -689,8 +649,6 @@
       "id": "cutlass",
       "type": "project",
       "label": "CUTLASS",
-      "href": "https://github.com/NVIDIA/cutlass",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -703,8 +661,6 @@
       "id": "flashattn",
       "type": "project",
       "label": "FlashAttention",
-      "href": "https://github.com/Dao-AILab/flash-attention",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -727,8 +683,6 @@
       "id": "triton",
       "type": "project",
       "label": "Triton",
-      "href": "https://github.com/triton-lang/triton",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -746,8 +700,6 @@
       "id": "nccl",
       "type": "project",
       "label": "NCCL",
-      "href": "https://github.com/NVIDIA/nccl",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -760,8 +712,6 @@
       "id": "spark",
       "type": "project",
       "label": "Spark",
-      "href": "https://github.com/apache/spark",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -779,8 +729,6 @@
       "id": "flink",
       "type": "project",
       "label": "Flink",
-      "href": "https://github.com/apache/flink",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -793,8 +741,6 @@
       "id": "kafka",
       "type": "project",
       "label": "Kafka",
-      "href": "https://github.com/apache/kafka",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -807,8 +753,6 @@
       "id": "iceberg",
       "type": "project",
       "label": "Iceberg",
-      "href": "https://github.com/apache/iceberg",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -821,8 +765,6 @@
       "id": "duckdb",
       "type": "project",
       "label": "DuckDB",
-      "href": "https://github.com/duckdb/duckdb",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -835,8 +777,6 @@
       "id": "clickhouse",
       "type": "project",
       "label": "ClickHouse",
-      "href": "https://github.com/ClickHouse/ClickHouse",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -849,8 +789,6 @@
       "id": "etcd",
       "type": "project",
       "label": "etcd",
-      "href": "https://github.com/etcd-io/etcd",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -863,8 +801,6 @@
       "id": "tikv",
       "type": "project",
       "label": "TiKV",
-      "href": "https://github.com/tikv/tikv",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -877,8 +813,6 @@
       "id": "cockroach",
       "type": "project",
       "label": "CockroachDB",
-      "href": "https://github.com/cockroachdb/cockroach",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -891,8 +825,6 @@
       "id": "zookeeper",
       "type": "project",
       "label": "ZooKeeper",
-      "href": "https://github.com/apache/zookeeper",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -905,8 +837,6 @@
       "id": "linux",
       "type": "project",
       "label": "Linux Kernel",
-      "href": "https://github.com/torvalds/linux",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -924,8 +854,6 @@
       "id": "nginx",
       "type": "project",
       "label": "nginx",
-      "href": "https://github.com/nginx/nginx",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -938,8 +866,6 @@
       "id": "cilium",
       "type": "project",
       "label": "Cilium",
-      "href": "https://github.com/cilium/cilium",
-      "external": true,
       "resources": [
         {
           "kind": "project",
@@ -952,7 +878,6 @@
       "id": "python",
       "type": "language",
       "label": "Python",
-      "href": "https://docs.python.org/3/",
       "resources": [
         {
           "kind": "docs",
@@ -970,7 +895,6 @@
       "id": "cpp",
       "type": "language",
       "label": "C++",
-      "href": "https://en.cppreference.com/w/cpp",
       "resources": [
         {
           "kind": "docs",
@@ -993,7 +917,6 @@
       "id": "rust",
       "type": "language",
       "label": "Rust",
-      "href": "https://doc.rust-lang.org/book/",
       "resources": [
         {
           "kind": "book",
@@ -1011,7 +934,6 @@
       "id": "go",
       "type": "language",
       "label": "Go",
-      "href": "https://go.dev/doc/",
       "resources": [
         {
           "kind": "docs",
@@ -1029,7 +951,6 @@
       "id": "java",
       "type": "language",
       "label": "Java",
-      "href": "https://docs.oracle.com/en/java/",
       "resources": [
         {
           "kind": "docs",
@@ -1047,7 +968,6 @@
       "id": "scala",
       "type": "language",
       "label": "Scala",
-      "href": "https://docs.scala-lang.org/",
       "resources": [
         {
           "kind": "docs",
@@ -1060,7 +980,6 @@
       "id": "c",
       "type": "language",
       "label": "C",
-      "href": "https://en.cppreference.com/w/c",
       "resources": [
         {
           "kind": "docs",
@@ -1078,7 +997,6 @@
       "id": "cuda-cpp",
       "type": "language",
       "label": "CUDA C++",
-      "href": "https://docs.nvidia.com/cuda/cuda-c-programming-guide/",
       "resources": [
         {
           "kind": "docs",
@@ -1096,7 +1014,6 @@
       "id": "ptx",
       "type": "language",
       "label": "PTX",
-      "href": "https://docs.nvidia.com/cuda/parallel-thread-execution/",
       "resources": [
         {
           "kind": "docs",
@@ -1109,7 +1026,6 @@
       "id": "assembly",
       "type": "language",
       "label": "汇编",
-      "href": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
       "resources": [
         {
           "kind": "docs",

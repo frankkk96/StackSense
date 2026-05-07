@@ -555,7 +555,6 @@
       "V1 引擎相比 V0 在调度和异步执行上做了什么重构？",
       "跟 TensorRT-LLM、SGLang 在吞吐 / 易用性上的取舍？"
     ],
-    "link": "https://github.com/vllm-project/vllm",
     "logoSlug": null
   },
   "tensorrt-llm": {
@@ -574,7 +573,6 @@
       "Hopper 的 TMA / WGMMA 怎么被利用到 attention kernel？",
       "为什么 NVIDIA 自己又搞 TensorRT-LLM 而不是优化 vLLM？"
     ],
-    "link": "https://github.com/NVIDIA/TensorRT-LLM",
     "logoSlug": null
   },
   "nanogpt": {
@@ -593,7 +591,6 @@
       "从 nanoGPT 扩到千亿参数，哪些组件首先撑不住？",
       "bf16、torch.compile 各自在训练稳定性 / 速度上贡献多少？"
     ],
-    "link": "https://github.com/karpathy/nanoGPT",
     "logoSlug": null
   },
   "megatron": {
@@ -612,7 +609,6 @@
       "为什么 TP size 通常不超过 8？跟 NVLink 拓扑什么关系？",
       "Megatron + ZeRO 怎么组合？各自负责哪部分并行？"
     ],
-    "link": "https://github.com/NVIDIA/Megatron-LM",
     "logoSlug": null
   },
   "deepspeed": {
@@ -631,7 +627,6 @@
       "DeepSpeed-Inference 跟 vLLM / TensorRT-LLM 路线分歧？",
       "为什么大厂训练逐渐从 DeepSpeed 迁回 Megatron + FSDP？"
     ],
-    "link": "https://github.com/microsoft/DeepSpeed",
     "logoSlug": null
   },
   "cutlass": {
@@ -650,7 +645,6 @@
       "epilogue fusion 相比单独写 kernel 的性能差距来自哪？",
       "跟手写 cuBLAS / Triton 的工程取舍？"
     ],
-    "link": "https://github.com/NVIDIA/cutlass",
     "logoSlug": "nvidia"
   },
   "flashattn": {
@@ -669,7 +663,6 @@
       "为什么 backward 选择 recompute 而不是存中间 softmax？",
       "跟 xformers memory-efficient attention 的本质差异？"
     ],
-    "link": "https://github.com/Dao-AILab/flash-attention",
     "logoSlug": null
   },
   "triton": {
@@ -688,7 +681,6 @@
       "autotune 的搜索空间怎么剪枝？",
       "torch.compile 用 Triton 做 codegen 的取舍？"
     ],
-    "link": "https://github.com/triton-lang/triton",
     "logoSlug": null
   },
   "nccl": {
@@ -707,7 +699,6 @@
       "和 MPI、Gloo 的设计哲学根本差异？",
       "GPUDirect RDMA 跳过 CPU 的具体路径？"
     ],
-    "link": "https://github.com/NVIDIA/nccl",
     "logoSlug": "nvidia"
   },
   "spark": {
@@ -726,7 +717,6 @@
       "AQE 解决了哪些静态优化的痛点？",
       "为什么 Spark 选 JVM 而不像 DuckDB 那样走 native？"
     ],
-    "link": "https://github.com/apache/spark",
     "logoSlug": "apachespark"
   },
   "flink": {
@@ -745,7 +735,6 @@
       "Flink 跟 Spark Structured Streaming 的本质差异？",
       "为什么 Flink 把 batch 当成 streaming 的特例？"
     ],
-    "link": "https://github.com/apache/flink",
     "logoSlug": "apacheflink"
   },
   "kafka": {
@@ -764,7 +753,6 @@
       "consumer rebalance 为什么慢？cooperative rebalance 怎么改进？",
       "Kafka 跟 Pulsar 在存算分离上的设计差异？"
     ],
-    "link": "https://github.com/apache/kafka",
     "logoSlug": "apachekafka"
   },
   "iceberg": {
@@ -783,7 +771,6 @@
       "Iceberg vs Delta Lake vs Hudi 的核心架构差异？",
       "S3 上怎么做到原子提交？catalog 扮演什么角色？"
     ],
-    "link": "https://iceberg.apache.org/",
     "logoSlug": "apacheiceberg"
   },
   "duckdb": {
@@ -802,7 +789,6 @@
       "Parquet/Arrow 上的零拷贝怎么做到的？",
       "单机 OLAP 跟分布式 OLAP 的边界在哪？"
     ],
-    "link": "https://github.com/duckdb/duckdb",
     "logoSlug": "duckdb"
   },
   "clickhouse": {
@@ -821,7 +807,6 @@
       "ReplicatedMergeTree 怎么做副本同步？ZooKeeper 是瓶颈吗？",
       "ClickHouse 跟 Druid / Pinot 在实时摄入上的设计差异？"
     ],
-    "link": "https://github.com/ClickHouse/ClickHouse",
     "logoSlug": "clickhouse"
   },
   "etcd": {
@@ -839,7 +824,6 @@
       "为什么 etcd 用 boltdb/bbolt 而不是 LSM？",
       "K8s 把 etcd 打爆的常见模式有哪些，怎么缓解？"
     ],
-    "link": "https://etcd.io/",
     "logoSlug": "etcd"
   },
   "tikv": {
@@ -857,7 +841,6 @@
       "PD 的 TSO 单点会不会成为瓶颈？怎么扩展？",
       "热点 Region 的负载均衡是怎么做的？"
     ],
-    "link": "https://tikv.org/",
     "logoSlug": "tikv"
   },
   "cockroach": {
@@ -875,7 +858,6 @@
       "Serializable 隔离下的 read refresh 机制怎么避免 abort 风暴？",
       "对比 Spanner / TiDB，CRDB 的工程取舍？"
     ],
-    "link": "https://www.cockroachlabs.com/docs/",
     "logoSlug": "cockroachlabs"
   },
   "zookeeper": {
@@ -893,7 +875,6 @@
       "watch 的 one-shot 设计踩过哪些坑？",
       "session expiration 跟 ephemeral node 怎么协同避免脑裂？"
     ],
-    "link": "https://zookeeper.apache.org/",
     "logoSlug": "apachezookeeper"
   },
   "linux": {
@@ -912,7 +893,6 @@
       "namespace + cgroup 怎么共同实现容器隔离？",
       "eBPF 为什么能在内核里安全运行用户字节码？"
     ],
-    "link": "https://github.com/torvalds/linux",
     "logoSlug": "linux"
   },
   "nginx": {
@@ -931,7 +911,6 @@
       "worker 之间的负载均衡（accept_mutex / SO_REUSEPORT）怎么演进？",
       "tcp/http upstream keepalive 池的实现要点？"
     ],
-    "link": "https://github.com/nginx/nginx",
     "logoSlug": "nginx"
   },
   "cilium": {
@@ -950,7 +929,6 @@
       "sidecarless service mesh 相比 Istio sidecar 的工程取舍？",
       "Hubble 怎么在数据面零侵入做 L7 可观测？"
     ],
-    "link": "https://github.com/cilium/cilium",
     "logoSlug": "cilium"
   },
   "python": {
@@ -969,7 +947,6 @@
       "PEP 703 free-threaded CPython 对引用计数做了哪些改造？",
       "type hints 在 runtime 是否强制？"
     ],
-    "link": "https://docs.python.org/3/",
     "logoSlug": "python"
   },
   "cpp": {
@@ -988,7 +965,6 @@
       "C++20 coroutine 底层是什么？跟 stackful coroutine 取舍？",
       "pimpl 解决了 ABI 稳定的哪些问题？代价是什么？"
     ],
-    "link": "https://en.cppreference.com/w/cpp",
     "logoSlug": "cplusplus"
   },
   "rust": {
@@ -1007,7 +983,6 @@
       "Unsafe Rust 开了哪些特权？什么时候不得不用？",
       "declarative macro 跟 procedural macro 各自适合什么场景？"
     ],
-    "link": "https://doc.rust-lang.org/book/",
     "logoSlug": "rust"
   },
   "go": {
@@ -1026,7 +1001,6 @@
       "context.Context 的正确用法？cancel 信号怎么穿透到 syscall？",
       "sync.Pool 解决了什么？在 GC 时的行为？"
     ],
-    "link": "https://go.dev/doc/",
     "logoSlug": "go"
   },
   "java": {
@@ -1045,7 +1019,6 @@
       "Java 的 NIO 跟 Linux epoll 怎么对应？Netty 加了什么？",
       "Project Loom 的虚拟线程对 reactive 编程冲击有多大？"
     ],
-    "link": "https://docs.oracle.com/en/java/",
     "logoSlug": "openjdk"
   },
   "scala": {
@@ -1064,7 +1037,6 @@
       "Akka actor model 跟 Erlang OTP 的取舍？",
       "Type class 模式在 Scala 怎么实现？对比 Haskell 有何阉割？"
     ],
-    "link": "https://docs.scala-lang.org/",
     "logoSlug": "scala"
   },
   "c": {
@@ -1083,7 +1055,6 @@
       "signed integer overflow 是 UB 这件事对编译器优化意味着什么？",
       "restrict 关键字到底能给优化器带来多少收益？"
     ],
-    "link": "https://en.cppreference.com/w/c",
     "logoSlug": "c"
   },
   "cuda-cpp": {
@@ -1102,7 +1073,6 @@
       "为什么提高 occupancy 不一定提高吞吐？",
       "CUDA Graph 相比传统 stream 的 launch overhead 优化在哪？"
     ],
-    "link": "https://docs.nvidia.com/cuda/cuda-c-programming-guide/",
     "logoSlug": "nvidia"
   },
   "ptx": {
@@ -1121,7 +1091,6 @@
       "mma.sync 指令的 fragment 布局跟 tensor core 硬件如何对应？",
       "ptxas 的优化等级 -O3 vs -O0 实际能差出多少？"
     ],
-    "link": "https://docs.nvidia.com/cuda/parallel-thread-execution/",
     "logoSlug": "nvidia"
   },
   "assembly": {
@@ -1140,7 +1109,6 @@
       "RISC-V vector extension 跟 x86 SIMD 的设计哲学差异？",
       "为什么 syscall 要走特定寄存器约定？"
     ],
-    "link": "https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html",
     "logoSlug": null
   }
 }

@@ -24,8 +24,6 @@ export interface GraphNode {
   id: string;
   type: NodeType;
   label: string;
-  href: string;
-  external?: boolean;
   resources?: NodeResource[];
 }
 
@@ -35,15 +33,9 @@ export interface GraphEdge {
   kind: EdgeKind;
 }
 
-export interface GraphData {
-  nodes: GraphNode[];
-  edges: GraphEdge[];
-}
-
 export interface NodeDetail {
   blurb: string;
   concepts: string[];
   questions: string[];
-  link?: string;
   logoSlug?: string | null;
 }
