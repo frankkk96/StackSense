@@ -1,6 +1,6 @@
-import Graph from '../components/Graph';
-import { siteTitle } from '../src/data/site';
-import { DEFAULT_LOCALE } from '../src/data/types';
+import Graph from '@/components/Graph/Graph';
+import { siteTitle } from '@/data/site';
+import { DEFAULT_LOCALE } from '@/data/types';
 
 export const metadata = {
   title: `StackSense · ${siteTitle[DEFAULT_LOCALE]}`,

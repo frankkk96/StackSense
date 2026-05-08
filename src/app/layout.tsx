@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from 'next';
-import { siteTitle, siteDescription } from '../src/data/site';
-import { DEFAULT_LOCALE } from '../src/data/types';
-import '../src/styles/global.css';
+import { siteTitle, siteDescription } from '@/data/site';
+import { DEFAULT_LOCALE } from '@/data/types';
+
+import '@/styles/globals.css';
 
 // Build-time metadata uses the default locale. The runtime UI swaps strings
 // client-side based on the user's saved preference, but search engines and
@@ -54,7 +55,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>{children}</body>
+      <body className="bg-bg text-text font-sans text-base leading-normal">
+        {children}
+      </body>
     </html>
   );
 }

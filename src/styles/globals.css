@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --color-text:     rgb(242 241 236);
+  --color-bg:       rgb(22 23 23);
+  --color-bg-muted: rgb(32 33 34);
+  --color-bg-elev:  rgb(28 29 30);
+  --color-border:   rgb(242 241 236);
+  --color-accent:   rgb(242 241 236);
+
+  --font-sans:
+    Inter, 'Noto Sans SC', system-ui, ui-sans-serif, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono:
+    'JetBrains Mono', 'Fira Code', Consolas, ui-monospace, SFMono-Regular, Menlo,
+    Monaco, 'Liberation Mono', 'Courier New', monospace;
+
+  --breakpoint-md: 720px;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-image:
+      radial-gradient(ellipse 80% 60% at 15% 0%, rgb(242 241 236 / 0.04), transparent 60%),
+      radial-gradient(ellipse 60% 50% at 100% 30%, rgb(242 241 236 / 0.025), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgb(242 241 236 / 0.3);
+    color: rgb(242 241 236);
+  }
+}
+
+@layer components {
+  /* Faint dot grid behind the graph — pseudo-element with a tiled radial gradient. */
+  .dot-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgb(242 241 236 / 0.06) 1px, transparent 0);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+}

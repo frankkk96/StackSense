@@ -1,9 +1,6 @@
 import type { Locale } from './types';
 
-interface LocalizedString {
-  en: string;
-  zh: string;
-}
+type LocalizedString = Record<Locale, string>;
 
 export const siteTitle: LocalizedString = {
   en: 'AI Stack Knowledge Graph',
@@ -16,7 +13,3 @@ export const siteDescription: LocalizedString = {
 };
 
 export const contactEmail = 'frank@stacksense.cc';
-
-export function pickLocalized(s: LocalizedString, locale: Locale): string {
-  return s[locale];
-}

@@ -7,7 +7,6 @@ import type { Locale, NodeType } from '../data/types';
 export interface UIStrings {
   searchPlaceholder: string;
   searchAria: string;
-  resultsHeader: (n: number) => string;
 
   zoomIn: string;
   zoomOut: string;
@@ -28,7 +27,6 @@ export interface UIStrings {
 const en: UIStrings = {
   searchPlaceholder: 'Search nodes…',
   searchAria: 'Search nodes',
-  resultsHeader: () => 'Results',
 
   zoomIn: 'Zoom in',
   zoomOut: 'Zoom out',
@@ -37,7 +35,7 @@ const en: UIStrings = {
 
   sectionResources: (n) => `Resources · ${n}`,
   sectionConcepts: 'Core concepts',
-  sectionQuestions: "Questions you should be able to answer",
+  sectionQuestions: 'Questions you should be able to answer',
   sectionRelated: (n) => `Related nodes · ${n}`,
   jumpTo: (label) => `Jump to ${label}`,
 
@@ -53,7 +51,6 @@ const en: UIStrings = {
 const zh: UIStrings = {
   searchPlaceholder: '搜索节点…',
   searchAria: '搜索节点',
-  resultsHeader: () => '结果',
 
   zoomIn: '放大',
   zoomOut: '缩小',
