@@ -4,11 +4,7 @@ An interactive knowledge graph for AI / Data / Systems engineering. Every node i
 
 Live: <https://stacksense.cc>
 
-## What's in this repo
-
-- [`src/data/graph.{en,zh}.json`](src/data) — the nodes and edges. Edges only carry IDs, so the EN file is the canonical topology; both locales render the same graph.
-- [`src/data/details.{en,zh}.json`](src/data) — per-node `blurb`, `concepts`, and `questions`.
-- [`src/i18n/strings.ts`](src/i18n/strings.ts) — UI chrome strings (search placeholder, section headings, etc.).
+![StackSense home page](docs/screenshot.png)
 
 Corrections, missing nodes, and better blurbs are very welcome — open an issue or PR.
 
