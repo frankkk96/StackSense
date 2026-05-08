@@ -26,7 +26,6 @@ import { useGraphSearch } from '@/hooks/useGraphSearch';
 
 import { GraphHeader } from './GraphHeader';
 import { LangSwitcher } from './LangSwitcher';
-import { MaintainedBy } from './MaintainedBy';
 import { ZoomControls } from './ZoomControls';
 import { SidePanel } from '@/components/SidePanel/SidePanel';
 
@@ -317,7 +316,6 @@ export default function Graph() {
       />
 
       <LangSwitcher locale={locale} switchLocale={switchLocale} t={t} />
-      <MaintainedBy />
 
       <div ref={containerRef} className="absolute inset-0 z-[1] [&_canvas]:cursor-grab [&_canvas:active]:cursor-grabbing">
         {size.w > 0 && size.h > 0 && (
