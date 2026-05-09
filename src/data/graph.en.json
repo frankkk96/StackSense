@@ -2261,6 +2261,449 @@
           "href": "https://github.com/envoyproxy/envoy"
         }
       ]
+    },
+    {
+      "id": "databricks",
+      "type": "product",
+      "label": "Databricks",
+      "domain": "Data",
+      "tags": [
+        "Lakehouse",
+        "Photon",
+        "Unity Catalog",
+        "MLflow"
+      ],
+      "homepage": "https://www.databricks.com",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "Databricks Engineering Blog",
+          "href": "https://www.databricks.com/blog/category/engineering"
+        },
+        {
+          "kind": "paper",
+          "label": "Lakehouse · Armbrust 2021 (CIDR)",
+          "href": "https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf"
+        },
+        {
+          "kind": "paper",
+          "label": "Photon · SIGMOD 2022",
+          "href": "https://www.databricks.com/wp-content/uploads/2022/07/photon-sigmod-2022.pdf"
+        },
+        {
+          "kind": "docs",
+          "label": "Unity Catalog (open source)",
+          "href": "https://www.unitycatalog.io/"
+        }
+      ]
+    },
+    {
+      "id": "snowflake",
+      "type": "product",
+      "label": "Snowflake",
+      "domain": "Data",
+      "tags": [
+        "Cloud Data Warehouse",
+        "Storage-Compute Separation",
+        "Micro-partition"
+      ],
+      "homepage": "https://www.snowflake.com",
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "The Snowflake Elastic DW · SIGMOD 2016",
+          "href": "https://event.cwi.nl/lsde/papers/p215-dageville-snowflake.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "Snowflake Engineering Blog",
+          "href": "https://www.snowflake.com/blog/"
+        },
+        {
+          "kind": "docs",
+          "label": "Snowflake Docs",
+          "href": "https://docs.snowflake.com/"
+        }
+      ]
+    },
+    {
+      "id": "bigquery",
+      "type": "product",
+      "label": "BigQuery",
+      "domain": "Data",
+      "tags": [
+        "Serverless DW",
+        "Dremel",
+        "Capacitor",
+        "BI Engine"
+      ],
+      "homepage": "https://cloud.google.com/bigquery",
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Dremel · VLDB 2010",
+          "href": "https://research.google/pubs/dremel-interactive-analysis-of-web-scale-datasets-2/"
+        },
+        {
+          "kind": "paper",
+          "label": "Dremel: A Decade of SQL · VLDB 2020",
+          "href": "https://research.google/pubs/dremel-a-decade-of-interactive-sql-analysis-at-web-scale/"
+        },
+        {
+          "kind": "docs",
+          "label": "BigQuery Docs",
+          "href": "https://cloud.google.com/bigquery/docs"
+        }
+      ]
+    },
+    {
+      "id": "dbt",
+      "type": "product",
+      "label": "dbt",
+      "domain": "Data",
+      "tags": [
+        "Analytics Engineering",
+        "SQL Transformation",
+        "ELT"
+      ],
+      "homepage": "https://www.getdbt.com",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "dbt Developer Docs",
+          "href": "https://docs.getdbt.com/"
+        },
+        {
+          "kind": "project",
+          "label": "dbt-core (GitHub)",
+          "href": "https://github.com/dbt-labs/dbt-core"
+        },
+        {
+          "kind": "site",
+          "label": "Analytics Engineering Roundup",
+          "href": "https://roundup.getdbt.com/"
+        }
+      ]
+    },
+    {
+      "id": "confluent",
+      "type": "product",
+      "label": "Confluent",
+      "domain": "Data",
+      "tags": [
+        "Kafka",
+        "Tiered Storage",
+        "ksqlDB",
+        "Schema Registry"
+      ],
+      "homepage": "https://www.confluent.io",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "Confluent Engineering Blog",
+          "href": "https://www.confluent.io/blog/"
+        },
+        {
+          "kind": "docs",
+          "label": "Confluent Platform Docs",
+          "href": "https://docs.confluent.io/"
+        },
+        {
+          "kind": "site",
+          "label": "Kafka Improvement Proposals (KIPs)",
+          "href": "https://cwiki.apache.org/confluence/display/KAFKA/Kafka+Improvement+Proposals"
+        }
+      ]
+    },
+    {
+      "id": "mongodb",
+      "type": "product",
+      "label": "MongoDB",
+      "domain": "Data",
+      "tags": [
+        "Document DB",
+        "Replica Set",
+        "Sharding",
+        "WiredTiger"
+      ],
+      "homepage": "https://www.mongodb.com",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "MongoDB Manual",
+          "href": "https://www.mongodb.com/docs/manual/"
+        },
+        {
+          "kind": "site",
+          "label": "MongoDB Engineering Blog",
+          "href": "https://www.mongodb.com/blog/channel/engineering-blog"
+        },
+        {
+          "kind": "project",
+          "label": "mongo (GitHub)",
+          "href": "https://github.com/mongodb/mongo"
+        }
+      ]
+    },
+    {
+      "id": "elasticsearch",
+      "type": "product",
+      "label": "Elasticsearch",
+      "domain": "Data",
+      "tags": [
+        "Search",
+        "Lucene",
+        "Inverted Index",
+        "Observability"
+      ],
+      "homepage": "https://www.elastic.co",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "Elasticsearch Reference",
+          "href": "https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html"
+        },
+        {
+          "kind": "site",
+          "label": "Elastic Search Labs",
+          "href": "https://www.elastic.co/search-labs"
+        },
+        {
+          "kind": "project",
+          "label": "elasticsearch (GitHub)",
+          "href": "https://github.com/elastic/elasticsearch"
+        }
+      ]
+    },
+    {
+      "id": "openai",
+      "type": "product",
+      "label": "OpenAI",
+      "domain": "AI",
+      "tags": [
+        "GPT",
+        "ChatGPT",
+        "Frontier Lab",
+        "Reasoning"
+      ],
+      "homepage": "https://openai.com",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "OpenAI Research",
+          "href": "https://openai.com/research"
+        },
+        {
+          "kind": "paper",
+          "label": "GPT-4 Technical Report",
+          "href": "https://arxiv.org/abs/2303.08774"
+        },
+        {
+          "kind": "paper",
+          "label": "InstructGPT (RLHF)",
+          "href": "https://arxiv.org/abs/2203.02155"
+        },
+        {
+          "kind": "paper",
+          "label": "Scaling Laws · Kaplan 2020",
+          "href": "https://arxiv.org/abs/2001.08361"
+        }
+      ]
+    },
+    {
+      "id": "anthropic",
+      "type": "product",
+      "label": "Anthropic",
+      "domain": "AI",
+      "tags": [
+        "Claude",
+        "Constitutional AI",
+        "Interpretability",
+        "MCP"
+      ],
+      "homepage": "https://www.anthropic.com",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "Anthropic Research",
+          "href": "https://www.anthropic.com/research"
+        },
+        {
+          "kind": "paper",
+          "label": "Constitutional AI",
+          "href": "https://arxiv.org/abs/2212.08073"
+        },
+        {
+          "kind": "paper",
+          "label": "Transformer Circuits Thread",
+          "href": "https://transformer-circuits.pub/"
+        },
+        {
+          "kind": "docs",
+          "label": "Model Context Protocol (MCP)",
+          "href": "https://modelcontextprotocol.io/"
+        }
+      ]
+    },
+    {
+      "id": "huggingface",
+      "type": "product",
+      "label": "Hugging Face",
+      "domain": "AI",
+      "tags": [
+        "Model Hub",
+        "Datasets",
+        "Spaces",
+        "Open Source"
+      ],
+      "homepage": "https://huggingface.co",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "Hugging Face Blog",
+          "href": "https://huggingface.co/blog"
+        },
+        {
+          "kind": "docs",
+          "label": "Hub Docs",
+          "href": "https://huggingface.co/docs/hub/index"
+        },
+        {
+          "kind": "site",
+          "label": "Open LLM Leaderboard",
+          "href": "https://huggingface.co/open-llm-leaderboard"
+        }
+      ]
+    },
+    {
+      "id": "langchain",
+      "type": "product",
+      "label": "LangChain",
+      "domain": "AI",
+      "tags": [
+        "LLM Orchestration",
+        "Agents",
+        "RAG",
+        "LangGraph"
+      ],
+      "homepage": "https://www.langchain.com",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "LangChain Docs",
+          "href": "https://python.langchain.com/"
+        },
+        {
+          "kind": "project",
+          "label": "langchain (GitHub)",
+          "href": "https://github.com/langchain-ai/langchain"
+        },
+        {
+          "kind": "docs",
+          "label": "LangGraph",
+          "href": "https://langchain-ai.github.io/langgraph/"
+        },
+        {
+          "kind": "docs",
+          "label": "LangSmith",
+          "href": "https://docs.smith.langchain.com/"
+        }
+      ]
+    },
+    {
+      "id": "pinecone",
+      "type": "product",
+      "label": "Pinecone",
+      "domain": "AI",
+      "tags": [
+        "Vector DB",
+        "ANN",
+        "Embeddings",
+        "Hybrid Search"
+      ],
+      "homepage": "https://www.pinecone.io",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "Pinecone Docs",
+          "href": "https://docs.pinecone.io/"
+        },
+        {
+          "kind": "site",
+          "label": "Pinecone Learning Center",
+          "href": "https://www.pinecone.io/learn/"
+        },
+        {
+          "kind": "site",
+          "label": "Pinecone Engineering Blog",
+          "href": "https://www.pinecone.io/blog/"
+        }
+      ]
+    },
+    {
+      "id": "cloudflare",
+      "type": "product",
+      "label": "Cloudflare",
+      "domain": "Systems",
+      "tags": [
+        "CDN",
+        "Edge Compute",
+        "Workers",
+        "DDoS"
+      ],
+      "homepage": "https://www.cloudflare.com",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "Cloudflare Blog",
+          "href": "https://blog.cloudflare.com/"
+        },
+        {
+          "kind": "docs",
+          "label": "Workers Docs",
+          "href": "https://developers.cloudflare.com/workers/"
+        },
+        {
+          "kind": "project",
+          "label": "Pingora (GitHub)",
+          "href": "https://github.com/cloudflare/pingora"
+        },
+        {
+          "kind": "project",
+          "label": "workerd (GitHub)",
+          "href": "https://github.com/cloudflare/workerd"
+        }
+      ]
+    },
+    {
+      "id": "vercel",
+      "type": "product",
+      "label": "Vercel",
+      "domain": "Systems",
+      "tags": [
+        "Frontend Cloud",
+        "Next.js",
+        "Edge Functions",
+        "Preview Deploys"
+      ],
+      "homepage": "https://vercel.com",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "Vercel Blog",
+          "href": "https://vercel.com/blog"
+        },
+        {
+          "kind": "docs",
+          "label": "Next.js Docs",
+          "href": "https://nextjs.org/docs"
+        },
+        {
+          "kind": "site",
+          "label": "Vercel Engineering",
+          "href": "https://vercel.com/blog/category/engineering"
+        }
+      ]
     }
   ],
   "edges": [
@@ -3779,6 +4222,134 @@
     {
       "from": "rocksdb",
       "to": "kafka"
+    },
+    {
+      "from": "spark",
+      "to": "databricks"
+    },
+    {
+      "from": "delta-lake",
+      "to": "databricks"
+    },
+    {
+      "from": "parquet",
+      "to": "snowflake"
+    },
+    {
+      "from": "iceberg",
+      "to": "snowflake"
+    },
+    {
+      "from": "arrow",
+      "to": "snowflake"
+    },
+    {
+      "from": "parquet",
+      "to": "bigquery"
+    },
+    {
+      "from": "iceberg",
+      "to": "bigquery"
+    },
+    {
+      "from": "arrow",
+      "to": "bigquery"
+    },
+    {
+      "from": "snowflake",
+      "to": "dbt"
+    },
+    {
+      "from": "bigquery",
+      "to": "dbt"
+    },
+    {
+      "from": "databricks",
+      "to": "dbt"
+    },
+    {
+      "from": "kafka",
+      "to": "confluent"
+    },
+    {
+      "from": "consistent-hashing",
+      "to": "mongodb"
+    },
+    {
+      "from": "two-phase-commit",
+      "to": "mongodb"
+    },
+    {
+      "from": "java",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "gpt",
+      "to": "openai"
+    },
+    {
+      "from": "rlhf",
+      "to": "openai"
+    },
+    {
+      "from": "scaling-laws",
+      "to": "openai"
+    },
+    {
+      "from": "transformer",
+      "to": "anthropic"
+    },
+    {
+      "from": "rlhf",
+      "to": "anthropic"
+    },
+    {
+      "from": "hf-transformers",
+      "to": "huggingface"
+    },
+    {
+      "from": "llama",
+      "to": "huggingface"
+    },
+    {
+      "from": "transformer",
+      "to": "huggingface"
+    },
+    {
+      "from": "gpt",
+      "to": "langchain"
+    },
+    {
+      "from": "openai",
+      "to": "langchain"
+    },
+    {
+      "from": "anthropic",
+      "to": "langchain"
+    },
+    {
+      "from": "clip",
+      "to": "pinecone"
+    },
+    {
+      "from": "word2vec",
+      "to": "pinecone"
+    },
+    {
+      "from": "rust",
+      "to": "cloudflare"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "cloudflare"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "vercel"
+    },
+    {
+      "from": "docker",
+      "to": "vercel"
     }
   ]
 }

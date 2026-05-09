@@ -43,6 +43,7 @@ const en: UIStrings = {
     project: 'Open-source project',
     concept: 'Concept',
     language: 'Language',
+    product: 'Product',
   },
 
   langSwitcherLabel: 'Switch language',
@@ -67,6 +68,7 @@ const zh: UIStrings = {
     project: '开源项目',
     concept: '概念 / 知识',
     language: '编程语言',
+    product: '产品',
   },
 
   langSwitcherLabel: '切换语言',

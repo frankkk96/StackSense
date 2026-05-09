@@ -1,7 +1,7 @@
 // Shared types for the knowledge graph. Pure data lives in graph.json /
 // details.json; this file only defines the shape they conform to.
 
-export type NodeType = 'concept' | 'project' | 'language';
+export type NodeType = 'concept' | 'project' | 'language' | 'product';
 
 export type Domain = 'AI' | 'Data' | 'Systems' | 'Math' | 'Language';
 

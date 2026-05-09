@@ -187,6 +187,18 @@ export default function Graph() {
           textColor = THEME.BG_DEEP;
           break;
         }
+        case 'product': {
+          roundRect(ctx, x - w / 2, y - h / 2, w, h, 5);
+          ctx.fillStyle = highlight
+            ? THEME.PRODUCT_FILL_HOVER
+            : THEME.PRODUCT_FILL;
+          ctx.fill();
+          ctx.lineWidth = highlight ? 1.4 : 1;
+          ctx.strokeStyle = highlight ? THEME.BG_DEEP : THEME.PRODUCT_BORDER;
+          ctx.stroke();
+          textColor = THEME.BG_DEEP;
+          break;
+        }
         case 'concept': {
           const cut = 7;
           ctx.beginPath();

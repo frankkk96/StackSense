@@ -27,6 +27,9 @@ export const THEME = {
   ACCENT: 'rgb(242, 241, 236)',
   PROJECT_FILL: 'rgb(232, 231, 224)', // opaque, slightly recessed from ACCENT
   PROJECT_FILL_HOVER: 'rgb(242, 241, 236)',
+  PRODUCT_FILL: 'rgb(220, 213, 196)', // warmer beige to set products apart from OSS projects
+  PRODUCT_FILL_HOVER: 'rgb(232, 224, 205)',
+  PRODUCT_BORDER: 'rgba(20, 21, 22, 0.32)',
   CONCEPT_FILL: 'rgb(20, 21, 22)', // opaque deep
   CONCEPT_FILL_HOVER: 'rgb(38, 38, 38)',
   LANGUAGE_FILL: 'rgb(28, 29, 30)', // opaque
@@ -81,6 +84,8 @@ export function shapeWidth(n: { type: NodeType; label: string }): number {
   const tw = measureLabelWidth(n.label, n.type);
   switch (n.type) {
     case 'project':
+      return Math.max(60, tw + 22);
+    case 'product':
       return Math.max(60, tw + 22);
     case 'concept':
       return Math.max(70, tw + 32);

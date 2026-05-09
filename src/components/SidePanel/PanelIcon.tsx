@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Braces, Lightbulb } from 'lucide-react';
+import { Box, Braces, Briefcase, Lightbulb } from 'lucide-react';
 import type { NodeType } from '@/data/types';
 import { faviconUrl } from '@/lib/graph-data';
 
@@ -7,6 +7,7 @@ const TYPE_ICON: Record<NodeType, typeof Box> = {
   project: Box,
   concept: Lightbulb,
   language: Braces,
+  product: Briefcase,
 };
 
 const ICON_FRAME =

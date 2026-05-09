@@ -20,6 +20,8 @@ const CHIP_VARIANT_BY_TYPE: Record<NodeType, string> = {
   concept: 'bg-transparent border-border/30',
   language:
     'font-mono text-[11.5px] tracking-[0.02em] bg-bg-muted/60 border-border/20',
+  product:
+    'bg-accent/[0.07] border-accent/40 text-accent/95 hover:bg-accent/15 hover:border-accent/60 hover:text-accent',
 };
 
 export function SidePanel({ panel, onClose, onSelectNode, locale }: Props) {
