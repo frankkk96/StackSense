@@ -2704,6 +2704,3239 @@
           "href": "https://vercel.com/blog/category/engineering"
         }
       ]
+    },
+    {
+      "id": "hnsw",
+      "type": "concept",
+      "label": "HNSW",
+      "domain": "AI",
+      "tags": [
+        "ANN",
+        "图索引",
+        "向量检索"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Malkov & Yashunin · HNSW (2016)",
+          "href": "https://arxiv.org/abs/1603.09320"
+        },
+        {
+          "kind": "project",
+          "label": "hnswlib",
+          "href": "https://github.com/nmslib/hnswlib"
+        },
+        {
+          "kind": "site",
+          "label": "Pinecone · HNSW explained",
+          "href": "https://www.pinecone.io/learn/series/faiss/hnsw/"
+        }
+      ]
+    },
+    {
+      "id": "ivf-pq",
+      "type": "concept",
+      "label": "IVF / PQ",
+      "domain": "AI",
+      "tags": [
+        "ANN",
+        "量化",
+        "向量检索"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Jegou et al · Product Quantization (2011)",
+          "href": "https://hal.inria.fr/inria-00514462v2/document"
+        },
+        {
+          "kind": "site",
+          "label": "FAISS · IVF & PQ wiki",
+          "href": "https://github.com/facebookresearch/faiss/wiki/Faiss-indexes"
+        },
+        {
+          "kind": "site",
+          "label": "Pinecone · PQ explained",
+          "href": "https://www.pinecone.io/learn/series/faiss/product-quantization/"
+        }
+      ]
+    },
+    {
+      "id": "faiss",
+      "type": "project",
+      "label": "FAISS",
+      "domain": "AI",
+      "tags": [
+        "向量检索",
+        "ANN",
+        "库"
+      ],
+      "homepage": "https://faiss.ai",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "facebookresearch/faiss",
+          "href": "https://github.com/facebookresearch/faiss"
+        },
+        {
+          "kind": "paper",
+          "label": "Johnson et al · Billion-scale similarity search (2017)",
+          "href": "https://arxiv.org/abs/1702.08734"
+        },
+        {
+          "kind": "docs",
+          "label": "FAISS wiki",
+          "href": "https://github.com/facebookresearch/faiss/wiki"
+        }
+      ]
+    },
+    {
+      "id": "milvus",
+      "type": "product",
+      "label": "Milvus",
+      "domain": "AI",
+      "tags": [
+        "向量库",
+        "ANN",
+        "开源",
+        "Cloud Native"
+      ],
+      "homepage": "https://milvus.io",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "Milvus Docs",
+          "href": "https://milvus.io/docs"
+        },
+        {
+          "kind": "paper",
+          "label": "Milvus · SIGMOD 2021",
+          "href": "https://www.cs.purdue.edu/homes/csjgwang/pubs/SIGMOD21_Milvus.pdf"
+        },
+        {
+          "kind": "project",
+          "label": "milvus-io/milvus",
+          "href": "https://github.com/milvus-io/milvus"
+        }
+      ]
+    },
+    {
+      "id": "weaviate",
+      "type": "product",
+      "label": "Weaviate",
+      "domain": "AI",
+      "tags": [
+        "向量库",
+        "混合检索",
+        "GraphQL",
+        "开源"
+      ],
+      "homepage": "https://weaviate.io",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "Weaviate Docs",
+          "href": "https://weaviate.io/developers/weaviate"
+        },
+        {
+          "kind": "project",
+          "label": "weaviate/weaviate",
+          "href": "https://github.com/weaviate/weaviate"
+        },
+        {
+          "kind": "site",
+          "label": "Weaviate Blog",
+          "href": "https://weaviate.io/blog"
+        }
+      ]
+    },
+    {
+      "id": "qdrant",
+      "type": "product",
+      "label": "Qdrant",
+      "domain": "AI",
+      "tags": [
+        "向量库",
+        "ANN",
+        "Rust",
+        "过滤"
+      ],
+      "homepage": "https://qdrant.tech",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "Qdrant Docs",
+          "href": "https://qdrant.tech/documentation/"
+        },
+        {
+          "kind": "project",
+          "label": "qdrant/qdrant",
+          "href": "https://github.com/qdrant/qdrant"
+        },
+        {
+          "kind": "site",
+          "label": "Qdrant Benchmarks",
+          "href": "https://qdrant.tech/benchmarks/"
+        }
+      ]
+    },
+    {
+      "id": "chroma",
+      "type": "product",
+      "label": "Chroma",
+      "domain": "AI",
+      "tags": [
+        "向量库",
+        "Embedding",
+        "RAG",
+        "嵌入式"
+      ],
+      "homepage": "https://www.trychroma.com",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "Chroma Docs",
+          "href": "https://docs.trychroma.com/"
+        },
+        {
+          "kind": "project",
+          "label": "chroma-core/chroma",
+          "href": "https://github.com/chroma-core/chroma"
+        }
+      ]
+    },
+    {
+      "id": "pgvector",
+      "type": "project",
+      "label": "pgvector",
+      "domain": "AI",
+      "tags": [
+        "向量检索",
+        "Postgres 扩展",
+        "HNSW",
+        "IVF"
+      ],
+      "homepage": "https://github.com/pgvector/pgvector",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "pgvector/pgvector",
+          "href": "https://github.com/pgvector/pgvector"
+        },
+        {
+          "kind": "docs",
+          "label": "pgvector README",
+          "href": "https://github.com/pgvector/pgvector#readme"
+        }
+      ]
+    },
+    {
+      "id": "sentence-transformers",
+      "type": "project",
+      "label": "Sentence-Transformers",
+      "domain": "AI",
+      "tags": [
+        "Embedding",
+        "NLP",
+        "句子嵌入",
+        "Bi-encoder"
+      ],
+      "homepage": "https://www.sbert.net",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "SBERT.net",
+          "href": "https://www.sbert.net/"
+        },
+        {
+          "kind": "paper",
+          "label": "Reimers & Gurevych · Sentence-BERT (2019)",
+          "href": "https://arxiv.org/abs/1908.10084"
+        },
+        {
+          "kind": "project",
+          "label": "UKPLab/sentence-transformers",
+          "href": "https://github.com/UKPLab/sentence-transformers"
+        }
+      ]
+    },
+    {
+      "id": "colbert",
+      "type": "concept",
+      "label": "ColBERT / 后期交互",
+      "domain": "AI",
+      "tags": [
+        "检索",
+        "Late Interaction",
+        "Reranking"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Khattab & Zaharia · ColBERT (SIGIR 2020)",
+          "href": "https://arxiv.org/abs/2004.12832"
+        },
+        {
+          "kind": "paper",
+          "label": "ColBERTv2 (2021)",
+          "href": "https://arxiv.org/abs/2112.01488"
+        },
+        {
+          "kind": "project",
+          "label": "stanford-futuredata/ColBERT",
+          "href": "https://github.com/stanford-futuredata/ColBERT"
+        }
+      ]
+    },
+    {
+      "id": "rag",
+      "type": "concept",
+      "label": "RAG / 检索增强生成",
+      "domain": "AI",
+      "tags": [
+        "RAG",
+        "检索",
+        "LLM Application"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Lewis et al · RAG (NeurIPS 2020)",
+          "href": "https://arxiv.org/abs/2005.11401"
+        },
+        {
+          "kind": "site",
+          "label": "Pinecone · Learn RAG",
+          "href": "https://www.pinecone.io/learn/retrieval-augmented-generation/"
+        },
+        {
+          "kind": "paper",
+          "label": "Gao et al · RAG Survey (2023)",
+          "href": "https://arxiv.org/abs/2312.10997"
+        }
+      ]
+    },
+    {
+      "id": "llamaindex",
+      "type": "project",
+      "label": "LlamaIndex",
+      "domain": "AI",
+      "tags": [
+        "Data Framework",
+        "RAG",
+        "索引",
+        "LLM Orchestration"
+      ],
+      "homepage": "https://www.llamaindex.ai",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "LlamaIndex Docs",
+          "href": "https://docs.llamaindex.ai/"
+        },
+        {
+          "kind": "project",
+          "label": "run-llama/llama_index",
+          "href": "https://github.com/run-llama/llama_index"
+        }
+      ]
+    },
+    {
+      "id": "paged-attention",
+      "type": "concept",
+      "label": "PagedAttention",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "KV Cache",
+        "Memory Management"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Efficient Memory Management for LLM Serving · Kwon et al (SOSP 2023)",
+          "href": "https://arxiv.org/abs/2309.06180"
+        },
+        {
+          "kind": "docs",
+          "label": "vLLM PagedAttention design",
+          "href": "https://blog.vllm.ai/2023/06/20/vllm.html"
+        }
+      ]
+    },
+    {
+      "id": "prefix-caching",
+      "type": "concept",
+      "label": "前缀缓存",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "KV Cache",
+        "Cache Reuse"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "SGLang · RadixAttention (2023)",
+          "href": "https://arxiv.org/abs/2312.07104"
+        },
+        {
+          "kind": "docs",
+          "label": "vLLM Automatic Prefix Caching",
+          "href": "https://docs.vllm.ai/en/latest/features/automatic_prefix_caching.html"
+        }
+      ]
+    },
+    {
+      "id": "bpe-tokenization",
+      "type": "concept",
+      "label": "BPE 分词",
+      "domain": "AI",
+      "tags": [
+        "NLP",
+        "分词",
+        "BPE"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Sennrich et al · Neural Machine Translation of Rare Words with Subword Units (BPE, 2016)",
+          "href": "https://arxiv.org/abs/1508.07909"
+        },
+        {
+          "kind": "project",
+          "label": "tiktoken",
+          "href": "https://github.com/openai/tiktoken"
+        },
+        {
+          "kind": "project",
+          "label": "SentencePiece",
+          "href": "https://github.com/google/sentencepiece"
+        }
+      ]
+    },
+    {
+      "id": "gptq",
+      "type": "concept",
+      "label": "GPTQ 量化",
+      "domain": "AI",
+      "tags": [
+        "量化",
+        "推理",
+        "INT4"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Frantar et al · GPTQ (2022)",
+          "href": "https://arxiv.org/abs/2210.17323"
+        },
+        {
+          "kind": "project",
+          "label": "AutoGPTQ",
+          "href": "https://github.com/AutoGPTQ/AutoGPTQ"
+        }
+      ]
+    },
+    {
+      "id": "awq",
+      "type": "concept",
+      "label": "AWQ 量化",
+      "domain": "AI",
+      "tags": [
+        "量化",
+        "推理",
+        "INT4"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Lin et al · AWQ (MLSys 2024)",
+          "href": "https://arxiv.org/abs/2306.00978"
+        },
+        {
+          "kind": "project",
+          "label": "llm-awq",
+          "href": "https://github.com/mit-han-lab/llm-awq"
+        }
+      ]
+    },
+    {
+      "id": "smoothquant",
+      "type": "concept",
+      "label": "SmoothQuant",
+      "domain": "AI",
+      "tags": [
+        "量化",
+        "推理",
+        "INT8"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Xiao et al · SmoothQuant (ICML 2023)",
+          "href": "https://arxiv.org/abs/2211.10438"
+        }
+      ]
+    },
+    {
+      "id": "gguf",
+      "type": "concept",
+      "label": "GGUF 格式",
+      "domain": "AI",
+      "tags": [
+        "量化",
+        "Model Format",
+        "推理"
+      ],
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "GGUF spec",
+          "href": "https://github.com/ggerganov/ggml/blob/master/docs/gguf.md"
+        },
+        {
+          "kind": "project",
+          "label": "llama.cpp",
+          "href": "https://github.com/ggerganov/llama.cpp"
+        }
+      ]
+    },
+    {
+      "id": "llama-cpp",
+      "type": "project",
+      "label": "llama.cpp",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "推理引擎",
+        "端侧",
+        "GGUF"
+      ],
+      "homepage": "https://github.com/ggerganov/llama.cpp",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/ggerganov/llama.cpp"
+        },
+        {
+          "kind": "docs",
+          "label": "ggml library",
+          "href": "https://github.com/ggerganov/ggml"
+        }
+      ]
+    },
+    {
+      "id": "ollama",
+      "type": "project",
+      "label": "Ollama",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "端侧",
+        "LLM Serving",
+        "Developer UX"
+      ],
+      "homepage": "https://ollama.com",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/ollama/ollama"
+        },
+        {
+          "kind": "site",
+          "label": "Ollama",
+          "href": "https://ollama.com"
+        }
+      ]
+    },
+    {
+      "id": "sglang",
+      "type": "project",
+      "label": "SGLang",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "推理引擎",
+        "LLM Serving",
+        "RadixAttention"
+      ],
+      "homepage": "https://github.com/sgl-project/sglang",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/sgl-project/sglang"
+        },
+        {
+          "kind": "paper",
+          "label": "SGLang · RadixAttention (2023)",
+          "href": "https://arxiv.org/abs/2312.07104"
+        }
+      ]
+    },
+    {
+      "id": "tgi",
+      "type": "project",
+      "label": "Text Generation Inference (TGI)",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "推理引擎",
+        "LLM Serving"
+      ],
+      "homepage": "https://github.com/huggingface/text-generation-inference",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/huggingface/text-generation-inference"
+        },
+        {
+          "kind": "docs",
+          "label": "TGI Docs",
+          "href": "https://huggingface.co/docs/text-generation-inference"
+        }
+      ]
+    },
+    {
+      "id": "mlc-llm",
+      "type": "project",
+      "label": "MLC LLM",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "端侧",
+        "TVM",
+        "编译器"
+      ],
+      "homepage": "https://llm.mlc.ai",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/mlc-ai/mlc-llm"
+        },
+        {
+          "kind": "site",
+          "label": "MLC LLM",
+          "href": "https://llm.mlc.ai"
+        }
+      ]
+    },
+    {
+      "id": "prefill-decode-disagg",
+      "type": "concept",
+      "label": "Prefill/Decode 分离",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "LLM Serving",
+        "Scheduling"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Splitwise · Patel et al (ISCA 2024)",
+          "href": "https://arxiv.org/abs/2311.18677"
+        },
+        {
+          "kind": "paper",
+          "label": "DistServe (OSDI 2024)",
+          "href": "https://arxiv.org/abs/2401.09670"
+        }
+      ]
+    },
+    {
+      "id": "tensorflow",
+      "type": "project",
+      "label": "TensorFlow",
+      "domain": "AI",
+      "tags": [
+        "框架",
+        "Training Framework",
+        "Deep Learning",
+        "生产"
+      ],
+      "homepage": "https://www.tensorflow.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/tensorflow/tensorflow"
+        },
+        {
+          "kind": "docs",
+          "label": "文档",
+          "href": "https://www.tensorflow.org/api_docs"
+        },
+        {
+          "kind": "paper",
+          "label": "Abadi et al · TensorFlow (OSDI 2016)",
+          "href": "https://www.usenix.org/system/files/conference/osdi16/osdi16-abadi.pdf"
+        }
+      ]
+    },
+    {
+      "id": "keras",
+      "type": "project",
+      "label": "Keras",
+      "domain": "AI",
+      "tags": [
+        "框架",
+        "高层 API",
+        "Multi-backend"
+      ],
+      "homepage": "https://keras.io",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/keras-team/keras"
+        },
+        {
+          "kind": "docs",
+          "label": "文档",
+          "href": "https://keras.io/api/"
+        }
+      ]
+    },
+    {
+      "id": "lightning",
+      "type": "project",
+      "label": "PyTorch Lightning",
+      "domain": "AI",
+      "tags": [
+        "框架",
+        "Training Framework",
+        "Boilerplate Reduction"
+      ],
+      "homepage": "https://lightning.ai",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/Lightning-AI/pytorch-lightning"
+        },
+        {
+          "kind": "docs",
+          "label": "文档",
+          "href": "https://lightning.ai/docs/pytorch/stable/"
+        }
+      ]
+    },
+    {
+      "id": "accelerate",
+      "type": "project",
+      "label": "Hugging Face Accelerate",
+      "domain": "AI",
+      "tags": [
+        "框架",
+        "Distributed Training",
+        "多 GPU"
+      ],
+      "homepage": "https://huggingface.co/docs/accelerate",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/huggingface/accelerate"
+        },
+        {
+          "kind": "docs",
+          "label": "文档",
+          "href": "https://huggingface.co/docs/accelerate"
+        }
+      ]
+    },
+    {
+      "id": "colossal-ai",
+      "type": "project",
+      "label": "Colossal-AI",
+      "domain": "AI",
+      "tags": [
+        "Distributed Training",
+        "并行",
+        "LLM Training"
+      ],
+      "homepage": "https://colossalai.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/hpcaitech/ColossalAI"
+        },
+        {
+          "kind": "paper",
+          "label": "Li et al · Colossal-AI (2021)",
+          "href": "https://arxiv.org/abs/2110.14883"
+        }
+      ]
+    },
+    {
+      "id": "wandb",
+      "type": "product",
+      "label": "Weights & Biases",
+      "domain": "AI",
+      "tags": [
+        "实验追踪",
+        "MLOps",
+        "Artifacts",
+        "Sweeps"
+      ],
+      "homepage": "https://wandb.ai",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "wandb.ai",
+          "href": "https://wandb.ai"
+        },
+        {
+          "kind": "docs",
+          "label": "文档",
+          "href": "https://docs.wandb.ai/"
+        }
+      ]
+    },
+    {
+      "id": "mlflow",
+      "type": "project",
+      "label": "MLflow",
+      "domain": "AI",
+      "tags": [
+        "实验追踪",
+        "MLOps",
+        "模型注册"
+      ],
+      "homepage": "https://mlflow.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/mlflow/mlflow"
+        },
+        {
+          "kind": "docs",
+          "label": "文档",
+          "href": "https://mlflow.org/docs/latest/index.html"
+        }
+      ]
+    },
+    {
+      "id": "mixed-precision",
+      "type": "concept",
+      "label": "混合精度训练",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "Numerical Precision",
+        "Memory Optimization"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Micikevicius et al · Mixed Precision Training (2017)",
+          "href": "https://arxiv.org/abs/1710.03740"
+        },
+        {
+          "kind": "paper",
+          "label": "Micikevicius et al · FP8 Formats for Deep Learning (2022)",
+          "href": "https://arxiv.org/abs/2209.05433"
+        },
+        {
+          "kind": "docs",
+          "label": "PyTorch AMP",
+          "href": "https://pytorch.org/docs/stable/amp.html"
+        }
+      ]
+    },
+    {
+      "id": "tensor-parallel",
+      "type": "concept",
+      "label": "张量并行",
+      "domain": "AI",
+      "tags": [
+        "Distributed Training",
+        "并行",
+        "Model Parallelism"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Shoeybi et al · Megatron-LM (2019)",
+          "href": "https://arxiv.org/abs/1909.08053"
+        }
+      ]
+    },
+    {
+      "id": "pipeline-parallel",
+      "type": "concept",
+      "label": "流水并行",
+      "domain": "AI",
+      "tags": [
+        "Distributed Training",
+        "并行",
+        "Model Parallelism"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Huang et al · GPipe (2018)",
+          "href": "https://arxiv.org/abs/1811.06965"
+        },
+        {
+          "kind": "paper",
+          "label": "Narayanan et al · PipeDream (SOSP 2019)",
+          "href": "https://arxiv.org/abs/1806.03377"
+        }
+      ]
+    },
+    {
+      "id": "fsdp",
+      "type": "concept",
+      "label": "FSDP / 全分片数据并行",
+      "domain": "AI",
+      "tags": [
+        "Distributed Training",
+        "Memory Optimization",
+        "分片"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Zhao et al · PyTorch FSDP (2023)",
+          "href": "https://arxiv.org/abs/2304.11277"
+        },
+        {
+          "kind": "docs",
+          "label": "PyTorch FSDP",
+          "href": "https://pytorch.org/docs/stable/fsdp.html"
+        }
+      ]
+    },
+    {
+      "id": "gradient-checkpointing",
+      "type": "concept",
+      "label": "梯度检查点",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "Memory Optimization",
+        "Activation Recomputation"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Chen et al · Training Deep Nets with Sublinear Memory Cost (2016)",
+          "href": "https://arxiv.org/abs/1604.06174"
+        },
+        {
+          "kind": "docs",
+          "label": "PyTorch torch.utils.checkpoint",
+          "href": "https://pytorch.org/docs/stable/checkpoint.html"
+        }
+      ]
+    },
+    {
+      "id": "adamw",
+      "type": "concept",
+      "label": "AdamW",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "Optimizers",
+        "权重衰减"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Loshchilov & Hutter · Decoupled Weight Decay Regularization (2017)",
+          "href": "https://arxiv.org/abs/1711.05101"
+        }
+      ]
+    },
+    {
+      "id": "lr-schedule",
+      "type": "concept",
+      "label": "学习率调度",
+      "domain": "AI",
+      "tags": [
+        "训练",
+        "学习率",
+        "调度"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Loshchilov & Hutter · SGDR / Cosine Annealing (2016)",
+          "href": "https://arxiv.org/abs/1608.03983"
+        },
+        {
+          "kind": "paper",
+          "label": "Goyal et al · Linear LR Warmup (2017)",
+          "href": "https://arxiv.org/abs/1706.02677"
+        }
+      ]
+    },
+    {
+      "id": "rope",
+      "type": "concept",
+      "label": "RoPE / 旋转位置编码",
+      "domain": "AI",
+      "tags": [
+        "Model Architecture",
+        "位置编码",
+        "Transformer"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Su et al · RoFormer / RoPE (2021)",
+          "href": "https://arxiv.org/abs/2104.09864"
+        }
+      ]
+    },
+    {
+      "id": "rmsnorm",
+      "type": "concept",
+      "label": "RMSNorm / LayerNorm",
+      "domain": "AI",
+      "tags": [
+        "Model Architecture",
+        "归一化",
+        "Transformer"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Ba et al · Layer Normalization (2016)",
+          "href": "https://arxiv.org/abs/1607.06450"
+        },
+        {
+          "kind": "paper",
+          "label": "Zhang & Sennrich · Root Mean Square Layer Normalization (2019)",
+          "href": "https://arxiv.org/abs/1910.07467"
+        }
+      ]
+    },
+    {
+      "id": "nvidia-gpu",
+      "type": "concept",
+      "label": "NVIDIA GPU",
+      "domain": "Systems",
+      "tags": [
+        "硬件",
+        "GPU",
+        "Tensor Core",
+        "A100",
+        "H100"
+      ],
+      "resources": [
+        {
+          "kind": "site",
+          "label": "NVIDIA H100 datasheet",
+          "href": "https://www.nvidia.com/en-us/data-center/h100/"
+        },
+        {
+          "kind": "site",
+          "label": "Hopper Architecture Whitepaper",
+          "href": "https://resources.nvidia.com/en-us-tensor-core/nvidia-tensor-core-gpu-datasheet"
+        }
+      ]
+    },
+    {
+      "id": "tpu",
+      "type": "product",
+      "label": "Google TPU",
+      "domain": "Systems",
+      "tags": [
+        "硬件",
+        "AI Accelerator",
+        "Systolic Array"
+      ],
+      "homepage": "https://cloud.google.com/tpu",
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Jouppi et al · In-Datacenter Performance of a TPU (ISCA 2017)",
+          "href": "https://arxiv.org/abs/1704.04760"
+        },
+        {
+          "kind": "site",
+          "label": "Cloud TPU",
+          "href": "https://cloud.google.com/tpu"
+        }
+      ]
+    },
+    {
+      "id": "gpu-interconnect",
+      "type": "concept",
+      "label": "GPU 互联 (NVLink / InfiniBand)",
+      "domain": "Systems",
+      "tags": [
+        "硬件",
+        "Network",
+        "RDMA",
+        "NVLink"
+      ],
+      "resources": [
+        {
+          "kind": "site",
+          "label": "NVIDIA NVLink",
+          "href": "https://www.nvidia.com/en-us/data-center/nvlink/"
+        },
+        {
+          "kind": "site",
+          "label": "InfiniBand Trade Association",
+          "href": "https://www.infinibandta.org/"
+        }
+      ]
+    },
+    {
+      "id": "attention",
+      "type": "concept",
+      "label": "注意力机制",
+      "domain": "AI",
+      "tags": [
+        "Deep Learning Basics",
+        "Attention",
+        "Soft Alignment"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Bahdanau et al · Neural Machine Translation by Jointly Learning to Align and Translate (2014)",
+          "href": "https://arxiv.org/abs/1409.0473"
+        },
+        {
+          "kind": "paper",
+          "label": "Luong et al · Effective Approaches to Attention-based NMT (2015)",
+          "href": "https://arxiv.org/abs/1508.04025"
+        }
+      ]
+    },
+    {
+      "id": "self-attention",
+      "type": "concept",
+      "label": "Self-Attention",
+      "domain": "AI",
+      "tags": [
+        "Attention",
+        "Self-Attention",
+        "多头"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Vaswani et al · Attention Is All You Need (2017)",
+          "href": "https://arxiv.org/abs/1706.03762"
+        },
+        {
+          "kind": "site",
+          "label": "Illustrated Transformer · Jay Alammar",
+          "href": "https://jalammar.github.io/illustrated-transformer/"
+        }
+      ]
+    },
+    {
+      "id": "positional-encoding",
+      "type": "concept",
+      "label": "位置编码",
+      "domain": "AI",
+      "tags": [
+        "Transformer",
+        "Positional Encoding",
+        "RoPE"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "RoFormer · Su et al (RoPE)",
+          "href": "https://arxiv.org/abs/2104.09864"
+        },
+        {
+          "kind": "paper",
+          "label": "Press et al · ALiBi (2021)",
+          "href": "https://arxiv.org/abs/2108.12409"
+        }
+      ]
+    },
+    {
+      "id": "seq2seq",
+      "type": "concept",
+      "label": "Seq2Seq",
+      "domain": "AI",
+      "tags": [
+        "NLP",
+        "Encoder-Decoder",
+        "Machine Translation"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Sutskever et al · Sequence to Sequence Learning (2014)",
+          "href": "https://arxiv.org/abs/1409.3215"
+        },
+        {
+          "kind": "paper",
+          "label": "Cho et al · Encoder-Decoder GRU (2014)",
+          "href": "https://arxiv.org/abs/1406.1078"
+        }
+      ]
+    },
+    {
+      "id": "rnn-lstm",
+      "type": "concept",
+      "label": "RNN / LSTM / GRU",
+      "domain": "AI",
+      "tags": [
+        "Sequence Model",
+        "RNN",
+        "LSTM"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Hochreiter & Schmidhuber · LSTM (1997)",
+          "href": "https://www.bioinf.jku.at/publications/older/2604.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "colah · Understanding LSTM Networks",
+          "href": "https://colah.github.io/posts/2015-08-Understanding-LSTMs/"
+        }
+      ]
+    },
+    {
+      "id": "cnn",
+      "type": "concept",
+      "label": "卷积神经网络 (CNN)",
+      "domain": "AI",
+      "tags": [
+        "CV",
+        "CNN",
+        "卷积"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "LeCun et al · Gradient-Based Learning Applied to Document Recognition (1998)",
+          "href": "http://yann.lecun.com/exdb/publis/pdf/lecun-98.pdf"
+        },
+        {
+          "kind": "course",
+          "label": "Stanford CS231n",
+          "href": "https://cs231n.stanford.edu/"
+        }
+      ]
+    },
+    {
+      "id": "u-net",
+      "type": "concept",
+      "label": "U-Net",
+      "domain": "AI",
+      "tags": [
+        "CV",
+        "分割",
+        "Encoder-Decoder"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Ronneberger et al · U-Net (2015)",
+          "href": "https://arxiv.org/abs/1505.04597"
+        }
+      ]
+    },
+    {
+      "id": "vit",
+      "type": "concept",
+      "label": "Vision Transformer (ViT)",
+      "domain": "AI",
+      "tags": [
+        "Transformer",
+        "CV",
+        "Patch 嵌入",
+        "视觉"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Dosovitskiy et al · An Image is Worth 16x16 Words (2020)",
+          "href": "https://arxiv.org/abs/2010.11929"
+        },
+        {
+          "kind": "paper",
+          "label": "MAE · He et al (Masked Autoencoders)",
+          "href": "https://arxiv.org/abs/2111.06377"
+        }
+      ]
+    },
+    {
+      "id": "layer-norm",
+      "type": "concept",
+      "label": "Layer Normalization",
+      "domain": "AI",
+      "tags": [
+        "Deep Learning Basics",
+        "归一化",
+        "LayerNorm"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Ba et al · Layer Normalization (2016)",
+          "href": "https://arxiv.org/abs/1607.06450"
+        },
+        {
+          "kind": "paper",
+          "label": "Zhang & Sennrich · RMSNorm (2019)",
+          "href": "https://arxiv.org/abs/1910.07467"
+        }
+      ]
+    },
+    {
+      "id": "imagenet",
+      "type": "concept",
+      "label": "ImageNet",
+      "domain": "AI",
+      "tags": [
+        "CV",
+        "数据集",
+        "Benchmark"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Deng et al · ImageNet (2009)",
+          "href": "https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "image-net.org",
+          "href": "https://www.image-net.org/"
+        }
+      ]
+    },
+    {
+      "id": "decision-trees",
+      "type": "concept",
+      "label": "决策树 / GBDT",
+      "domain": "AI",
+      "tags": [
+        "经典 ML",
+        "Tree Models",
+        "Boosting"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Friedman · Greedy Function Approximation: A Gradient Boosting Machine",
+          "href": "https://jerryfriedman.su.domains/ftp/trebst.pdf"
+        },
+        {
+          "kind": "book",
+          "label": "ESL · Hastie, Tibshirani, Friedman",
+          "href": "https://hastie.su.domains/ElemStatLearn/"
+        }
+      ]
+    },
+    {
+      "id": "xgboost",
+      "type": "project",
+      "label": "XGBoost / LightGBM",
+      "domain": "AI",
+      "tags": [
+        "经典 ML",
+        "Gradient Boosting",
+        "表格"
+      ],
+      "homepage": "https://xgboost.readthedocs.io/",
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Chen & Guestrin · XGBoost (2016)",
+          "href": "https://arxiv.org/abs/1603.02754"
+        },
+        {
+          "kind": "paper",
+          "label": "Ke et al · LightGBM (2017)",
+          "href": "https://papers.nips.cc/paper/6907-lightgbm-a-highly-efficient-gradient-boosting-decision-tree.pdf"
+        },
+        {
+          "kind": "project",
+          "label": "dmlc/xgboost · GitHub",
+          "href": "https://github.com/dmlc/xgboost"
+        }
+      ]
+    },
+    {
+      "id": "svm",
+      "type": "concept",
+      "label": "支持向量机 (SVM)",
+      "domain": "AI",
+      "tags": [
+        "经典 ML",
+        "Kernel Methods",
+        "Max-Margin"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Cortes & Vapnik · Support-Vector Networks (1995)",
+          "href": "https://link.springer.com/article/10.1007/BF00994018"
+        }
+      ]
+    },
+    {
+      "id": "kmeans-clustering",
+      "type": "concept",
+      "label": "k-Means 聚类",
+      "domain": "AI",
+      "tags": [
+        "经典 ML",
+        "Unsupervised",
+        "聚类"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Lloyd · Least Squares Quantization in PCM (1982)",
+          "href": "https://cs.nyu.edu/~roweis/csc2515-2006/readings/lloyd57.pdf"
+        },
+        {
+          "kind": "book",
+          "label": "PRML · Bishop · Ch. 9",
+          "href": "https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/"
+        }
+      ]
+    },
+    {
+      "id": "pca",
+      "type": "concept",
+      "label": "PCA / 主成分分析",
+      "domain": "AI",
+      "tags": [
+        "经典 ML",
+        "降维",
+        "SVD"
+      ],
+      "resources": [
+        {
+          "kind": "site",
+          "label": "Tutorial on PCA · Jonathon Shlens",
+          "href": "https://arxiv.org/abs/1404.1100"
+        },
+        {
+          "kind": "paper",
+          "label": "van der Maaten & Hinton · t-SNE (2008)",
+          "href": "https://www.jmlr.org/papers/v9/vandermaaten08a.html"
+        },
+        {
+          "kind": "paper",
+          "label": "McInnes et al · UMAP (2018)",
+          "href": "https://arxiv.org/abs/1802.03426"
+        }
+      ]
+    },
+    {
+      "id": "alphago",
+      "type": "concept",
+      "label": "AlphaGo",
+      "domain": "AI",
+      "tags": [
+        "RL",
+        "自博弈",
+        "MCTS"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Silver et al · Mastering Go with Deep RL (AlphaGo, 2016)",
+          "href": "https://www.nature.com/articles/nature16961"
+        },
+        {
+          "kind": "paper",
+          "label": "Silver et al · AlphaZero (2017)",
+          "href": "https://arxiv.org/abs/1712.01815"
+        },
+        {
+          "kind": "paper",
+          "label": "Schrittwieser et al · MuZero (2019)",
+          "href": "https://arxiv.org/abs/1911.08265"
+        }
+      ]
+    },
+    {
+      "id": "alphafold",
+      "type": "concept",
+      "label": "AlphaFold",
+      "domain": "AI",
+      "tags": [
+        "Science",
+        "Structural Biology",
+        "蛋白质折叠"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Jumper et al · AlphaFold 2 (Nature, 2021)",
+          "href": "https://www.nature.com/articles/s41586-021-03819-2"
+        },
+        {
+          "kind": "project",
+          "label": "deepmind/alphafold · GitHub",
+          "href": "https://github.com/google-deepmind/alphafold"
+        }
+      ]
+    },
+    {
+      "id": "dpo",
+      "type": "concept",
+      "label": "DPO / 直接偏好优化",
+      "domain": "AI",
+      "tags": [
+        "偏好学习",
+        "对齐",
+        "DPO",
+        "RLHF Alternative",
+        "Preference Optimization"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Rafailov et al · DPO (2023)",
+          "href": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "kind": "paper",
+          "label": "ORPO · Hong et al",
+          "href": "https://arxiv.org/abs/2403.07691"
+        },
+        {
+          "kind": "paper",
+          "label": "KTO · Ethayarajh et al",
+          "href": "https://arxiv.org/abs/2402.01306"
+        }
+      ]
+    },
+    {
+      "id": "constitutional-ai",
+      "type": "concept",
+      "label": "Constitutional AI",
+      "domain": "AI",
+      "tags": [
+        "对齐",
+        "安全性",
+        "RLAIF",
+        "Self-Critique"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Bai et al · Constitutional AI (Anthropic, 2022)",
+          "href": "https://arxiv.org/abs/2212.08073"
+        },
+        {
+          "kind": "paper",
+          "label": "RLAIF · Lee et al",
+          "href": "https://arxiv.org/abs/2309.00267"
+        }
+      ]
+    },
+    {
+      "id": "chain-of-thought",
+      "type": "concept",
+      "label": "Chain-of-Thought",
+      "domain": "AI",
+      "tags": [
+        "推理",
+        "Prompting",
+        "In-Context Learning"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Wei et al · Chain-of-Thought Prompting (2022)",
+          "href": "https://arxiv.org/abs/2201.11903"
+        },
+        {
+          "kind": "paper",
+          "label": "Kojima et al · Zero-shot CoT (2022)",
+          "href": "https://arxiv.org/abs/2205.11916"
+        }
+      ]
+    },
+    {
+      "id": "stable-diffusion",
+      "type": "concept",
+      "label": "Stable Diffusion",
+      "domain": "AI",
+      "tags": [
+        "Generative Model",
+        "Diffusion",
+        "Text-to-Image",
+        "Latent Diffusion"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Rombach et al · High-Resolution Image Synthesis with Latent Diffusion (2022)",
+          "href": "https://arxiv.org/abs/2112.10752"
+        },
+        {
+          "kind": "project",
+          "label": "CompVis/stable-diffusion · GitHub",
+          "href": "https://github.com/CompVis/stable-diffusion"
+        },
+        {
+          "kind": "project",
+          "label": "Stability AI · stablediffusion (GitHub)",
+          "href": "https://github.com/Stability-AI/stablediffusion"
+        },
+        {
+          "kind": "project",
+          "label": "CompVis · latent-diffusion (GitHub)",
+          "href": "https://github.com/CompVis/latent-diffusion"
+        }
+      ]
+    },
+    {
+      "id": "whisper",
+      "type": "concept",
+      "label": "Whisper",
+      "domain": "AI",
+      "tags": [
+        "语音识别",
+        "多模态",
+        "Multilingual",
+        "Speech"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Radford et al · Robust Speech Recognition (Whisper, 2022)",
+          "href": "https://arxiv.org/abs/2212.04356"
+        },
+        {
+          "kind": "project",
+          "label": "openai/whisper · GitHub",
+          "href": "https://github.com/openai/whisper"
+        }
+      ]
+    },
+    {
+      "id": "t5",
+      "type": "concept",
+      "label": "T5",
+      "domain": "AI",
+      "tags": [
+        "NLP",
+        "Transformer",
+        "Encoder-Decoder LM"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Raffel et al · T5 (2019)",
+          "href": "https://arxiv.org/abs/1910.10683"
+        }
+      ]
+    },
+    {
+      "id": "controlnet",
+      "type": "concept",
+      "label": "ControlNet",
+      "domain": "AI",
+      "tags": [
+        "Generative Model",
+        "Conditional Generation",
+        "Image-to-Image"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Adding Conditional Control · Zhang et al (2023)",
+          "href": "https://arxiv.org/abs/2302.05543"
+        },
+        {
+          "kind": "project",
+          "label": "lllyasviel/ControlNet (GitHub)",
+          "href": "https://github.com/lllyasviel/ControlNet"
+        }
+      ]
+    },
+    {
+      "id": "sora",
+      "type": "concept",
+      "label": "Sora / DiT",
+      "domain": "AI",
+      "tags": [
+        "Generative Model",
+        "Video Generation",
+        "Diffusion Transformer"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Scalable Diffusion Models with Transformers · Peebles & Xie (2022)",
+          "href": "https://arxiv.org/abs/2212.09748"
+        },
+        {
+          "kind": "site",
+          "label": "OpenAI · Video generation models as world simulators",
+          "href": "https://openai.com/index/video-generation-models-as-world-simulators/"
+        }
+      ]
+    },
+    {
+      "id": "llava",
+      "type": "concept",
+      "label": "LLaVA / 视觉指令微调",
+      "domain": "AI",
+      "tags": [
+        "多模态",
+        "VLM",
+        "Instruction Tuning"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Visual Instruction Tuning · Liu et al (2023)",
+          "href": "https://arxiv.org/abs/2304.08485"
+        },
+        {
+          "kind": "project",
+          "label": "haotian-liu/LLaVA (GitHub)",
+          "href": "https://github.com/haotian-liu/LLaVA"
+        },
+        {
+          "kind": "paper",
+          "label": "BLIP-2 · Li et al",
+          "href": "https://arxiv.org/abs/2301.12597"
+        }
+      ]
+    },
+    {
+      "id": "ppo",
+      "type": "concept",
+      "label": "PPO / 策略优化",
+      "domain": "AI",
+      "tags": [
+        "RL",
+        "策略梯度",
+        "Actor-Critic"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "PPO · Schulman et al (2017)",
+          "href": "https://arxiv.org/abs/1707.06347"
+        },
+        {
+          "kind": "paper",
+          "label": "TRPO · Schulman et al (2015)",
+          "href": "https://arxiv.org/abs/1502.05477"
+        },
+        {
+          "kind": "paper",
+          "label": "A3C · Mnih et al (2016)",
+          "href": "https://arxiv.org/abs/1602.01783"
+        }
+      ]
+    },
+    {
+      "id": "dqn",
+      "type": "concept",
+      "label": "DQN / Q-Learning",
+      "domain": "AI",
+      "tags": [
+        "RL",
+        "Value-Based",
+        "Deep Q-Network"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Human-level control through deep RL · Mnih et al (Nature 2015)",
+          "href": "https://www.nature.com/articles/nature14236"
+        },
+        {
+          "kind": "paper",
+          "label": "Playing Atari with Deep RL · Mnih et al (2013)",
+          "href": "https://arxiv.org/abs/1312.5602"
+        }
+      ]
+    },
+    {
+      "id": "alphazero",
+      "type": "concept",
+      "label": "AlphaZero / MuZero",
+      "domain": "AI",
+      "tags": [
+        "RL",
+        "MCTS",
+        "自博弈"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Mastering Go without Human Knowledge · Silver et al (2017)",
+          "href": "https://www.nature.com/articles/nature24270"
+        },
+        {
+          "kind": "paper",
+          "label": "AlphaZero · Silver et al (2018)",
+          "href": "https://arxiv.org/abs/1712.01815"
+        },
+        {
+          "kind": "paper",
+          "label": "MuZero · Schrittwieser et al (2019)",
+          "href": "https://arxiv.org/abs/1911.08265"
+        }
+      ]
+    },
+    {
+      "id": "dspy",
+      "type": "concept",
+      "label": "DSPy / Programmatic Prompting",
+      "domain": "AI",
+      "tags": [
+        "LLM Orchestration",
+        "提示优化",
+        "编译器"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "DSPy · Khattab et al (2023)",
+          "href": "https://arxiv.org/abs/2310.03714"
+        },
+        {
+          "kind": "project",
+          "label": "stanfordnlp/dspy (GitHub)",
+          "href": "https://github.com/stanfordnlp/dspy"
+        }
+      ]
+    },
+    {
+      "id": "evals",
+      "type": "concept",
+      "label": "LLM 评测 (Evals)",
+      "domain": "AI",
+      "tags": [
+        "评测",
+        "MMLU",
+        "HumanEval"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "MMLU · Hendrycks et al",
+          "href": "https://arxiv.org/abs/2009.03300"
+        },
+        {
+          "kind": "paper",
+          "label": "HumanEval · Chen et al (Codex)",
+          "href": "https://arxiv.org/abs/2107.03374"
+        },
+        {
+          "kind": "project",
+          "label": "EleutherAI/lm-evaluation-harness",
+          "href": "https://github.com/EleutherAI/lm-evaluation-harness"
+        },
+        {
+          "kind": "paper",
+          "label": "BIG-bench · Srivastava et al",
+          "href": "https://arxiv.org/abs/2206.04615"
+        }
+      ]
+    },
+    {
+      "id": "autogen",
+      "type": "project",
+      "label": "AutoGen / Multi-Agent",
+      "domain": "AI",
+      "tags": [
+        "Agent",
+        "多 Agent",
+        "Conversation"
+      ],
+      "homepage": "https://microsoft.github.io/autogen/",
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "AutoGen · Wu et al (2023)",
+          "href": "https://arxiv.org/abs/2308.08155"
+        },
+        {
+          "kind": "project",
+          "label": "microsoft/autogen (GitHub)",
+          "href": "https://github.com/microsoft/autogen"
+        }
+      ]
+    },
+    {
+      "id": "pulsar",
+      "type": "project",
+      "label": "Apache Pulsar",
+      "domain": "Data",
+      "tags": [
+        "Streaming Pipeline",
+        "消息队列",
+        "分级存储",
+        "Geo-Replication"
+      ],
+      "homepage": "https://pulsar.apache.org"
+    },
+    {
+      "id": "rabbitmq",
+      "type": "project",
+      "label": "RabbitMQ",
+      "domain": "Data",
+      "tags": [
+        "消息队列",
+        "AMQP",
+        "Broker"
+      ],
+      "homepage": "https://www.rabbitmq.com"
+    },
+    {
+      "id": "nats",
+      "type": "project",
+      "label": "NATS / JetStream",
+      "domain": "Data",
+      "tags": [
+        "消息队列",
+        "Pub/Sub",
+        "Cloud Native"
+      ],
+      "homepage": "https://nats.io"
+    },
+    {
+      "id": "beam",
+      "type": "project",
+      "label": "Apache Beam",
+      "domain": "Data",
+      "tags": [
+        "Unified Batch + Stream",
+        "Unified Batch/Stream",
+        "Pipelines",
+        "Dataflow Model",
+        "Stream Processing"
+      ],
+      "homepage": "https://beam.apache.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/beam"
+        },
+        {
+          "kind": "paper",
+          "label": "Akidau et al · Dataflow Model (VLDB 2015)",
+          "href": "https://research.google/pubs/the-dataflow-model-a-practical-approach-to-balancing-correctness-latency-and-cost-in-massive-scale-unbounded-out-of-order-data-processing/"
+        }
+      ]
+    },
+    {
+      "id": "materialize",
+      "type": "project",
+      "label": "Materialize",
+      "domain": "Data",
+      "tags": [
+        "流式 SQL",
+        "Incremental View Maintenance",
+        "Differential Dataflow"
+      ],
+      "homepage": "https://materialize.com"
+    },
+    {
+      "id": "risingwave",
+      "type": "project",
+      "label": "RisingWave",
+      "domain": "Data",
+      "tags": [
+        "流式 SQL",
+        "Stream Processing",
+        "Cloud Native"
+      ],
+      "homepage": "https://risingwave.com"
+    },
+    {
+      "id": "debezium",
+      "type": "project",
+      "label": "Debezium",
+      "domain": "Data",
+      "tags": [
+        "CDC",
+        "Kafka Connect",
+        "变更数据捕获"
+      ],
+      "homepage": "https://debezium.io"
+    },
+    {
+      "id": "cdc",
+      "type": "concept",
+      "label": "变更数据捕获 (CDC)",
+      "domain": "Data",
+      "tags": [
+        "CDC",
+        "复制",
+        "Log-based Replication"
+      ]
+    },
+    {
+      "id": "exactly-once",
+      "type": "concept",
+      "label": "Exactly-Once 语义",
+      "domain": "Data",
+      "tags": [
+        "Stream Processing",
+        "Delivery Semantics",
+        "Idempotence"
+      ]
+    },
+    {
+      "id": "watermarks",
+      "type": "concept",
+      "label": "Watermark / 事件时间",
+      "domain": "Data",
+      "tags": [
+        "Stream Processing",
+        "Event Time",
+        "窗口"
+      ]
+    },
+    {
+      "id": "presto",
+      "type": "project",
+      "label": "Presto",
+      "domain": "Data",
+      "tags": [
+        "OLAP",
+        "联邦查询",
+        "MPP"
+      ],
+      "homepage": "https://prestodb.io"
+    },
+    {
+      "id": "druid",
+      "type": "project",
+      "label": "Apache Druid",
+      "domain": "Data",
+      "tags": [
+        "OLAP",
+        "实时分析",
+        "Time-Series"
+      ],
+      "homepage": "https://druid.apache.org"
+    },
+    {
+      "id": "pinot",
+      "type": "project",
+      "label": "Apache Pinot",
+      "domain": "Data",
+      "tags": [
+        "OLAP",
+        "实时分析",
+        "C 端分析"
+      ],
+      "homepage": "https://pinot.apache.org"
+    },
+    {
+      "id": "starrocks",
+      "type": "project",
+      "label": "StarRocks",
+      "domain": "Data",
+      "tags": [
+        "OLAP",
+        "MPP",
+        "Lakehouse Query"
+      ],
+      "homepage": "https://www.starrocks.io"
+    },
+    {
+      "id": "prometheus",
+      "type": "project",
+      "label": "Prometheus",
+      "domain": "Systems",
+      "tags": [
+        "Time-Series DB",
+        "可观测性",
+        "Pull Model",
+        "PromQL",
+        "指标"
+      ],
+      "homepage": "https://prometheus.io",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/prometheus/prometheus"
+        },
+        {
+          "kind": "docs",
+          "label": "Prometheus Docs",
+          "href": "https://prometheus.io/docs/"
+        }
+      ]
+    },
+    {
+      "id": "lucene",
+      "type": "project",
+      "label": "Apache Lucene",
+      "domain": "Data",
+      "tags": [
+        "搜索",
+        "倒排索引",
+        "库"
+      ],
+      "homepage": "https://lucene.apache.org"
+    },
+    {
+      "id": "opensearch",
+      "type": "project",
+      "label": "OpenSearch",
+      "domain": "Data",
+      "tags": [
+        "搜索",
+        "Lucene",
+        "Open Source Fork"
+      ],
+      "homepage": "https://opensearch.org"
+    },
+    {
+      "id": "polars",
+      "type": "project",
+      "label": "Polars",
+      "domain": "Data",
+      "tags": [
+        "列式",
+        "DataFrame",
+        "Lazy Execution",
+        "Rust",
+        "Arrow-native"
+      ],
+      "homepage": "https://pola.rs",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/pola-rs/polars"
+        },
+        {
+          "kind": "docs",
+          "label": "Polars User Guide",
+          "href": "https://docs.pola.rs/"
+        }
+      ]
+    },
+    {
+      "id": "pandas",
+      "type": "project",
+      "label": "pandas",
+      "domain": "Data",
+      "tags": [
+        "DataFrame",
+        "Python",
+        "Analytics"
+      ],
+      "homepage": "https://pandas.pydata.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/pandas-dev/pandas"
+        },
+        {
+          "kind": "docs",
+          "label": "pandas User Guide",
+          "href": "https://pandas.pydata.org/docs/user_guide/"
+        },
+        {
+          "kind": "paper",
+          "label": "McKinney · Data Structures for Statistical Computing in Python (SciPy 2010)",
+          "href": "https://conference.scipy.org/proceedings/scipy2010/pdfs/mckinney.pdf"
+        }
+      ]
+    },
+    {
+      "id": "dask",
+      "type": "project",
+      "label": "Dask",
+      "domain": "Data",
+      "tags": [
+        "DataFrame",
+        "Parallel Computing",
+        "Python",
+        "分布式"
+      ],
+      "homepage": "https://www.dask.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/dask/dask"
+        },
+        {
+          "kind": "docs",
+          "label": "Dask Documentation",
+          "href": "https://docs.dask.org/"
+        }
+      ]
+    },
+    {
+      "id": "jupyter",
+      "type": "project",
+      "label": "Jupyter",
+      "domain": "Data",
+      "tags": [
+        "Notebook",
+        "REPL",
+        "Interactive Computing"
+      ],
+      "homepage": "https://jupyter.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/jupyter/notebook"
+        },
+        {
+          "kind": "docs",
+          "label": "Jupyter Documentation",
+          "href": "https://docs.jupyter.org/"
+        }
+      ]
+    },
+    {
+      "id": "prefect",
+      "type": "project",
+      "label": "Prefect",
+      "domain": "Data",
+      "tags": [
+        "编排",
+        "工作流",
+        "Python"
+      ],
+      "homepage": "https://www.prefect.io",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/PrefectHQ/prefect"
+        },
+        {
+          "kind": "docs",
+          "label": "Prefect Docs",
+          "href": "https://docs.prefect.io/"
+        }
+      ]
+    },
+    {
+      "id": "dagster",
+      "type": "project",
+      "label": "Dagster",
+      "domain": "Data",
+      "tags": [
+        "编排",
+        "资产化",
+        "Data Pipelines"
+      ],
+      "homepage": "https://dagster.io",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/dagster-io/dagster"
+        },
+        {
+          "kind": "docs",
+          "label": "Dagster Documentation",
+          "href": "https://docs.dagster.io/"
+        }
+      ]
+    },
+    {
+      "id": "airbyte",
+      "type": "project",
+      "label": "Airbyte",
+      "domain": "Data",
+      "tags": [
+        "ELT",
+        "Data Integration",
+        "连接器"
+      ],
+      "homepage": "https://airbyte.com",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/airbytehq/airbyte"
+        },
+        {
+          "kind": "docs",
+          "label": "Airbyte Docs",
+          "href": "https://docs.airbyte.com/"
+        }
+      ]
+    },
+    {
+      "id": "fivetran",
+      "type": "product",
+      "label": "Fivetran",
+      "domain": "Data",
+      "tags": [
+        "ELT",
+        "Managed Connectors",
+        "Data Integration"
+      ],
+      "homepage": "https://www.fivetran.com",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "Fivetran Docs",
+          "href": "https://fivetran.com/docs"
+        },
+        {
+          "kind": "site",
+          "label": "Fivetran Blog",
+          "href": "https://www.fivetran.com/blog"
+        }
+      ]
+    },
+    {
+      "id": "redshift",
+      "type": "product",
+      "label": "Amazon Redshift",
+      "domain": "Data",
+      "tags": [
+        "Cloud Data Warehouse",
+        "MPP",
+        "AWS",
+        "列式"
+      ],
+      "homepage": "https://aws.amazon.com/redshift/",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "Redshift Developer Guide",
+          "href": "https://docs.aws.amazon.com/redshift/"
+        },
+        {
+          "kind": "paper",
+          "label": "Gupta et al · Amazon Redshift Re-invented (SIGMOD 2022)",
+          "href": "https://assets.amazon.science/4f/36/2bd1b03c4099b09b6e3ef4a82a90/amazon-redshift-re-invented.pdf"
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "type": "product",
+      "label": "Amazon S3",
+      "domain": "Data",
+      "tags": [
+        "对象存储",
+        "AWS",
+        "Cloud Storage",
+        "数据湖"
+      ],
+      "homepage": "https://aws.amazon.com/s3/",
+      "resources": [
+        {
+          "kind": "docs",
+          "label": "S3 User Guide",
+          "href": "https://docs.aws.amazon.com/s3/"
+        },
+        {
+          "kind": "paper",
+          "label": "Vogels · Amazon S3 (CACM)",
+          "href": "https://www.allthingsdistributed.com/files/amazon-dynamo-sosp2007.pdf"
+        }
+      ]
+    },
+    {
+      "id": "hive-metastore",
+      "type": "project",
+      "label": "Hive Metastore",
+      "domain": "Data",
+      "tags": [
+        "Catalog",
+        "Schema 注册",
+        "Hadoop"
+      ],
+      "homepage": "https://hive.apache.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/hive"
+        },
+        {
+          "kind": "docs",
+          "label": "Hive Metastore Admin Manual",
+          "href": "https://cwiki.apache.org/confluence/display/Hive/AdminManual+Metastore+Administration"
+        }
+      ]
+    },
+    {
+      "id": "unity-catalog",
+      "type": "project",
+      "label": "Unity Catalog",
+      "domain": "Data",
+      "tags": [
+        "Catalog",
+        "治理",
+        "Lakehouse",
+        "开源"
+      ],
+      "homepage": "https://www.unitycatalog.io",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/unitycatalog/unitycatalog"
+        },
+        {
+          "kind": "docs",
+          "label": "Unity Catalog Docs",
+          "href": "https://docs.unitycatalog.io/"
+        }
+      ]
+    },
+    {
+      "id": "orc",
+      "type": "project",
+      "label": "Apache ORC",
+      "domain": "Data",
+      "tags": [
+        "Storage",
+        "Columnar Storage",
+        "文件格式"
+      ],
+      "homepage": "https://orc.apache.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/orc"
+        },
+        {
+          "kind": "site",
+          "label": "orc.apache.org",
+          "href": "https://orc.apache.org/"
+        }
+      ]
+    },
+    {
+      "id": "avro",
+      "type": "project",
+      "label": "Apache Avro",
+      "domain": "Data",
+      "tags": [
+        "Serialization",
+        "Schema Evolution",
+        "Row-based Format"
+      ],
+      "homepage": "https://avro.apache.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/avro"
+        },
+        {
+          "kind": "site",
+          "label": "avro.apache.org",
+          "href": "https://avro.apache.org/"
+        }
+      ]
+    },
+    {
+      "id": "lsm-tree",
+      "type": "concept",
+      "label": "LSM-Tree",
+      "domain": "Systems",
+      "tags": [
+        "Storage",
+        "Index Structure",
+        "Write-Optimized"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "O'Neil et al · The Log-Structured Merge-Tree (1996)",
+          "href": "https://www.cs.umb.edu/~poneil/lsmtree.pdf"
+        },
+        {
+          "kind": "paper",
+          "label": "bLSM · Sears & Ramakrishnan (SIGMOD 2012)",
+          "href": "https://www.cs.umb.edu/~poneil/blsm.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "RocksDB · LSM tree intro",
+          "href": "https://github.com/facebook/rocksdb/wiki/Leveled-Compaction"
+        }
+      ]
+    },
+    {
+      "id": "b-tree",
+      "type": "concept",
+      "label": "B-Tree",
+      "domain": "Systems",
+      "tags": [
+        "Storage",
+        "Index Structure",
+        "Read-Optimized"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Bayer & McCreight · Organization & Maintenance of Large Ordered Indexes (1972)",
+          "href": "https://infolab.usc.edu/csci585/Spring2010/den_ar/indexing.pdf"
+        },
+        {
+          "kind": "paper",
+          "label": "Lehman & Yao · Efficient Locking for B-Trees (1981)",
+          "href": "https://www.csd.uoc.gr/~hy460/pdf/p650-lehman.pdf"
+        }
+      ]
+    },
+    {
+      "id": "bloom-filter",
+      "type": "concept",
+      "label": "布隆过滤器",
+      "domain": "Systems",
+      "tags": [
+        "Probabilistic Data Structure",
+        "Storage",
+        "Hashing"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Bloom · Space/Time Trade-offs in Hash Coding (1970)",
+          "href": "https://dl.acm.org/doi/10.1145/362686.362692"
+        },
+        {
+          "kind": "paper",
+          "label": "Cuckoo Filter · Fan et al (CoNEXT 2014)",
+          "href": "https://www.cs.cmu.edu/~dga/papers/cuckoo-conext2014.pdf"
+        }
+      ]
+    },
+    {
+      "id": "mvcc",
+      "type": "concept",
+      "label": "MVCC / 多版本并发控制",
+      "domain": "Systems",
+      "tags": [
+        "Database",
+        "并发控制",
+        "Isolation"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Bernstein & Goodman · Multiversion Concurrency Control (1983)",
+          "href": "https://dl.acm.org/doi/10.1145/319996.319998"
+        },
+        {
+          "kind": "docs",
+          "label": "PostgreSQL · MVCC Internals",
+          "href": "https://www.postgresql.org/docs/current/mvcc-intro.html"
+        }
+      ]
+    },
+    {
+      "id": "snapshot-isolation",
+      "type": "concept",
+      "label": "快照隔离",
+      "domain": "Systems",
+      "tags": [
+        "Database",
+        "隔离级别",
+        "Serializability"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Berenson et al · A Critique of ANSI SQL Isolation Levels (1995)",
+          "href": "https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-95-51.pdf"
+        },
+        {
+          "kind": "paper",
+          "label": "Cahill et al · Serializable Snapshot Isolation (SIGMOD 2008)",
+          "href": "https://courses.cs.washington.edu/courses/cse444/08au/544M/READING-LIST/fekete-sigmod2008.pdf"
+        }
+      ]
+    },
+    {
+      "id": "linearizability",
+      "type": "concept",
+      "label": "Linearizability / 线性一致性",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "一致性",
+        "Linearizability"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Herlihy & Wing · Linearizability (TOPLAS 1990)",
+          "href": "https://cs.brown.edu/~mph/HerlihyW90/p463-herlihy.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "Jepsen · Consistency Models",
+          "href": "https://jepsen.io/consistency"
+        }
+      ]
+    },
+    {
+      "id": "eventual-consistency",
+      "type": "concept",
+      "label": "最终一致性",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "一致性",
+        "AP"
+      ],
+      "resources": [
+        {
+          "kind": "site",
+          "label": "Vogels · Eventually Consistent (ACM Queue)",
+          "href": "https://queue.acm.org/detail.cfm?id=1466448"
+        },
+        {
+          "kind": "paper",
+          "label": "Bailis & Ghodsi · Eventual Consistency Today (ACM Queue 2013)",
+          "href": "https://queue.acm.org/detail.cfm?id=2462076"
+        }
+      ]
+    },
+    {
+      "id": "crdt",
+      "type": "concept",
+      "label": "CRDT",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "复制",
+        "无冲突"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Shapiro et al · A Comprehensive Study of CRDTs (2011)",
+          "href": "https://hal.inria.fr/inria-00555588/document"
+        },
+        {
+          "kind": "site",
+          "label": "crdt.tech",
+          "href": "https://crdt.tech/"
+        }
+      ]
+    },
+    {
+      "id": "quorum",
+      "type": "concept",
+      "label": "Quorum",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "复制",
+        "Anti-Entropy"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Gifford · Weighted Voting for Replicated Data (SOSP 1979)",
+          "href": "https://dl.acm.org/doi/10.1145/800215.806583"
+        },
+        {
+          "kind": "paper",
+          "label": "Merkle · Protocols for Public Key Cryptosystems (1980, Merkle Trees)",
+          "href": "https://www.merkle.com/papers/Protocols.pdf"
+        }
+      ]
+    },
+    {
+      "id": "saga",
+      "type": "concept",
+      "label": "Saga 模式",
+      "domain": "Systems",
+      "tags": [
+        "分布式事务",
+        "Microservices",
+        "Compensation"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Garcia-Molina & Salem · Sagas (SIGMOD 1987)",
+          "href": "https://www.cs.cornell.edu/andru/cs711/2002fa/reading/sagas.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "microservices.io · Saga",
+          "href": "https://microservices.io/patterns/data/saga.html"
+        }
+      ]
+    },
+    {
+      "id": "hlc",
+      "type": "concept",
+      "label": "HLC / 混合逻辑时钟",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "Logical Clock",
+        "Time"
+      ],
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Kulkarni et al · Logical Physical Clocks (2014)",
+          "href": "https://cse.buffalo.edu/tech-reports/2014-04.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "CockroachDB · HLC blog",
+          "href": "https://www.cockroachlabs.com/blog/living-without-atomic-clocks/"
+        }
+      ]
+    },
+    {
+      "id": "cassandra",
+      "type": "project",
+      "label": "Apache Cassandra",
+      "domain": "Systems",
+      "tags": [
+        "Database",
+        "NoSQL",
+        "Wide-Column",
+        "AP"
+      ],
+      "homepage": "https://cassandra.apache.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/cassandra"
+        },
+        {
+          "kind": "paper",
+          "label": "Lakshman & Malik · Cassandra (LADIS 2009)",
+          "href": "https://www.cs.cornell.edu/projects/ladis2009/papers/lakshman-ladis2009.pdf"
+        }
+      ]
+    },
+    {
+      "id": "scylla",
+      "type": "project",
+      "label": "ScyllaDB",
+      "domain": "Systems",
+      "tags": [
+        "Database",
+        "NoSQL",
+        "Wide-Column",
+        "Shard-per-core"
+      ],
+      "homepage": "https://www.scylladb.com",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/scylladb/scylladb"
+        },
+        {
+          "kind": "site",
+          "label": "ScyllaDB · Architecture",
+          "href": "https://www.scylladb.com/product/technology/"
+        }
+      ]
+    },
+    {
+      "id": "hbase",
+      "type": "project",
+      "label": "Apache HBase",
+      "domain": "Systems",
+      "tags": [
+        "Database",
+        "NoSQL",
+        "Wide-Column",
+        "HDFS"
+      ],
+      "homepage": "https://hbase.apache.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apache/hbase"
+        },
+        {
+          "kind": "site",
+          "label": "HBase Reference Guide",
+          "href": "https://hbase.apache.org/book.html"
+        }
+      ]
+    },
+    {
+      "id": "leveldb",
+      "type": "project",
+      "label": "LevelDB",
+      "domain": "Systems",
+      "tags": [
+        "存储引擎",
+        "LSM",
+        "嵌入式"
+      ],
+      "homepage": "https://github.com/google/leveldb",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/google/leveldb"
+        }
+      ]
+    },
+    {
+      "id": "foundationdb",
+      "type": "project",
+      "label": "FoundationDB",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "Distributed KV",
+        "ACID",
+        "Deterministic Simulation"
+      ],
+      "homepage": "https://www.foundationdb.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/apple/foundationdb"
+        },
+        {
+          "kind": "paper",
+          "label": "Zhou et al · FoundationDB (SIGMOD 2021)",
+          "href": "https://www.foundationdb.org/files/fdb-paper.pdf"
+        }
+      ]
+    },
+    {
+      "id": "mysql",
+      "type": "project",
+      "label": "MySQL",
+      "domain": "Systems",
+      "tags": [
+        "Database",
+        "Relational Database",
+        "OLTP",
+        "InnoDB"
+      ],
+      "homepage": "https://www.mysql.com",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/mysql/mysql-server"
+        },
+        {
+          "kind": "docs",
+          "label": "MySQL Reference Manual",
+          "href": "https://dev.mysql.com/doc/refman/8.0/en/"
+        }
+      ]
+    },
+    {
+      "id": "sqlite",
+      "type": "project",
+      "label": "SQLite",
+      "domain": "Systems",
+      "tags": [
+        "Database",
+        "Relational Database",
+        "嵌入式",
+        "B-Tree"
+      ],
+      "homepage": "https://www.sqlite.org",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "sqlite.org",
+          "href": "https://www.sqlite.org/"
+        },
+        {
+          "kind": "docs",
+          "label": "SQLite · Architecture",
+          "href": "https://www.sqlite.org/arch.html"
+        }
+      ]
+    },
+    {
+      "id": "tidb",
+      "type": "project",
+      "label": "TiDB",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "Distributed Database",
+        "HTAP",
+        "MySQL Compatible"
+      ],
+      "homepage": "https://www.pingcap.com",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/pingcap/tidb"
+        },
+        {
+          "kind": "paper",
+          "label": "Huang et al · TiDB (VLDB 2020)",
+          "href": "https://www.vldb.org/pvldb/vol13/p3072-huang.pdf"
+        }
+      ]
+    },
+    {
+      "id": "yugabyte",
+      "type": "project",
+      "label": "YugabyteDB",
+      "domain": "Systems",
+      "tags": [
+        "分布式",
+        "Distributed Database",
+        "PostgreSQL Compatible"
+      ],
+      "homepage": "https://www.yugabyte.com",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/yugabyte/yugabyte-db"
+        },
+        {
+          "kind": "site",
+          "label": "YugabyteDB · Architecture",
+          "href": "https://docs.yugabyte.com/preview/architecture/"
+        }
+      ]
+    },
+    {
+      "id": "aurora",
+      "type": "product",
+      "label": "Amazon Aurora",
+      "domain": "Systems",
+      "tags": [
+        "云数据库",
+        "Storage-Compute Separation",
+        "MySQL/PostgreSQL Compatible"
+      ],
+      "homepage": "https://aws.amazon.com/rds/aurora/",
+      "resources": [
+        {
+          "kind": "paper",
+          "label": "Verbitski et al · Aurora (SIGMOD 2017)",
+          "href": "https://www.allthingsdistributed.com/files/p1041-verbitski.pdf"
+        },
+        {
+          "kind": "site",
+          "label": "AWS · Aurora",
+          "href": "https://aws.amazon.com/rds/aurora/"
+        }
+      ]
+    },
+    {
+      "id": "http2",
+      "type": "concept",
+      "label": "HTTP/2",
+      "domain": "Systems",
+      "tags": [
+        "Network",
+        "Protocol",
+        "HTTP",
+        "多路复用"
+      ]
+    },
+    {
+      "id": "http3-quic",
+      "type": "concept",
+      "label": "HTTP/3 / QUIC",
+      "domain": "Systems",
+      "tags": [
+        "Network",
+        "Protocol",
+        "QUIC",
+        "UDP",
+        "Low Latency"
+      ]
+    },
+    {
+      "id": "dns",
+      "type": "concept",
+      "label": "DNS",
+      "domain": "Systems",
+      "tags": [
+        "Network",
+        "Protocol",
+        "Name Resolution",
+        "Distributed System"
+      ]
+    },
+    {
+      "id": "tls",
+      "type": "concept",
+      "label": "TLS",
+      "domain": "Systems",
+      "tags": [
+        "Network",
+        "Security",
+        "Cryptography",
+        "Handshake"
+      ]
+    },
+    {
+      "id": "oci-standard",
+      "type": "concept",
+      "label": "OCI 标准",
+      "domain": "Systems",
+      "tags": [
+        "Container",
+        "标准",
+        "Image Format",
+        "Runtime Spec"
+      ]
+    },
+    {
+      "id": "wasm",
+      "type": "concept",
+      "label": "WebAssembly (WASM)",
+      "domain": "Systems",
+      "tags": [
+        "Runtime",
+        "Portable",
+        "沙箱",
+        "字节码",
+        "Edge Compute"
+      ]
+    },
+    {
+      "id": "observability",
+      "type": "concept",
+      "label": "可观测性",
+      "domain": "Systems",
+      "tags": [
+        "可观测性",
+        "指标",
+        "日志",
+        "Distributed Tracing"
+      ]
+    },
+    {
+      "id": "grafana",
+      "type": "project",
+      "label": "Grafana",
+      "domain": "Systems",
+      "tags": [
+        "可观测性",
+        "可视化",
+        "Dashboards"
+      ],
+      "homepage": "https://grafana.com",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/grafana/grafana"
+        }
+      ]
+    },
+    {
+      "id": "opentelemetry",
+      "type": "project",
+      "label": "OpenTelemetry",
+      "domain": "Systems",
+      "tags": [
+        "可观测性",
+        "Tracing",
+        "指标",
+        "标准",
+        "OTLP"
+      ],
+      "homepage": "https://opentelemetry.io",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/open-telemetry"
+        },
+        {
+          "kind": "docs",
+          "label": "OpenTelemetry Docs",
+          "href": "https://opentelemetry.io/docs/"
+        }
+      ]
+    },
+    {
+      "id": "istio",
+      "type": "project",
+      "label": "Istio",
+      "domain": "Systems",
+      "tags": [
+        "Network",
+        "Service Mesh",
+        "Envoy",
+        "Traffic Management"
+      ],
+      "homepage": "https://istio.io",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/istio/istio"
+        }
+      ]
+    },
+    {
+      "id": "helm",
+      "type": "project",
+      "label": "Helm",
+      "domain": "Systems",
+      "tags": [
+        "Container",
+        "包管理",
+        "Kubernetes",
+        "Charts"
+      ],
+      "homepage": "https://helm.sh",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/helm/helm"
+        }
+      ]
+    },
+    {
+      "id": "terraform",
+      "type": "project",
+      "label": "Terraform",
+      "domain": "Systems",
+      "tags": [
+        "IaC",
+        "云",
+        "Provisioning",
+        "HCL"
+      ],
+      "homepage": "https://www.terraform.io",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/hashicorp/terraform"
+        }
+      ]
+    },
+    {
+      "id": "nodejs",
+      "type": "project",
+      "label": "Node.js",
+      "domain": "Language",
+      "tags": [
+        "Runtime",
+        "JavaScript",
+        "V8",
+        "Event Loop",
+        "服务端 JS"
+      ],
+      "homepage": "https://nodejs.org",
+      "resources": [
+        {
+          "kind": "project",
+          "label": "GitHub",
+          "href": "https://github.com/nodejs/node"
+        }
+      ]
+    },
+    {
+      "id": "aws",
+      "type": "product",
+      "label": "AWS",
+      "domain": "Systems",
+      "tags": [
+        "云",
+        "IaaS",
+        "S3",
+        "EC2",
+        "Hyperscaler"
+      ],
+      "homepage": "https://aws.amazon.com",
+      "resources": [
+        {
+          "kind": "site",
+          "label": "AWS",
+          "href": "https://aws.amazon.com"
+        }
+      ]
+    },
+    {
+      "id": "llvm",
+      "type": "project",
+      "label": "LLVM",
+      "domain": "Language",
+      "tags": [
+        "编译器",
+        "Compiler Infrastructure",
+        "IR",
+        "后端"
+      ],
+      "homepage": "https://llvm.org/"
+    },
+    {
+      "id": "jvm",
+      "type": "project",
+      "label": "JVM (Java Virtual Machine)",
+      "domain": "Language",
+      "tags": [
+        "Runtime",
+        "Bytecode VM",
+        "JIT",
+        "GC"
+      ],
+      "homepage": "https://openjdk.org/"
+    },
+    {
+      "id": "typescript",
+      "type": "language",
+      "label": "TypeScript",
+      "domain": "Language",
+      "tags": [
+        "Web",
+        "Static Typing",
+        "Transpiled"
+      ],
+      "homepage": "https://www.typescriptlang.org/"
+    },
+    {
+      "id": "javascript",
+      "type": "language",
+      "label": "JavaScript",
+      "domain": "Language",
+      "tags": [
+        "Web",
+        "Dynamic Typing",
+        "ECMAScript"
+      ],
+      "homepage": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
     }
   ],
   "edges": [
@@ -4350,6 +7583,2494 @@
     {
       "from": "docker",
       "to": "vercel"
+    },
+    {
+      "from": "hnsw",
+      "to": "faiss"
+    },
+    {
+      "from": "hnsw",
+      "to": "pinecone"
+    },
+    {
+      "from": "hnsw",
+      "to": "milvus"
+    },
+    {
+      "from": "hnsw",
+      "to": "weaviate"
+    },
+    {
+      "from": "hnsw",
+      "to": "qdrant"
+    },
+    {
+      "from": "hnsw",
+      "to": "pgvector"
+    },
+    {
+      "from": "hnsw",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "ivf-pq",
+      "to": "faiss"
+    },
+    {
+      "from": "ivf-pq",
+      "to": "milvus"
+    },
+    {
+      "from": "ivf-pq",
+      "to": "pinecone"
+    },
+    {
+      "from": "ivf-pq",
+      "to": "pgvector"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "hnsw"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "ivf-pq"
+    },
+    {
+      "from": "probability",
+      "to": "hnsw"
+    },
+    {
+      "from": "faiss",
+      "to": "milvus"
+    },
+    {
+      "from": "faiss",
+      "to": "pinecone"
+    },
+    {
+      "from": "cpp",
+      "to": "faiss"
+    },
+    {
+      "from": "cpp",
+      "to": "milvus"
+    },
+    {
+      "from": "go",
+      "to": "milvus"
+    },
+    {
+      "from": "go",
+      "to": "weaviate"
+    },
+    {
+      "from": "rust",
+      "to": "qdrant"
+    },
+    {
+      "from": "python",
+      "to": "chroma"
+    },
+    {
+      "from": "postgres",
+      "to": "pgvector"
+    },
+    {
+      "from": "transformer",
+      "to": "sentence-transformers"
+    },
+    {
+      "from": "bert",
+      "to": "sentence-transformers"
+    },
+    {
+      "from": "huggingface",
+      "to": "sentence-transformers"
+    },
+    {
+      "from": "sentence-transformers",
+      "to": "pinecone"
+    },
+    {
+      "from": "sentence-transformers",
+      "to": "chroma"
+    },
+    {
+      "from": "bert",
+      "to": "colbert"
+    },
+    {
+      "from": "transformer",
+      "to": "colbert"
+    },
+    {
+      "from": "colbert",
+      "to": "rag"
+    },
+    {
+      "from": "transformer",
+      "to": "rag"
+    },
+    {
+      "from": "gpt",
+      "to": "rag"
+    },
+    {
+      "from": "word2vec",
+      "to": "rag"
+    },
+    {
+      "from": "rag",
+      "to": "pinecone"
+    },
+    {
+      "from": "rag",
+      "to": "milvus"
+    },
+    {
+      "from": "rag",
+      "to": "weaviate"
+    },
+    {
+      "from": "rag",
+      "to": "qdrant"
+    },
+    {
+      "from": "rag",
+      "to": "chroma"
+    },
+    {
+      "from": "rag",
+      "to": "pgvector"
+    },
+    {
+      "from": "rag",
+      "to": "langchain"
+    },
+    {
+      "from": "rag",
+      "to": "llamaindex"
+    },
+    {
+      "from": "llamaindex",
+      "to": "pinecone"
+    },
+    {
+      "from": "openai",
+      "to": "llamaindex"
+    },
+    {
+      "from": "anthropic",
+      "to": "llamaindex"
+    },
+    {
+      "from": "python",
+      "to": "llamaindex"
+    },
+    {
+      "from": "paged-attention",
+      "to": "vllm"
+    },
+    {
+      "from": "paged-attention",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "paged-attention",
+      "to": "sglang"
+    },
+    {
+      "from": "paged-attention",
+      "to": "tgi"
+    },
+    {
+      "from": "continuous-batching",
+      "to": "paged-attention"
+    },
+    {
+      "from": "prefix-caching",
+      "to": "vllm"
+    },
+    {
+      "from": "prefix-caching",
+      "to": "sglang"
+    },
+    {
+      "from": "prefix-caching",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "paged-attention",
+      "to": "prefix-caching"
+    },
+    {
+      "from": "bpe-tokenization",
+      "to": "gpt"
+    },
+    {
+      "from": "bpe-tokenization",
+      "to": "bert"
+    },
+    {
+      "from": "bpe-tokenization",
+      "to": "llama"
+    },
+    {
+      "from": "bpe-tokenization",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "gptq",
+      "to": "vllm"
+    },
+    {
+      "from": "gptq",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "gptq",
+      "to": "tgi"
+    },
+    {
+      "from": "gptq",
+      "to": "sglang"
+    },
+    {
+      "from": "awq",
+      "to": "vllm"
+    },
+    {
+      "from": "awq",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "awq",
+      "to": "tgi"
+    },
+    {
+      "from": "awq",
+      "to": "sglang"
+    },
+    {
+      "from": "smoothquant",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "smoothquant",
+      "to": "vllm"
+    },
+    {
+      "from": "gguf",
+      "to": "llama-cpp"
+    },
+    {
+      "from": "gguf",
+      "to": "ollama"
+    },
+    {
+      "from": "llama-cpp",
+      "to": "ollama"
+    },
+    {
+      "from": "cpp",
+      "to": "llama-cpp"
+    },
+    {
+      "from": "transformer",
+      "to": "llama-cpp"
+    },
+    {
+      "from": "llama",
+      "to": "llama-cpp"
+    },
+    {
+      "from": "go",
+      "to": "ollama"
+    },
+    {
+      "from": "transformer",
+      "to": "sglang"
+    },
+    {
+      "from": "python",
+      "to": "sglang"
+    },
+    {
+      "from": "pytorch",
+      "to": "sglang"
+    },
+    {
+      "from": "flashattn",
+      "to": "sglang"
+    },
+    {
+      "from": "continuous-batching",
+      "to": "sglang"
+    },
+    {
+      "from": "llama",
+      "to": "sglang"
+    },
+    {
+      "from": "transformer",
+      "to": "tgi"
+    },
+    {
+      "from": "rust",
+      "to": "tgi"
+    },
+    {
+      "from": "python",
+      "to": "tgi"
+    },
+    {
+      "from": "hf-transformers",
+      "to": "tgi"
+    },
+    {
+      "from": "flashattn",
+      "to": "tgi"
+    },
+    {
+      "from": "continuous-batching",
+      "to": "tgi"
+    },
+    {
+      "from": "huggingface",
+      "to": "tgi"
+    },
+    {
+      "from": "tvm",
+      "to": "mlc-llm"
+    },
+    {
+      "from": "transformer",
+      "to": "mlc-llm"
+    },
+    {
+      "from": "python",
+      "to": "mlc-llm"
+    },
+    {
+      "from": "cpp",
+      "to": "mlc-llm"
+    },
+    {
+      "from": "prefill-decode-disagg",
+      "to": "vllm"
+    },
+    {
+      "from": "prefill-decode-disagg",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "prefill-decode-disagg",
+      "to": "sglang"
+    },
+    {
+      "from": "continuous-batching",
+      "to": "prefill-decode-disagg"
+    },
+    {
+      "from": "lora",
+      "to": "tgi"
+    },
+    {
+      "from": "rlhf",
+      "to": "tgi"
+    },
+    {
+      "from": "llama",
+      "to": "tgi"
+    },
+    {
+      "from": "llama",
+      "to": "ollama"
+    },
+    {
+      "from": "llama",
+      "to": "mlc-llm"
+    },
+    {
+      "from": "python",
+      "to": "tensorflow"
+    },
+    {
+      "from": "cpp",
+      "to": "tensorflow"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "tensorflow"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "tensorflow"
+    },
+    {
+      "from": "calculus",
+      "to": "tensorflow"
+    },
+    {
+      "from": "backpropagation",
+      "to": "tensorflow"
+    },
+    {
+      "from": "tensorflow",
+      "to": "xla"
+    },
+    {
+      "from": "tensorflow",
+      "to": "keras"
+    },
+    {
+      "from": "python",
+      "to": "keras"
+    },
+    {
+      "from": "python",
+      "to": "lightning"
+    },
+    {
+      "from": "pytorch",
+      "to": "lightning"
+    },
+    {
+      "from": "lightning",
+      "to": "deepspeed"
+    },
+    {
+      "from": "lightning",
+      "to": "fsdp"
+    },
+    {
+      "from": "python",
+      "to": "accelerate"
+    },
+    {
+      "from": "pytorch",
+      "to": "accelerate"
+    },
+    {
+      "from": "accelerate",
+      "to": "deepspeed"
+    },
+    {
+      "from": "accelerate",
+      "to": "megatron"
+    },
+    {
+      "from": "accelerate",
+      "to": "fsdp"
+    },
+    {
+      "from": "accelerate",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "huggingface",
+      "to": "accelerate"
+    },
+    {
+      "from": "python",
+      "to": "colossal-ai"
+    },
+    {
+      "from": "pytorch",
+      "to": "colossal-ai"
+    },
+    {
+      "from": "cuda-cpp",
+      "to": "colossal-ai"
+    },
+    {
+      "from": "zero",
+      "to": "colossal-ai"
+    },
+    {
+      "from": "tensor-parallel",
+      "to": "colossal-ai"
+    },
+    {
+      "from": "pipeline-parallel",
+      "to": "colossal-ai"
+    },
+    {
+      "from": "pytorch",
+      "to": "wandb"
+    },
+    {
+      "from": "tensorflow",
+      "to": "wandb"
+    },
+    {
+      "from": "lightning",
+      "to": "wandb"
+    },
+    {
+      "from": "hf-transformers",
+      "to": "wandb"
+    },
+    {
+      "from": "python",
+      "to": "mlflow"
+    },
+    {
+      "from": "pytorch",
+      "to": "mlflow"
+    },
+    {
+      "from": "tensorflow",
+      "to": "mlflow"
+    },
+    {
+      "from": "databricks",
+      "to": "mlflow"
+    },
+    {
+      "from": "nvidia-gpu",
+      "to": "mixed-precision"
+    },
+    {
+      "from": "mixed-precision",
+      "to": "megatron"
+    },
+    {
+      "from": "mixed-precision",
+      "to": "deepspeed"
+    },
+    {
+      "from": "mixed-precision",
+      "to": "pytorch"
+    },
+    {
+      "from": "mixed-precision",
+      "to": "jax"
+    },
+    {
+      "from": "mixed-precision",
+      "to": "llama"
+    },
+    {
+      "from": "mixed-precision",
+      "to": "gpt"
+    },
+    {
+      "from": "transformer",
+      "to": "tensor-parallel"
+    },
+    {
+      "from": "tensor-parallel",
+      "to": "megatron"
+    },
+    {
+      "from": "tensor-parallel",
+      "to": "deepspeed"
+    },
+    {
+      "from": "tensor-parallel",
+      "to": "llama"
+    },
+    {
+      "from": "nccl",
+      "to": "tensor-parallel"
+    },
+    {
+      "from": "transformer",
+      "to": "pipeline-parallel"
+    },
+    {
+      "from": "pipeline-parallel",
+      "to": "megatron"
+    },
+    {
+      "from": "pipeline-parallel",
+      "to": "deepspeed"
+    },
+    {
+      "from": "zero",
+      "to": "fsdp"
+    },
+    {
+      "from": "pytorch",
+      "to": "fsdp"
+    },
+    {
+      "from": "fsdp",
+      "to": "llama"
+    },
+    {
+      "from": "nccl",
+      "to": "fsdp"
+    },
+    {
+      "from": "gradient-checkpointing",
+      "to": "megatron"
+    },
+    {
+      "from": "gradient-checkpointing",
+      "to": "deepspeed"
+    },
+    {
+      "from": "gradient-checkpointing",
+      "to": "pytorch"
+    },
+    {
+      "from": "gradient-checkpointing",
+      "to": "llama"
+    },
+    {
+      "from": "gradient-checkpointing",
+      "to": "gpt"
+    },
+    {
+      "from": "adam",
+      "to": "adamw"
+    },
+    {
+      "from": "convex-optimization",
+      "to": "adamw"
+    },
+    {
+      "from": "adamw",
+      "to": "transformer"
+    },
+    {
+      "from": "adamw",
+      "to": "gpt"
+    },
+    {
+      "from": "adamw",
+      "to": "bert"
+    },
+    {
+      "from": "adamw",
+      "to": "llama"
+    },
+    {
+      "from": "calculus",
+      "to": "lr-schedule"
+    },
+    {
+      "from": "lr-schedule",
+      "to": "transformer"
+    },
+    {
+      "from": "lr-schedule",
+      "to": "gpt"
+    },
+    {
+      "from": "lr-schedule",
+      "to": "bert"
+    },
+    {
+      "from": "lr-schedule",
+      "to": "llama"
+    },
+    {
+      "from": "transformer",
+      "to": "rope"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "rope"
+    },
+    {
+      "from": "rope",
+      "to": "llama"
+    },
+    {
+      "from": "rope",
+      "to": "mamba"
+    },
+    {
+      "from": "batch-norm",
+      "to": "rmsnorm"
+    },
+    {
+      "from": "rmsnorm",
+      "to": "transformer"
+    },
+    {
+      "from": "rmsnorm",
+      "to": "llama"
+    },
+    {
+      "from": "rmsnorm",
+      "to": "gpt"
+    },
+    {
+      "from": "rmsnorm",
+      "to": "bert"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "nvidia-gpu"
+    },
+    {
+      "from": "nvidia-gpu",
+      "to": "cuda-cpp"
+    },
+    {
+      "from": "nvidia-gpu",
+      "to": "cutlass"
+    },
+    {
+      "from": "nvidia-gpu",
+      "to": "flashattn"
+    },
+    {
+      "from": "nvidia-gpu",
+      "to": "nccl"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "tpu"
+    },
+    {
+      "from": "tpu",
+      "to": "xla"
+    },
+    {
+      "from": "tpu",
+      "to": "jax"
+    },
+    {
+      "from": "tpu",
+      "to": "tensorflow"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "gpu-interconnect"
+    },
+    {
+      "from": "computer-architecture",
+      "to": "gpu-interconnect"
+    },
+    {
+      "from": "nvidia-gpu",
+      "to": "gpu-interconnect"
+    },
+    {
+      "from": "gpu-interconnect",
+      "to": "nccl"
+    },
+    {
+      "from": "gpu-interconnect",
+      "to": "megatron"
+    },
+    {
+      "from": "gpu-interconnect",
+      "to": "deepspeed"
+    },
+    {
+      "from": "attention",
+      "to": "self-attention"
+    },
+    {
+      "from": "attention",
+      "to": "seq2seq"
+    },
+    {
+      "from": "attention",
+      "to": "transformer"
+    },
+    {
+      "from": "attention",
+      "to": "bert"
+    },
+    {
+      "from": "attention",
+      "to": "gpt"
+    },
+    {
+      "from": "self-attention",
+      "to": "transformer"
+    },
+    {
+      "from": "self-attention",
+      "to": "vit"
+    },
+    {
+      "from": "self-attention",
+      "to": "flashattn"
+    },
+    {
+      "from": "positional-encoding",
+      "to": "transformer"
+    },
+    {
+      "from": "positional-encoding",
+      "to": "llama"
+    },
+    {
+      "from": "positional-encoding",
+      "to": "vit"
+    },
+    {
+      "from": "rnn-lstm",
+      "to": "seq2seq"
+    },
+    {
+      "from": "rnn-lstm",
+      "to": "attention"
+    },
+    {
+      "from": "rnn-lstm",
+      "to": "word2vec"
+    },
+    {
+      "from": "rnn-lstm",
+      "to": "mamba"
+    },
+    {
+      "from": "seq2seq",
+      "to": "transformer"
+    },
+    {
+      "from": "seq2seq",
+      "to": "t5"
+    },
+    {
+      "from": "cnn",
+      "to": "alexnet"
+    },
+    {
+      "from": "cnn",
+      "to": "resnet"
+    },
+    {
+      "from": "cnn",
+      "to": "u-net"
+    },
+    {
+      "from": "cnn",
+      "to": "vit"
+    },
+    {
+      "from": "u-net",
+      "to": "diffusion"
+    },
+    {
+      "from": "u-net",
+      "to": "stable-diffusion"
+    },
+    {
+      "from": "vit",
+      "to": "clip"
+    },
+    {
+      "from": "vit",
+      "to": "stable-diffusion"
+    },
+    {
+      "from": "layer-norm",
+      "to": "transformer"
+    },
+    {
+      "from": "layer-norm",
+      "to": "bert"
+    },
+    {
+      "from": "layer-norm",
+      "to": "gpt"
+    },
+    {
+      "from": "layer-norm",
+      "to": "llama"
+    },
+    {
+      "from": "imagenet",
+      "to": "alexnet"
+    },
+    {
+      "from": "imagenet",
+      "to": "resnet"
+    },
+    {
+      "from": "imagenet",
+      "to": "vit"
+    },
+    {
+      "from": "imagenet",
+      "to": "clip"
+    },
+    {
+      "from": "decision-trees",
+      "to": "xgboost"
+    },
+    {
+      "from": "svm",
+      "to": "decision-trees"
+    },
+    {
+      "from": "kmeans-clustering",
+      "to": "word2vec"
+    },
+    {
+      "from": "pca",
+      "to": "word2vec"
+    },
+    {
+      "from": "pca",
+      "to": "vae"
+    },
+    {
+      "from": "reinforcement-learning",
+      "to": "alphago"
+    },
+    {
+      "from": "alphago",
+      "to": "alphafold"
+    },
+    {
+      "from": "rlhf",
+      "to": "dpo"
+    },
+    {
+      "from": "rlhf",
+      "to": "constitutional-ai"
+    },
+    {
+      "from": "constitutional-ai",
+      "to": "anthropic"
+    },
+    {
+      "from": "gpt",
+      "to": "chain-of-thought"
+    },
+    {
+      "from": "chain-of-thought",
+      "to": "openai"
+    },
+    {
+      "from": "diffusion",
+      "to": "stable-diffusion"
+    },
+    {
+      "from": "clip",
+      "to": "stable-diffusion"
+    },
+    {
+      "from": "stable-diffusion",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "transformer",
+      "to": "whisper"
+    },
+    {
+      "from": "whisper",
+      "to": "openai"
+    },
+    {
+      "from": "whisper",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "transformer",
+      "to": "t5"
+    },
+    {
+      "from": "t5",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "transformer",
+      "to": "vit"
+    },
+    {
+      "from": "vit",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "pca"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "svm"
+    },
+    {
+      "from": "probability",
+      "to": "kmeans-clustering"
+    },
+    {
+      "from": "probability",
+      "to": "decision-trees"
+    },
+    {
+      "from": "convex-optimization",
+      "to": "svm"
+    },
+    {
+      "from": "convex-optimization",
+      "to": "dpo"
+    },
+    {
+      "from": "information-theory",
+      "to": "decision-trees"
+    },
+    {
+      "from": "calculus",
+      "to": "cnn"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "cnn"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "self-attention"
+    },
+    {
+      "from": "vae",
+      "to": "stable-diffusion"
+    },
+    {
+      "from": "stable-diffusion",
+      "to": "controlnet"
+    },
+    {
+      "from": "stable-diffusion",
+      "to": "lora"
+    },
+    {
+      "from": "diffusion",
+      "to": "sora"
+    },
+    {
+      "from": "transformer",
+      "to": "sora"
+    },
+    {
+      "from": "stable-diffusion",
+      "to": "sora"
+    },
+    {
+      "from": "resnet",
+      "to": "vit"
+    },
+    {
+      "from": "vit",
+      "to": "llava"
+    },
+    {
+      "from": "clip",
+      "to": "llava"
+    },
+    {
+      "from": "gpt",
+      "to": "llava"
+    },
+    {
+      "from": "llava",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "reinforcement-learning",
+      "to": "ppo"
+    },
+    {
+      "from": "reinforcement-learning",
+      "to": "dqn"
+    },
+    {
+      "from": "reinforcement-learning",
+      "to": "alphazero"
+    },
+    {
+      "from": "probability",
+      "to": "ppo"
+    },
+    {
+      "from": "convex-optimization",
+      "to": "ppo"
+    },
+    {
+      "from": "ppo",
+      "to": "rlhf"
+    },
+    {
+      "from": "dqn",
+      "to": "alphazero"
+    },
+    {
+      "from": "dpo",
+      "to": "llama"
+    },
+    {
+      "from": "dpo",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "information-theory",
+      "to": "dpo"
+    },
+    {
+      "from": "gpt",
+      "to": "dspy"
+    },
+    {
+      "from": "dspy",
+      "to": "langchain"
+    },
+    {
+      "from": "gpt",
+      "to": "evals"
+    },
+    {
+      "from": "scaling-laws",
+      "to": "evals"
+    },
+    {
+      "from": "rlhf",
+      "to": "evals"
+    },
+    {
+      "from": "gpt",
+      "to": "llamaindex"
+    },
+    {
+      "from": "clip",
+      "to": "llamaindex"
+    },
+    {
+      "from": "gpt",
+      "to": "autogen"
+    },
+    {
+      "from": "openai",
+      "to": "autogen"
+    },
+    {
+      "from": "langchain",
+      "to": "autogen"
+    },
+    {
+      "from": "java",
+      "to": "pulsar"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "pulsar"
+    },
+    {
+      "from": "pulsar",
+      "to": "rocksdb"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "pulsar"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "rabbitmq"
+    },
+    {
+      "from": "go",
+      "to": "nats"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "nats"
+    },
+    {
+      "from": "java",
+      "to": "beam"
+    },
+    {
+      "from": "beam",
+      "to": "flink"
+    },
+    {
+      "from": "beam",
+      "to": "spark"
+    },
+    {
+      "from": "watermarks",
+      "to": "beam"
+    },
+    {
+      "from": "rust",
+      "to": "materialize"
+    },
+    {
+      "from": "materialize",
+      "to": "kafka"
+    },
+    {
+      "from": "materialize",
+      "to": "cdc"
+    },
+    {
+      "from": "rust",
+      "to": "risingwave"
+    },
+    {
+      "from": "risingwave",
+      "to": "kafka"
+    },
+    {
+      "from": "risingwave",
+      "to": "watermarks"
+    },
+    {
+      "from": "java",
+      "to": "debezium"
+    },
+    {
+      "from": "debezium",
+      "to": "kafka"
+    },
+    {
+      "from": "debezium",
+      "to": "cdc"
+    },
+    {
+      "from": "cdc",
+      "to": "kafka"
+    },
+    {
+      "from": "cdc",
+      "to": "postgres"
+    },
+    {
+      "from": "cdc",
+      "to": "mongodb"
+    },
+    {
+      "from": "exactly-once",
+      "to": "flink"
+    },
+    {
+      "from": "exactly-once",
+      "to": "kafka"
+    },
+    {
+      "from": "exactly-once",
+      "to": "beam"
+    },
+    {
+      "from": "watermarks",
+      "to": "flink"
+    },
+    {
+      "from": "watermarks",
+      "to": "materialize"
+    },
+    {
+      "from": "java",
+      "to": "presto"
+    },
+    {
+      "from": "presto",
+      "to": "trino"
+    },
+    {
+      "from": "parquet",
+      "to": "presto"
+    },
+    {
+      "from": "iceberg",
+      "to": "presto"
+    },
+    {
+      "from": "arrow",
+      "to": "presto"
+    },
+    {
+      "from": "java",
+      "to": "druid"
+    },
+    {
+      "from": "druid",
+      "to": "kafka"
+    },
+    {
+      "from": "java",
+      "to": "pinot"
+    },
+    {
+      "from": "pinot",
+      "to": "kafka"
+    },
+    {
+      "from": "cpp",
+      "to": "starrocks"
+    },
+    {
+      "from": "java",
+      "to": "starrocks"
+    },
+    {
+      "from": "parquet",
+      "to": "starrocks"
+    },
+    {
+      "from": "iceberg",
+      "to": "starrocks"
+    },
+    {
+      "from": "go",
+      "to": "prometheus"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "prometheus"
+    },
+    {
+      "from": "prometheus",
+      "to": "kubernetes"
+    },
+    {
+      "from": "java",
+      "to": "lucene"
+    },
+    {
+      "from": "lucene",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "lucene",
+      "to": "opensearch"
+    },
+    {
+      "from": "java",
+      "to": "opensearch"
+    },
+    {
+      "from": "rust",
+      "to": "polars"
+    },
+    {
+      "from": "arrow",
+      "to": "polars"
+    },
+    {
+      "from": "parquet",
+      "to": "polars"
+    },
+    {
+      "from": "python",
+      "to": "polars"
+    },
+    {
+      "from": "python",
+      "to": "pandas"
+    },
+    {
+      "from": "arrow",
+      "to": "pandas"
+    },
+    {
+      "from": "pandas",
+      "to": "jupyter"
+    },
+    {
+      "from": "python",
+      "to": "dask"
+    },
+    {
+      "from": "pandas",
+      "to": "dask"
+    },
+    {
+      "from": "arrow",
+      "to": "dask"
+    },
+    {
+      "from": "python",
+      "to": "jupyter"
+    },
+    {
+      "from": "python",
+      "to": "prefect"
+    },
+    {
+      "from": "prefect",
+      "to": "dbt"
+    },
+    {
+      "from": "python",
+      "to": "dagster"
+    },
+    {
+      "from": "dagster",
+      "to": "dbt"
+    },
+    {
+      "from": "dagster",
+      "to": "spark"
+    },
+    {
+      "from": "python",
+      "to": "beam"
+    },
+    {
+      "from": "java",
+      "to": "airbyte"
+    },
+    {
+      "from": "python",
+      "to": "airbyte"
+    },
+    {
+      "from": "airbyte",
+      "to": "snowflake"
+    },
+    {
+      "from": "airbyte",
+      "to": "bigquery"
+    },
+    {
+      "from": "airbyte",
+      "to": "redshift"
+    },
+    {
+      "from": "fivetran",
+      "to": "snowflake"
+    },
+    {
+      "from": "fivetran",
+      "to": "bigquery"
+    },
+    {
+      "from": "fivetran",
+      "to": "redshift"
+    },
+    {
+      "from": "fivetran",
+      "to": "databricks"
+    },
+    {
+      "from": "fivetran",
+      "to": "dbt"
+    },
+    {
+      "from": "redshift",
+      "to": "dbt"
+    },
+    {
+      "from": "s3",
+      "to": "redshift"
+    },
+    {
+      "from": "parquet",
+      "to": "redshift"
+    },
+    {
+      "from": "s3",
+      "to": "iceberg"
+    },
+    {
+      "from": "s3",
+      "to": "delta-lake"
+    },
+    {
+      "from": "s3",
+      "to": "hudi"
+    },
+    {
+      "from": "s3",
+      "to": "databricks"
+    },
+    {
+      "from": "s3",
+      "to": "snowflake"
+    },
+    {
+      "from": "s3",
+      "to": "trino"
+    },
+    {
+      "from": "s3",
+      "to": "spark"
+    },
+    {
+      "from": "hive-metastore",
+      "to": "spark"
+    },
+    {
+      "from": "hive-metastore",
+      "to": "trino"
+    },
+    {
+      "from": "hive-metastore",
+      "to": "iceberg"
+    },
+    {
+      "from": "java",
+      "to": "hive-metastore"
+    },
+    {
+      "from": "unity-catalog",
+      "to": "delta-lake"
+    },
+    {
+      "from": "unity-catalog",
+      "to": "iceberg"
+    },
+    {
+      "from": "unity-catalog",
+      "to": "databricks"
+    },
+    {
+      "from": "orc",
+      "to": "spark"
+    },
+    {
+      "from": "orc",
+      "to": "trino"
+    },
+    {
+      "from": "orc",
+      "to": "hudi"
+    },
+    {
+      "from": "hive-metastore",
+      "to": "orc"
+    },
+    {
+      "from": "avro",
+      "to": "kafka"
+    },
+    {
+      "from": "avro",
+      "to": "spark"
+    },
+    {
+      "from": "avro",
+      "to": "beam"
+    },
+    {
+      "from": "java",
+      "to": "avro"
+    },
+    {
+      "from": "lsm-tree",
+      "to": "rocksdb"
+    },
+    {
+      "from": "lsm-tree",
+      "to": "leveldb"
+    },
+    {
+      "from": "lsm-tree",
+      "to": "cassandra"
+    },
+    {
+      "from": "lsm-tree",
+      "to": "scylla"
+    },
+    {
+      "from": "lsm-tree",
+      "to": "hbase"
+    },
+    {
+      "from": "lsm-tree",
+      "to": "bigtable"
+    },
+    {
+      "from": "b-tree",
+      "to": "postgres"
+    },
+    {
+      "from": "b-tree",
+      "to": "mysql"
+    },
+    {
+      "from": "b-tree",
+      "to": "sqlite"
+    },
+    {
+      "from": "b-tree",
+      "to": "mongodb"
+    },
+    {
+      "from": "bloom-filter",
+      "to": "rocksdb"
+    },
+    {
+      "from": "bloom-filter",
+      "to": "leveldb"
+    },
+    {
+      "from": "bloom-filter",
+      "to": "cassandra"
+    },
+    {
+      "from": "bloom-filter",
+      "to": "bigtable"
+    },
+    {
+      "from": "mvcc",
+      "to": "postgres"
+    },
+    {
+      "from": "mvcc",
+      "to": "mysql"
+    },
+    {
+      "from": "mvcc",
+      "to": "spanner"
+    },
+    {
+      "from": "mvcc",
+      "to": "cockroach"
+    },
+    {
+      "from": "mvcc",
+      "to": "tikv"
+    },
+    {
+      "from": "mvcc",
+      "to": "snapshot-isolation"
+    },
+    {
+      "from": "snapshot-isolation",
+      "to": "postgres"
+    },
+    {
+      "from": "snapshot-isolation",
+      "to": "cockroach"
+    },
+    {
+      "from": "snapshot-isolation",
+      "to": "spanner"
+    },
+    {
+      "from": "snapshot-isolation",
+      "to": "foundationdb"
+    },
+    {
+      "from": "linearizability",
+      "to": "spanner"
+    },
+    {
+      "from": "linearizability",
+      "to": "etcd"
+    },
+    {
+      "from": "linearizability",
+      "to": "zookeeper"
+    },
+    {
+      "from": "linearizability",
+      "to": "raft"
+    },
+    {
+      "from": "linearizability",
+      "to": "paxos"
+    },
+    {
+      "from": "eventual-consistency",
+      "to": "dynamo"
+    },
+    {
+      "from": "eventual-consistency",
+      "to": "cassandra"
+    },
+    {
+      "from": "eventual-consistency",
+      "to": "redis"
+    },
+    {
+      "from": "eventual-consistency",
+      "to": "crdt"
+    },
+    {
+      "from": "crdt",
+      "to": "redis"
+    },
+    {
+      "from": "quorum",
+      "to": "dynamo"
+    },
+    {
+      "from": "quorum",
+      "to": "cassandra"
+    },
+    {
+      "from": "quorum",
+      "to": "scylla"
+    },
+    {
+      "from": "quorum",
+      "to": "zookeeper"
+    },
+    {
+      "from": "saga",
+      "to": "two-phase-commit"
+    },
+    {
+      "from": "hlc",
+      "to": "cockroach"
+    },
+    {
+      "from": "hlc",
+      "to": "yugabyte"
+    },
+    {
+      "from": "hlc",
+      "to": "mongodb"
+    },
+    {
+      "from": "cassandra",
+      "to": "scylla"
+    },
+    {
+      "from": "leveldb",
+      "to": "rocksdb"
+    },
+    {
+      "from": "mysql",
+      "to": "tidb"
+    },
+    {
+      "from": "mysql",
+      "to": "aurora"
+    },
+    {
+      "from": "tidb",
+      "to": "tikv"
+    },
+    {
+      "from": "java",
+      "to": "cassandra"
+    },
+    {
+      "from": "java",
+      "to": "hbase"
+    },
+    {
+      "from": "cpp",
+      "to": "scylla"
+    },
+    {
+      "from": "cpp",
+      "to": "leveldb"
+    },
+    {
+      "from": "cpp",
+      "to": "mysql"
+    },
+    {
+      "from": "cpp",
+      "to": "foundationdb"
+    },
+    {
+      "from": "c",
+      "to": "sqlite"
+    },
+    {
+      "from": "go",
+      "to": "tidb"
+    },
+    {
+      "from": "go",
+      "to": "yugabyte"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "cassandra"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "mysql"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "tidb"
+    },
+    {
+      "from": "consistent-hashing",
+      "to": "cassandra"
+    },
+    {
+      "from": "consistent-hashing",
+      "to": "scylla"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "cassandra"
+    },
+    {
+      "from": "bigtable",
+      "to": "hbase"
+    },
+    {
+      "from": "two-phase-commit",
+      "to": "foundationdb"
+    },
+    {
+      "from": "raft",
+      "to": "yugabyte"
+    },
+    {
+      "from": "spanner",
+      "to": "yugabyte"
+    },
+    {
+      "from": "spanner",
+      "to": "aurora"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "http2"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "http3-quic"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "dns"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "tls"
+    },
+    {
+      "from": "http2",
+      "to": "grpc"
+    },
+    {
+      "from": "http2",
+      "to": "envoy"
+    },
+    {
+      "from": "http2",
+      "to": "nginx"
+    },
+    {
+      "from": "http3-quic",
+      "to": "cloudflare"
+    },
+    {
+      "from": "http3-quic",
+      "to": "nginx"
+    },
+    {
+      "from": "tls",
+      "to": "nginx"
+    },
+    {
+      "from": "tls",
+      "to": "envoy"
+    },
+    {
+      "from": "tls",
+      "to": "cloudflare"
+    },
+    {
+      "from": "dns",
+      "to": "cloudflare"
+    },
+    {
+      "from": "dns",
+      "to": "kubernetes"
+    },
+    {
+      "from": "oci-standard",
+      "to": "docker"
+    },
+    {
+      "from": "oci-standard",
+      "to": "kubernetes"
+    },
+    {
+      "from": "linux",
+      "to": "oci-standard"
+    },
+    {
+      "from": "operating-systems",
+      "to": "wasm"
+    },
+    {
+      "from": "wasm",
+      "to": "cloudflare"
+    },
+    {
+      "from": "cpp",
+      "to": "wasm"
+    },
+    {
+      "from": "rust",
+      "to": "wasm"
+    },
+    {
+      "from": "observability",
+      "to": "prometheus"
+    },
+    {
+      "from": "observability",
+      "to": "grafana"
+    },
+    {
+      "from": "observability",
+      "to": "opentelemetry"
+    },
+    {
+      "from": "observability",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "ebpf",
+      "to": "observability"
+    },
+    {
+      "from": "prometheus",
+      "to": "grafana"
+    },
+    {
+      "from": "go",
+      "to": "grafana"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "grafana"
+    },
+    {
+      "from": "opentelemetry",
+      "to": "prometheus"
+    },
+    {
+      "from": "opentelemetry",
+      "to": "grafana"
+    },
+    {
+      "from": "grpc",
+      "to": "opentelemetry"
+    },
+    {
+      "from": "envoy",
+      "to": "istio"
+    },
+    {
+      "from": "kubernetes",
+      "to": "istio"
+    },
+    {
+      "from": "go",
+      "to": "istio"
+    },
+    {
+      "from": "kubernetes",
+      "to": "helm"
+    },
+    {
+      "from": "go",
+      "to": "helm"
+    },
+    {
+      "from": "go",
+      "to": "terraform"
+    },
+    {
+      "from": "terraform",
+      "to": "aws"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "nodejs"
+    },
+    {
+      "from": "cpp",
+      "to": "nodejs"
+    },
+    {
+      "from": "nodejs",
+      "to": "vercel"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "aws"
+    },
+    {
+      "from": "aws",
+      "to": "kubernetes"
+    },
+    {
+      "from": "cpp",
+      "to": "llvm"
+    },
+    {
+      "from": "llvm",
+      "to": "mlir"
+    },
+    {
+      "from": "llvm",
+      "to": "xla"
+    },
+    {
+      "from": "llvm",
+      "to": "tvm"
+    },
+    {
+      "from": "llvm",
+      "to": "triton"
+    },
+    {
+      "from": "llvm",
+      "to": "rust"
+    },
+    {
+      "from": "llvm",
+      "to": "cuda-cpp"
+    },
+    {
+      "from": "llvm",
+      "to": "ptx"
+    },
+    {
+      "from": "llvm",
+      "to": "assembly"
+    },
+    {
+      "from": "java",
+      "to": "jvm"
+    },
+    {
+      "from": "scala",
+      "to": "jvm"
+    },
+    {
+      "from": "jvm",
+      "to": "spark"
+    },
+    {
+      "from": "jvm",
+      "to": "flink"
+    },
+    {
+      "from": "jvm",
+      "to": "kafka"
+    },
+    {
+      "from": "jvm",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "jvm",
+      "to": "trino"
+    },
+    {
+      "from": "jvm",
+      "to": "zookeeper"
+    },
+    {
+      "from": "jvm",
+      "to": "iceberg"
+    },
+    {
+      "from": "jvm",
+      "to": "hudi"
+    },
+    {
+      "from": "typescript",
+      "to": "vercel"
+    },
+    {
+      "from": "typescript",
+      "to": "cloudflare"
+    },
+    {
+      "from": "typescript",
+      "to": "langchain"
+    },
+    {
+      "from": "javascript",
+      "to": "vercel"
+    },
+    {
+      "from": "javascript",
+      "to": "cloudflare"
+    },
+    {
+      "from": "javascript",
+      "to": "langchain"
+    },
+    {
+      "from": "wasm",
+      "to": "vercel"
+    },
+    {
+      "from": "elasticsearch",
+      "to": "pinecone"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "pinecone"
+    },
+    {
+      "from": "clip",
+      "to": "langchain"
+    },
+    {
+      "from": "langchain",
+      "to": "pinecone"
+    },
+    {
+      "from": "openai",
+      "to": "pinecone"
+    },
+    {
+      "from": "anthropic",
+      "to": "pinecone"
+    },
+    {
+      "from": "transformer",
+      "to": "pinecone"
+    },
+    {
+      "from": "bert",
+      "to": "pinecone"
+    },
+    {
+      "from": "nccl",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "pytorch",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "ptx",
+      "to": "vllm"
+    },
+    {
+      "from": "triton",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "moe",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "lora",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "llama",
+      "to": "tensorrt-llm"
+    },
+    {
+      "from": "zero",
+      "to": "llama"
+    },
+    {
+      "from": "flashattn",
+      "to": "llama"
+    },
+    {
+      "from": "flashattn",
+      "to": "megatron"
+    },
+    {
+      "from": "flashattn",
+      "to": "deepspeed"
+    },
+    {
+      "from": "moe",
+      "to": "gpt"
+    },
+    {
+      "from": "huggingface",
+      "to": "hf-transformers"
+    },
+    {
+      "from": "huggingface",
+      "to": "llama"
+    },
+    {
+      "from": "hf-transformers",
+      "to": "llama"
+    },
+    {
+      "from": "scaling-laws",
+      "to": "gpt"
+    },
+    {
+      "from": "chinchilla",
+      "to": "gpt"
+    },
+    {
+      "from": "jax",
+      "to": "xla"
+    },
+    {
+      "from": "triton",
+      "to": "flashattn"
+    },
+    {
+      "from": "cutlass",
+      "to": "megatron"
+    },
+    {
+      "from": "nccl",
+      "to": "llama"
+    },
+    {
+      "from": "megatron",
+      "to": "llama"
+    },
+    {
+      "from": "deepspeed",
+      "to": "llama"
+    },
+    {
+      "from": "rlhf",
+      "to": "gpt"
+    },
+    {
+      "from": "clip",
+      "to": "llama"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "backpropagation"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "batch-norm"
+    },
+    {
+      "from": "calculus",
+      "to": "vae"
+    },
+    {
+      "from": "calculus",
+      "to": "gan"
+    },
+    {
+      "from": "probability",
+      "to": "mamba"
+    },
+    {
+      "from": "probability",
+      "to": "lora"
+    },
+    {
+      "from": "backpropagation",
+      "to": "alexnet"
+    },
+    {
+      "from": "backpropagation",
+      "to": "bert"
+    },
+    {
+      "from": "backpropagation",
+      "to": "gpt"
+    },
+    {
+      "from": "sgd",
+      "to": "bert"
+    },
+    {
+      "from": "sgd",
+      "to": "gpt"
+    },
+    {
+      "from": "dropout",
+      "to": "vit"
+    },
+    {
+      "from": "word2vec",
+      "to": "llama"
+    },
+    {
+      "from": "vae",
+      "to": "gan"
+    },
+    {
+      "from": "gan",
+      "to": "diffusion"
+    },
+    {
+      "from": "kafka",
+      "to": "flink"
+    },
+    {
+      "from": "kafka",
+      "to": "spark"
+    },
+    {
+      "from": "kafka",
+      "to": "clickhouse"
+    },
+    {
+      "from": "kafka",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "iceberg",
+      "to": "clickhouse"
+    },
+    {
+      "from": "iceberg",
+      "to": "duckdb"
+    },
+    {
+      "from": "airflow",
+      "to": "spark"
+    },
+    {
+      "from": "airflow",
+      "to": "dbt"
+    },
+    {
+      "from": "rocksdb",
+      "to": "clickhouse"
+    },
+    {
+      "from": "parquet",
+      "to": "databricks"
+    },
+    {
+      "from": "iceberg",
+      "to": "databricks"
+    },
+    {
+      "from": "airflow",
+      "to": "snowflake"
+    },
+    {
+      "from": "airflow",
+      "to": "bigquery"
+    },
+    {
+      "from": "gfs",
+      "to": "bigtable"
+    },
+    {
+      "from": "cap-theorem",
+      "to": "mongodb"
+    },
+    {
+      "from": "lamport-clocks",
+      "to": "tikv"
+    },
+    {
+      "from": "lamport-clocks",
+      "to": "etcd"
+    },
+    {
+      "from": "linux",
+      "to": "mongodb"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "mongodb"
+    },
+    {
+      "from": "cpp",
+      "to": "mongodb"
+    },
+    {
+      "from": "kubernetes",
+      "to": "cilium"
+    },
+    {
+      "from": "kubernetes",
+      "to": "envoy"
+    },
+    {
+      "from": "rust",
+      "to": "envoy"
+    },
+    {
+      "from": "go",
+      "to": "cloudflare"
+    },
+    {
+      "from": "docker",
+      "to": "redis"
+    },
+    {
+      "from": "docker",
+      "to": "postgres"
+    },
+    {
+      "from": "docker",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "docker",
+      "to": "mongodb"
+    },
+    {
+      "from": "docker",
+      "to": "kafka"
+    },
+    {
+      "from": "docker",
+      "to": "spark"
+    },
+    {
+      "from": "docker",
+      "to": "airflow"
+    },
+    {
+      "from": "kubernetes",
+      "to": "spark"
+    },
+    {
+      "from": "kubernetes",
+      "to": "kafka"
+    },
+    {
+      "from": "kubernetes",
+      "to": "airflow"
+    },
+    {
+      "from": "kubernetes",
+      "to": "flink"
+    },
+    {
+      "from": "tcp-ip",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "linux",
+      "to": "elasticsearch"
+    },
+    {
+      "from": "grpc",
+      "to": "etcd"
+    },
+    {
+      "from": "grpc",
+      "to": "cockroach"
+    },
+    {
+      "from": "grpc",
+      "to": "tikv"
+    },
+    {
+      "from": "python",
+      "to": "langchain"
+    },
+    {
+      "from": "python",
+      "to": "llama"
+    },
+    {
+      "from": "python",
+      "to": "grpc"
+    },
+    {
+      "from": "java",
+      "to": "grpc"
+    },
+    {
+      "from": "java",
+      "to": "parquet"
+    },
+    {
+      "from": "linear-algebra",
+      "to": "triton"
     }
   ]
 }
